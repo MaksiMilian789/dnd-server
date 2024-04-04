@@ -345,4 +345,4 @@ healthchecksdb
 !External/*.pdb
 !External/**/*.nupkg
 
-.vs/*
+/.vs
