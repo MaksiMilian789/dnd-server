@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DndServer.API", "dnd-server\DndServer.API.csproj", "{E2035CA9-F004-4139-8346-01523EA9306B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DndServer.API", "DndServer.API\DndServer.API.csproj", "{E2035CA9-F004-4139-8346-01523EA9306B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DndServer.Domain", "DndServer.Domain\DndServer.Domain.csproj", "{D3AF866D-4564-40F2-8A48-3899B91387B7}"
 EndProject
