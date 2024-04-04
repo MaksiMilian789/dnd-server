@@ -344,3 +344,5 @@ healthchecksdb
 *.zip
 !External/*.pdb
 !External/**/*.nupkg
+
+.vs/*

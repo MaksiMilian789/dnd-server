@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\maksi\\source\\repos\\dnd-server\\dnd-server\\dnd-server.csproj": {}
+    "G:\\repos\\dnd-server\\dnd-server\\dnd-server.csproj": {}
   },
   "projects": {
-    "C:\\Users\\maksi\\source\\repos\\dnd-server\\dnd-server\\dnd-server.csproj": {
+    "G:\\repos\\dnd-server\\dnd-server\\dnd-server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\maksi\\source\\repos\\dnd-server\\dnd-server\\dnd-server.csproj",
+        "projectUniqueName": "G:\\repos\\dnd-server\\dnd-server\\dnd-server.csproj",
         "projectName": "dnd-server",
-        "projectPath": "C:\\Users\\maksi\\source\\repos\\dnd-server\\dnd-server\\dnd-server.csproj",
+        "projectPath": "G:\\repos\\dnd-server\\dnd-server\\dnd-server.csproj",
         "packagesPath": "C:\\Users\\maksi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\maksi\\source\\repos\\dnd-server\\dnd-server\\obj\\",
+        "outputPath": "G:\\repos\\dnd-server\\dnd-server\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\maksi\\AppData\\Roaming\\NuGet\\NuGet.Config",

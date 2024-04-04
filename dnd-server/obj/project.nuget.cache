@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "h132VndwZcu5/V3AYODix1PsMdD87ulG1624Xtuv756ZIgC/at+fyYw423JkdrrKguwOjYLsl2R8U0EFIKkpAw==",
+  "dgSpecHash": "aA8CkBjQ/BVBGZ/Qsr4DH7a9KAoeLlPSrnOh3qe1wOKTXV8NAQjdE5A//DZXu9le6bgU/5S1Pf9z+oVoDY0hxw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\maksi\\source\\repos\\dnd-server\\dnd-server\\dnd-server.csproj",
+  "projectFilePath": "G:\\repos\\dnd-server\\dnd-server\\DndServer.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\maksi\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\maksi\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",

@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "uz43MRUyJCljy5sHVVrmOl6NagSHz2uauUgr3cG68Ic=",
+  "Source": "DndServer.API",
+  "BasePath": "_content/DndServer.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
