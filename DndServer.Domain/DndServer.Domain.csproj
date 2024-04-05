@@ -6,13 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Character\Inventory\" />
-    <Folder Include="Character\Race\" />
-    <Folder Include="Character\Gender\" />
-    <Folder Include="Character\Class\" />
-    <Folder Include="Character\Background\" />
-    <Folder Include="Character\Ideology\" />
-  </ItemGroup>
-
 </Project>

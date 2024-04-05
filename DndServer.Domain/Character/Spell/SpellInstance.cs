@@ -11,13 +11,13 @@ public class SpellInstance
     public int Level { get; set; }
     public int Distance { get; set; }
     public ActionTypesEnum ActionType { get; set; }
-    public DiceRolls Damage { get; set; }
+    public Damage Damage { get; set; }
     public ActionTime ActionTime { get; set; }
     public List<SpellComponents> Components { get; set; }
     public SystemEnum System { get; set; }
 
     public SpellInstance(int id, string name, string description, int level, int distance, ActionTypesEnum actionType,
-        DiceRolls damage, ActionTime actionTime, List<SpellComponents> components, SystemEnum system)
+        Damage damage, ActionTime actionTime, List<SpellComponents> components, SystemEnum system)
     {
         Id = id;
         Name = name;
