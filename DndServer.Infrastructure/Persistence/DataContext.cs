@@ -51,6 +51,9 @@ public class DataContext : DbContext
     {
     }
 
+    public void Migrate() =>
+        Database.Migrate();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new BackgroundInstanceConfiguration());

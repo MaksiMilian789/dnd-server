@@ -3,11 +3,10 @@
 public class Resistance
 {
     public int? Flat { get; set; }
-    public DamageType DamageType { get; set; }
+    public DamageType DamageType { get; set; } = null!;
 
-    public Resistance(int? flat, DamageType damageType)
+    public Resistance(int? flat)
     {
         Flat = flat;
-        DamageType = damageType;
     }
 }

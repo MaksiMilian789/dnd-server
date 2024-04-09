@@ -13,5 +13,6 @@ public class CharacterConfiguration : IEntityTypeConfiguration<Domain.Character.
         builder.HasMany(x => x.Note).WithMany(x => x.Character);
         builder.HasMany(x => x.SkillInstance).WithMany(x => x.Character);
         builder.HasMany(x => x.SpellInstance).WithMany(x => x.Character);
+        builder.ComplexProperty(x => x.Characteristics);
     }
 }

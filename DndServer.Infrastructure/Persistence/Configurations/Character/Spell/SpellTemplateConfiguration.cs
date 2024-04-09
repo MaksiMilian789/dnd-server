@@ -6,6 +6,7 @@ namespace DndServer.Infrastructure.Persistence.Configurations.Character.Spell;
 
 public class SpellTemplateConfiguration : IEntityTypeConfiguration<SpellTemplate>
 {
-    public void Configure(EntityTypeBuilder<SpellTemplate> builder) =>
-        builder.HasKey(x => x.Id);
+    public void Configure(EntityTypeBuilder<SpellTemplate> builder)
+    {
+    }
 }

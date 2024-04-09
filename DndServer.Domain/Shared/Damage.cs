@@ -3,15 +3,13 @@
 public class Damage
 {
     public int Flat { get; set; }
-    public DiceRolls DamageRoll { get; set; }
-    public DamageType Type { get; set; }
+    public DiceRolls DamageRoll { get; set; } = null!;
+    public DamageType Type { get; set; } = null!;
     public bool Heal { get; set; }
 
-    public Damage(int flat, DiceRolls damageRoll, DamageType type, bool heal)
+    public Damage(int flat, bool heal)
     {
         Flat = flat;
-        DamageRoll = damageRoll;
-        Type = type;
         Heal = heal;
     }
 }

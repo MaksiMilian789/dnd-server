@@ -1,5 +1,4 @@
 ﻿using DndServer.Domain.Character.Skill;
-using DndServer.Domain.Shared;
 using DndServer.Domain.Shared.Enums;
 
 namespace DndServer.Domain.Character.Inventory;
@@ -10,8 +9,8 @@ public class ObjectTemplate : ObjectInstance
     public int? WorldId { get; set; }
     public ICollection<SkillTemplate> SkillTemplate { get; set; }
 
-    public ObjectTemplate(int id, string name, string description, Damage damage, AttackTypesEnum attackType,
-        int? distance, SystemEnum system, int authorId, int? worldId) : base(id, name, description, damage, attackType,
+    public ObjectTemplate(int id, string name, string description, AttackTypesEnum attackType,
+        int? distance, SystemEnum system, int authorId, int? worldId) : base(id, name, description, attackType,
         distance, system)
     {
         AuthorId = authorId;

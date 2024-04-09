@@ -14,5 +14,27 @@ public class SkillInstanceConfiguration : IEntityTypeConfiguration<SkillInstance
         builder.HasMany(x => x.ClassInstance).WithMany(x => x.SkillInstance);
         builder.HasMany(x => x.RaceInstance).WithMany(x => x.SkillInstance);
         builder.HasMany(x => x.ObjectInstance).WithMany(x => x.SkillInstance);
+        builder.ComplexProperty(x => x.Value);
+
+        builder.ComplexProperty(x => x.Value, a =>
+        {
+            a.ComplexProperty(y => y.Damage, b =>
+            {
+                b.ComplexProperty(z => z.DamageRoll);
+                b.ComplexProperty(z => z.Type);
+            });
+            a.ComplexProperty(y => y.AttackBonus, b =>
+            {
+                b.ComplexProperty(z => z.Damage, b =>
+                {
+                    b.ComplexProperty(z => z.DamageRoll);
+                    b.ComplexProperty(z => z.Type);
+                });
+            });
+            a.ComplexProperty(y => y.Effect);
+            a.ComplexProperty(y => y.Resistance, b => { b.ComplexProperty(z => z.DamageType); });
+            a.ComplexProperty(y => y.TypeVision);
+            a.ComplexProperty(y => y.PerLevel);
+        });
     }
 }

@@ -6,16 +6,16 @@ public class World
     public string Name { get; set; }
     public string Description { get; set; }
     public ICollection<WorldLinks> WorldLinks { get; set; }
-    public Tracker Tracker { get; set; }
-    public Wiki Wiki { get; set; }
+    public Tracker Tracker { get; set; } = null!;
+    public int TrackerKey { get; set; }
+    public Wiki Wiki { get; set; } = null!;
+    public int WikiKey { get; set; }
 
-    public World(int id, string name, string description, Tracker tracker, Wiki wiki)
+    public World(int id, string name, string description)
     {
         Id = id;
         Name = name;
         Description = description;
-        Tracker = tracker;
-        Wiki = wiki;
         WorldLinks = new List<WorldLinks>();
     }
 }

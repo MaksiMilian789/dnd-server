@@ -8,7 +8,6 @@ public class SkillTemplateConfiguration : IEntityTypeConfiguration<SkillTemplate
 {
     public void Configure(EntityTypeBuilder<SkillTemplate> builder)
     {
-        builder.HasKey(x => x.Id);
         builder.HasMany(x => x.BackgroundTemplate).WithMany(x => x.SkillTemplate);
         builder.HasMany(x => x.RaceTemplate).WithMany(x => x.SkillTemplate);
         builder.HasMany(x => x.SpellTemplate).WithMany(x => x.SkillTemplate);

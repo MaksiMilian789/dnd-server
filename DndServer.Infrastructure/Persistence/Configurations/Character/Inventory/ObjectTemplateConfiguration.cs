@@ -6,6 +6,7 @@ namespace DndServer.Infrastructure.Persistence.Configurations.Character.Inventor
 
 public class ObjectTemplateConfiguration : IEntityTypeConfiguration<ObjectTemplate>
 {
-    public void Configure(EntityTypeBuilder<ObjectTemplate> builder) =>
-        builder.HasKey(x => x.Id);
+    public void Configure(EntityTypeBuilder<ObjectTemplate> builder)
+    {
+    }
 }

@@ -9,6 +9,6 @@ public class TrackerConfiguration : IEntityTypeConfiguration<Tracker>
     public void Configure(EntityTypeBuilder<Tracker> builder)
     {
         builder.HasKey(x => x.Id);
-        builder.HasOne(x => x.World).WithOne(x => x.Tracker);
+        builder.HasOne(x => x.World).WithOne(x => x.Tracker).HasForeignKey<Domain.World.World>(x => x.TrackerKey);
     }
 }

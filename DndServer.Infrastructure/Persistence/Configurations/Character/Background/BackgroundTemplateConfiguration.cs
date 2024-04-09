@@ -6,6 +6,7 @@ namespace DndServer.Infrastructure.Persistence.Configurations.Character.Backgrou
 
 public class BackgroundTemplateConfiguration : IEntityTypeConfiguration<BackgroundTemplate>
 {
-    public void Configure(EntityTypeBuilder<BackgroundTemplate> builder) =>
-        builder.HasKey(x => x.Id);
+    public void Configure(EntityTypeBuilder<BackgroundTemplate> builder)
+    {
+    }
 }

@@ -6,6 +6,7 @@ namespace DndServer.Infrastructure.Persistence.Configurations.Character.Race;
 
 public class RaceTemplateConfiguration : IEntityTypeConfiguration<RaceTemplate>
 {
-    public void Configure(EntityTypeBuilder<RaceTemplate> builder) =>
-        builder.HasKey(x => x.Id);
+    public void Configure(EntityTypeBuilder<RaceTemplate> builder)
+    {
+    }
 }

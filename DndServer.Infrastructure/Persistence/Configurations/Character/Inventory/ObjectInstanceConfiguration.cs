@@ -6,6 +6,13 @@ namespace DndServer.Infrastructure.Persistence.Configurations.Character.Inventor
 
 public class ObjectInstanceConfiguration : IEntityTypeConfiguration<ObjectInstance>
 {
-    public void Configure(EntityTypeBuilder<ObjectInstance> builder) =>
+    public void Configure(EntityTypeBuilder<ObjectInstance> builder)
+    {
         builder.HasKey(x => x.Id);
+        builder.ComplexProperty(x => x.Damage, b =>
+        {
+            b.ComplexProperty(z => z.DamageRoll);
+            b.ComplexProperty(z => z.Type);
+        });
+    }
 }
