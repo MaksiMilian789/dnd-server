@@ -9,6 +9,17 @@ using DndServer.Domain.Character.Skill;
 using DndServer.Domain.Character.Spell;
 using DndServer.Domain.User;
 using DndServer.Domain.World;
+using DndServer.Infrastructure.Persistence.Configurations.Character;
+using DndServer.Infrastructure.Persistence.Configurations.Character.Background;
+using DndServer.Infrastructure.Persistence.Configurations.Character.Class;
+using DndServer.Infrastructure.Persistence.Configurations.Character.Condition;
+using DndServer.Infrastructure.Persistence.Configurations.Character.Inventory;
+using DndServer.Infrastructure.Persistence.Configurations.Character.Note;
+using DndServer.Infrastructure.Persistence.Configurations.Character.Race;
+using DndServer.Infrastructure.Persistence.Configurations.Character.Skill;
+using DndServer.Infrastructure.Persistence.Configurations.Character.Spell;
+using DndServer.Infrastructure.Persistence.Configurations.User;
+using DndServer.Infrastructure.Persistence.Configurations.World;
 using Microsoft.EntityFrameworkCore;
 
 namespace DndServer.Infrastructure.Persistence;
@@ -38,5 +49,30 @@ public class DataContext : DbContext
 
     public DataContext(DbContextOptions<DataContext> options) : base(options)
     {
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfiguration(new BackgroundInstanceConfiguration());
+        modelBuilder.ApplyConfiguration(new BackgroundTemplateConfiguration());
+        modelBuilder.ApplyConfiguration(new ClassInstanceConfiguration());
+        modelBuilder.ApplyConfiguration(new ClassTemplateConfiguration());
+        modelBuilder.ApplyConfiguration(new ConditionsConfiguration());
+        modelBuilder.ApplyConfiguration(new ObjectInstanceConfiguration());
+        modelBuilder.ApplyConfiguration(new ObjectTemplateConfiguration());
+        modelBuilder.ApplyConfiguration(new NoteConfiguration());
+        modelBuilder.ApplyConfiguration(new RaceInstanceConfiguration());
+        modelBuilder.ApplyConfiguration(new RaceTemplateConfiguration());
+        modelBuilder.ApplyConfiguration(new SkillInstanceConfiguration());
+        modelBuilder.ApplyConfiguration(new SkillTemplateConfiguration());
+        modelBuilder.ApplyConfiguration(new SpellInstanceConfiguration());
+        modelBuilder.ApplyConfiguration(new SpellTemplateConfiguration());
+        modelBuilder.ApplyConfiguration(new CharacterConfiguration());
+        modelBuilder.ApplyConfiguration(new UserConfiguration());
+        modelBuilder.ApplyConfiguration(new TrackerConfiguration());
+        modelBuilder.ApplyConfiguration(new WikiConfiguration());
+        modelBuilder.ApplyConfiguration(new WikiPageConfiguration());
+        modelBuilder.ApplyConfiguration(new WorldConfiguration());
+        modelBuilder.ApplyConfiguration(new WorldLinksConfiguration());
     }
 }
