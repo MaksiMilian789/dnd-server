@@ -1,4 +1,5 @@
-﻿using DndServer.Domain.Shared;
+﻿using DndServer.Domain.Character.Skill;
+using DndServer.Domain.Shared;
 using DndServer.Domain.Shared.Enums;
 
 namespace DndServer.Domain.Character.Spell;
@@ -15,6 +16,8 @@ public class SpellInstance
     public ActionTime ActionTime { get; set; }
     public List<SpellComponents> Components { get; set; }
     public SystemEnum System { get; set; }
+    public ICollection<SkillInstance> SkillInstance { get; set; }
+    public ICollection<Character> Character { get; set; }
 
     public SpellInstance(int id, string name, string description, int level, int distance, ActionTypesEnum actionType,
         Damage damage, ActionTime actionTime, List<SpellComponents> components, SystemEnum system)
@@ -29,5 +32,7 @@ public class SpellInstance
         ActionTime = actionTime;
         Components = components;
         System = system;
+        SkillInstance = new List<SkillInstance>();
+        Character = new List<Character>();
     }
 }

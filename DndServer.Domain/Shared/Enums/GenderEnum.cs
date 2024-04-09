@@ -1,4 +1,4 @@
-﻿namespace DndServer.Domain.Shared;
+﻿namespace DndServer.Domain.Shared.Enums;
 
 public enum GenderEnum
 {

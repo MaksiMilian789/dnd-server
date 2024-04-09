@@ -5,15 +5,15 @@ namespace DndServer.Domain.World;
 public class WorldLinks
 {
     public int Id { get; set; }
-    public int UserId { get; set; }
-    public int WorldId { get; set; }
+    public User.User User { get; set; }
+    public World World { get; set; }
     public RoleEnum Role { get; set; }
 
-    public WorldLinks(int id, int userId, int worldId, RoleEnum role)
+    public WorldLinks(int id, User.User user, World world, RoleEnum role)
     {
         Id = id;
-        UserId = userId;
-        WorldId = worldId;
+        User = user;
+        World = world;
         Role = role;
     }
 }

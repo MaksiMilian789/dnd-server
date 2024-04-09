@@ -1,4 +1,5 @@
-﻿using DndServer.Domain.Shared;
+﻿using DndServer.Domain.Character.Skill;
+using DndServer.Domain.Shared;
 using DndServer.Domain.Shared.Enums;
 
 namespace DndServer.Domain.Character.Inventory;
@@ -12,6 +13,8 @@ public class ObjectInstance
     public AttackTypesEnum AttackType { get; set; }
     public int? Distance { get; set; }
     public SystemEnum System { get; set; }
+    public ICollection<SkillInstance> SkillInstance { get; set; }
+    public ICollection<Character> Character { get; set; }
 
     public ObjectInstance(int id, string name, string description, Damage damage, AttackTypesEnum attackType,
         int? distance, SystemEnum system)
@@ -23,5 +26,7 @@ public class ObjectInstance
         AttackType = attackType;
         Distance = distance;
         System = system;
+        SkillInstance = new List<SkillInstance>();
+        Character = new List<Character>();
     }
 }

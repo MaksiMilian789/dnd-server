@@ -3,14 +3,14 @@
 public class WikiPage
 {
     public int Id { get; set; }
-    public int WikiSectionId { get; set; }
+    public Wiki Wiki { get; set; }
     public string Header { get; set; }
     public string Text { get; set; }
 
-    public WikiPage(int id, int wikiSectionId, string header, string text)
+    public WikiPage(int id, Wiki wiki, string header, string text)
     {
         Id = id;
-        WikiSectionId = wikiSectionId;
+        Wiki = wiki;
         Header = header;
         Text = text;
     }
