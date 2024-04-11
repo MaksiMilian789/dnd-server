@@ -32,12 +32,10 @@ public static class ConfigureServices
     public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("default");
-        Console.WriteLine(connectionString);
         services
             .AddDbContext<DataContext>(
                 options => { options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)); }
             );
-        Console.WriteLine(connectionString);
 
         services.AddScoped<IWorldRepository, WorldRepository>();
         services.AddScoped<IWorldLinksRepository, WorldLinksRepository>();
