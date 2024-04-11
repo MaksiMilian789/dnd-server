@@ -1,7 +1,8 @@
 ﻿using DndServer.Application.Auth.Interfaces;
 using DndServer.Application.Auth.Services;
-using DndServer.Application.User.Interfaces;
-using DndServer.Application.User.Services;
+using DndServer.Application.Users.Interfaces;
+using DndServer.Application.Users.Services;
+using DndServer.Domain.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,7 +13,7 @@ public static class ConfigureServices
     public static IServiceCollection AddApplications(this IServiceCollection services)
     {
         services.AddScoped<IUserService, UserService>();
-        services.AddScoped<IPasswordHasher<Domain.User.User>, PasswordHasher>();
+        services.AddScoped<IPasswordHasher<User>, PasswordHasher>();
         services.AddScoped<IJwtService, JwtService>();
 
         return services;

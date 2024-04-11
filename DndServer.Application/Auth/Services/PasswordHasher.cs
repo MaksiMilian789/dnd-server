@@ -1,12 +1,13 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
+using DndServer.Domain.Users;
 using Microsoft.AspNetCore.Identity;
 
 namespace DndServer.Application.Auth.Services;
 
-public class PasswordHasher : IPasswordHasher<Domain.User.User>
+public class PasswordHasher : IPasswordHasher<User>
 {
-    public string HashPassword(Domain.User.User user, string password)
+    public string HashPassword(User user, string password)
     {
         var passPhrase = "dnd" + password + "789";
         using var hash = MD5.Create();
@@ -14,7 +15,7 @@ public class PasswordHasher : IPasswordHasher<Domain.User.User>
         return result.Aggregate("", (current, b) => current + b);
     }
 
-    public PasswordVerificationResult VerifyHashedPassword(Domain.User.User user, string hashedPassword,
+    public PasswordVerificationResult VerifyHashedPassword(User user, string hashedPassword,
         string providedPassword) =>
         hashedPassword == HashPassword(user, providedPassword)
             ? PasswordVerificationResult.Success

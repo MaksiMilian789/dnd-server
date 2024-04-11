@@ -1,5 +1,5 @@
-﻿using DndServer.Application.User.Interfaces;
-using DndServer.Domain.User;
+﻿using DndServer.Application.Users.Interfaces;
+using DndServer.Domain.Users;
 using DndServer.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;

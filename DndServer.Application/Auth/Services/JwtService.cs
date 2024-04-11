@@ -3,7 +3,8 @@ using System.Security.Claims;
 using System.Text;
 using DndServer.Application.Auth.Interfaces;
 using DndServer.Application.Auth.Models;
-using DndServer.Application.User.Interfaces;
+using DndServer.Application.Users.Interfaces;
+using DndServer.Domain.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
@@ -11,11 +12,11 @@ namespace DndServer.Application.Auth.Services;
 
 public class JwtService : IJwtService
 {
-    private readonly IPasswordHasher<Domain.User.User> _passwordHasher;
+    private readonly IPasswordHasher<User> _passwordHasher;
     private readonly IUserService _userService;
 
     public JwtService(
-        IPasswordHasher<Domain.User.User> passwordHasher, IUserService userService)
+        IPasswordHasher<User> passwordHasher, IUserService userService)
     {
         _passwordHasher = passwordHasher;
         _userService = userService;
@@ -48,7 +49,7 @@ public class JwtService : IJwtService
     /// </summary>
     /// <param name="user">Пользователь</param>
     /// <exception cref="ArgumentNullException"></exception>
-    private string CreateJwt(Domain.User.User user)
+    private string CreateJwt(User user)
     {
         if (user == null)
             throw new ArgumentNullException(nameof(user));
@@ -72,7 +73,7 @@ public class JwtService : IJwtService
     /// </summary>
     /// <param name="user">Пользователь</param>
     /// <returns></returns>
-    private IEnumerable<Claim> BuildClaims(Domain.User.User user)
+    private IEnumerable<Claim> BuildClaims(User user)
     {
         if (user == null)
             throw new ArgumentNullException(nameof(user));

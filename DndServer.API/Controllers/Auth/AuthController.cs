@@ -1,7 +1,7 @@
 ﻿using DndServer.API.Resources;
 using DndServer.Application.Auth.Interfaces;
 using DndServer.Application.Auth.Models;
-using DndServer.Application.User.Interfaces;
+using DndServer.Application.Users.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DndServer.API.Controllers.Auth;
