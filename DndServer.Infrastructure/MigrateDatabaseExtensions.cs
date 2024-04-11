@@ -1,4 +1,7 @@
-﻿using DndServer.Infrastructure.Persistence;
+﻿using DndServer.Application.User.Interfaces;
+using DndServer.Domain.User;
+using DndServer.Infrastructure.Persistence;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -29,6 +32,24 @@ public static class MigrateDatabaseExtensions
             logger.LogError(ex, "An error occurred while migrating the database");
         }
 
+        CreateDefaultUser(services);
         return host;
+    }
+
+    private static async void CreateDefaultUser(IServiceProvider services)
+    {
+        var hasher = services.GetService<IPasswordHasher<User>>();
+        var userService = services.GetService<IUserService>();
+        var user = await userService?.GetByLoginAsync("admin")!;
+
+        if (user is null)
+        {
+            user = new User("admin", "");
+
+            var hashedPassword = hasher!.HashPassword(user, "123");
+            user.PasswordHash = hashedPassword;
+
+            userService.CreateUser(user);
+        }
     }
 }

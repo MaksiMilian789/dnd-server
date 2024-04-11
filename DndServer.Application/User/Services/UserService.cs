@@ -20,4 +20,7 @@ public class UserService : IUserService
         var userList = _userRepository.Get(x => x.Login == login);
         return Task.FromResult(userList.FirstOrDefault());
     }
+
+    public void CreateUser(Domain.User.User user) =>
+        _userRepository.Create(user);
 }

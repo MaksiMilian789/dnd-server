@@ -24,20 +24,16 @@ public class JwtService : IJwtService
     public async Task<TokenResponse> LogIn(TokenRequest tokenRequest)
     {
         if (tokenRequest.Login is null || tokenRequest.Password is null)
-            throw new Exception("\"username\" и \"password\" не могут быть не заданы.");
+            throw new UnauthorizedAccessException();
 
         var user = await _userService.GetByLoginAsync(tokenRequest.Login);
 
-        if (user is null)
-        {
-            throw new Exception(
-                $"Пользователь с username=\"{tokenRequest.Login}\" не существует.");
-        }
+        if (user is null) throw new UnauthorizedAccessException();
 
         var hashedPassword = _passwordHasher.HashPassword(user, tokenRequest.Password);
 
         if (hashedPassword != user.PasswordHash)
-            throw new Exception("Неверный пароль.");
+            throw new UnauthorizedAccessException();
 
         var accessToken = CreateJwt(user);
 
@@ -59,7 +55,7 @@ public class JwtService : IJwtService
 
         // Create access token
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes("789");
+        var key = Encoding.ASCII.GetBytes("d99b1b1486b9b46e9a1a68d555e499a20e8d78e39203f5e5febd99ed90b957d0");
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(BuildClaims(user)),

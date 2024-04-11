@@ -37,9 +37,13 @@ public class AuthController : ControllerBase
             var token = await _jwtService.LogIn(request);
             return new AuthResult(token.AccessToken);
         }
-        catch
+        catch (UnauthorizedAccessException)
         {
             return Unauthorized(CreateFailResponse(Errors.AuthFailed));
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { message = ex.Message });
         }
     }
 

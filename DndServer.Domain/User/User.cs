@@ -10,9 +10,8 @@ public class User
     public ICollection<Character.Character> Character { get; set; }
     public ICollection<WorldLinks> WorldLinks { get; set; }
 
-    public User(int id, string login, string passwordHash)
+    public User(string login, string passwordHash)
     {
-        Id = id;
         Login = login;
         PasswordHash = passwordHash;
         Character = new List<Character.Character>();
