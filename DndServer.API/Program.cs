@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Text;
 using DndServer.Application;
 using DndServer.Infrastructure;
@@ -51,6 +52,9 @@ builder.Services.AddSwaggerGen(opt =>
             new string[] { }
         }
     });
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    opt.IncludeXmlComments(xmlPath);
 });
 
 builder.Services
