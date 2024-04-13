@@ -18,6 +18,9 @@ public static class ConfigureServices
         services.AddScoped<IPasswordHasher<User>, PasswordHasher>();
         services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<ICharacterService, CharacterService>();
+        services.AddScoped<IBackgroundService, BackgroundService>();
+        services.AddScoped<IClassService, ClassService>();
+        services.AddScoped<IRaceService, RaceService>();
 
         return services;
     }

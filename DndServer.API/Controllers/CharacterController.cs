@@ -11,11 +11,18 @@ namespace DndServer.API.Controllers;
 public class CharacterController : ControllerBase
 {
     private readonly ICharacterService _characterService;
+    private readonly IBackgroundService _backgroundService;
+    private readonly IRaceService _raceService;
+    private readonly IClassService _classService;
 
     public CharacterController(
-        ICharacterService characterService)
+        ICharacterService characterService, IBackgroundService backgroundService, IRaceService raceService,
+        IClassService classService)
     {
         _characterService = characterService;
+        _backgroundService = backgroundService;
+        _raceService = raceService;
+        _classService = classService;
     }
 
     /// <summary>
@@ -35,8 +42,8 @@ public class CharacterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<List<CharacterInfoDto>>> GetClasses(string login) =>
-        await _characterService.GetClasses(login);
+    public async Task<ActionResult<List<ClassDto>>> GetClasses(string login) =>
+        await _classService.GetClasses(login);
 
     /// <summary>
     ///     Список шаблонов рас
@@ -45,8 +52,8 @@ public class CharacterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<List<CharacterInfoDto>>> GetRaces(string login) =>
-        await _characterService.GetRaces(login);
+    public async Task<ActionResult<List<RaceDto>>> GetRaces(string login) =>
+        await _raceService.GetRaces(login);
 
 
     /// <summary>
@@ -56,8 +63,8 @@ public class CharacterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<List<CharacterInfoDto>>> GetBackgrounds(string login) =>
-        await _characterService.GetBackgrounds(login);
+    public async Task<ActionResult<List<BackgroundDto>>> GetBackgrounds(string login) =>
+        await _backgroundService.GetBackgrounds(login);
 
     private static ProblemDetails CreateFailResponse(string title) => new() { Title = title };
 }
