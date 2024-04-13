@@ -17,9 +17,9 @@ public class SkillTemplate : SkillInstance
     public ICollection<RaceTemplate> RaceTemplate { get; set; }
     public ICollection<SpellTemplate> SpellTemplate { get; set; }
 
-    public SkillTemplate(int id, string name, string description, ActionTypesEnum actionType, SkillTypesEnum skillType,
+    public SkillTemplate(string name, string description, ActionTypesEnum actionType, SkillTypesEnum skillType,
         int? distance, bool passive, int recharge, int charges, SystemEnum system, int authorId,
-        int? worldId) : base(id, name, description, actionType, skillType, distance, passive, recharge, charges, system)
+        int? worldId) : base(name, description, actionType, skillType, distance, passive, recharge, charges, system)
     {
         AuthorId = authorId;
         WorldId = worldId;

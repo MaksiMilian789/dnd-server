@@ -38,7 +38,7 @@ public class CharacterController : ControllerBase
     /// <summary>
     ///     Список шаблонов классов
     /// </summary>
-    [HttpGet("GetClasses")]
+    [HttpGet("getClasses")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
@@ -48,7 +48,7 @@ public class CharacterController : ControllerBase
     /// <summary>
     ///     Список шаблонов рас
     /// </summary>
-    [HttpGet("GetRaces")]
+    [HttpGet("getRaces")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
@@ -59,12 +59,21 @@ public class CharacterController : ControllerBase
     /// <summary>
     ///     Список шаблонов предысторий
     /// </summary>
-    [HttpGet("GetBackgrounds")]
+    [HttpGet("getBackgrounds")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
     public async Task<ActionResult<List<BackgroundDto>>> GetBackgrounds(string login) =>
         await _backgroundService.GetBackgrounds(login);
 
-    private static ProblemDetails CreateFailResponse(string title) => new() { Title = title };
+
+    /// <summary>
+    ///     Создание персонажа
+    /// </summary>
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesDefaultResponseType]
+    public async Task CreateCharacter([FromBody] CharacterCreateDto dto) =>
+        await _characterService.CreateCharacter(dto);
 }

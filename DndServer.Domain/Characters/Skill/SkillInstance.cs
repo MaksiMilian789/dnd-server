@@ -27,10 +27,9 @@ public class SkillInstance
     public ICollection<RaceInstance> RaceInstance { get; set; }
     public ICollection<SpellInstance> SpellInstance { get; set; }
 
-    public SkillInstance(int id, string name, string description, ActionTypesEnum actionType, SkillTypesEnum skillType,
+    public SkillInstance(string name, string description, ActionTypesEnum actionType, SkillTypesEnum skillType,
         int? distance, bool passive, int recharge, int charges, SystemEnum system)
     {
-        Id = id;
         Name = name;
         Description = description;
         ActionType = actionType;

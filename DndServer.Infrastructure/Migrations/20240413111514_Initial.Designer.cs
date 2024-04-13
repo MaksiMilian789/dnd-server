@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DndServer.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240411152145_Initial")]
+    [Migration("20240413111514_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -225,9 +225,6 @@ namespace DndServer.Infrastructure.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<int>("RaceInstanceId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Speed")
                         .HasColumnType("int");
 
                     b.Property<int>("System")

@@ -554,7 +554,6 @@ namespace DndServer.Infrastructure.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Level = table.Column<int>(type: "int", nullable: false),
                     Age = table.Column<int>(type: "int", nullable: false),
-                    Speed = table.Column<int>(type: "int", nullable: false),
                     Gender = table.Column<int>(type: "int", nullable: false),
                     Ideology = table.Column<int>(type: "int", nullable: false),
                     System = table.Column<int>(type: "int", nullable: false),

@@ -224,9 +224,6 @@ namespace DndServer.Infrastructure.Migrations
                     b.Property<int>("RaceInstanceId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Speed")
-                        .HasColumnType("int");
-
                     b.Property<int>("System")
                         .HasColumnType("int");
 
