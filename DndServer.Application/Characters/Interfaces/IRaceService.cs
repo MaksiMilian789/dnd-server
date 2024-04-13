@@ -4,6 +4,6 @@ namespace DndServer.Application.Characters.Interfaces;
 
 public interface IRaceService
 {
-    public Task<List<RaceDto>> GetRaces(string login);
+    public Task<List<RaceDto>> GetRaces();
     public Task CreateRaceTemplate(RaceCreateDto dto);
 }

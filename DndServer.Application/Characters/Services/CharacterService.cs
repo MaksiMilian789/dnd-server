@@ -74,4 +74,32 @@ public class CharacterService : ICharacterService
 
         return Task.CompletedTask;
     }
+
+    public Task<CharacterDto> GetCharacter(int id)
+    {
+        var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
+        if (character == null) throw new Exception();
+
+        var characterDto = new CharacterDto
+        {
+            Id = character.Id,
+            Name = character.Name,
+            Level = character.Level,
+            Age = character.Age,
+            Gender = character.Gender,
+            Ideology = character.Ideology,
+            System = character.System,
+            Characteristics = character.Characteristics,
+            ClassInstance = character.ClassInstance,
+            RaceInstance = character.RaceInstance,
+            BackgroundInstance = character.BackgroundInstance,
+            Conditions = character.Conditions,
+            ObjectInstance = character.ObjectInstance,
+            Note = character.Note,
+            SkillInstance = character.SkillInstance,
+            SpellInstance = character.SpellInstance
+        };
+
+        return Task.FromResult(characterDto);
+    }
 }

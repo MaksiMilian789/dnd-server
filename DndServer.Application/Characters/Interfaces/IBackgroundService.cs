@@ -4,6 +4,6 @@ namespace DndServer.Application.Characters.Interfaces;
 
 public interface IBackgroundService
 {
-    public Task<List<BackgroundDto>> GetBackgrounds(string login);
+    public Task<List<BackgroundDto>> GetBackgrounds();
     public Task CreateBackgroundTemplate(BackgroundCreateDto dto);
 }

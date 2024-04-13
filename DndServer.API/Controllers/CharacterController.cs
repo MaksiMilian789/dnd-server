@@ -36,6 +36,16 @@ public class CharacterController : ControllerBase
         await _characterService.GetShortListCharacters(login);
 
     /// <summary>
+    ///     Персонаж
+    /// </summary>
+    [HttpGet("character")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesDefaultResponseType]
+    public async Task<ActionResult<CharacterDto>> GetCharacter(int id) =>
+        await _characterService.GetCharacter(id);
+
+    /// <summary>
     ///     Создание персонажа
     /// </summary>
     [HttpPost]
@@ -52,8 +62,8 @@ public class CharacterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<List<ClassDto>>> GetClasses(string login) =>
-        await _classService.GetClasses(login);
+    public async Task<ActionResult<List<ClassDto>>> GetClasses() =>
+        await _classService.GetClasses();
 
     /// <summary>
     ///     Создание шаблона класса
@@ -72,8 +82,8 @@ public class CharacterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<List<RaceDto>>> GetRaces(string login) =>
-        await _raceService.GetRaces(login);
+    public async Task<ActionResult<List<RaceDto>>> GetRaces() =>
+        await _raceService.GetRaces();
 
     /// <summary>
     ///     Создание шаблона предыстории
@@ -92,8 +102,8 @@ public class CharacterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<List<BackgroundDto>>> GetBackgrounds(string login) =>
-        await _backgroundService.GetBackgrounds(login);
+    public async Task<ActionResult<List<BackgroundDto>>> GetBackgrounds() =>
+        await _backgroundService.GetBackgrounds();
 
     /// <summary>
     ///     Создание шаблона предыстории

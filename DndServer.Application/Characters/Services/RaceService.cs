@@ -21,7 +21,7 @@ public class RaceService : IRaceService
         _skillTemplateRepository = skillTemplateRepository;
     }
 
-    public Task<List<RaceDto>> GetRaces(string login)
+    public Task<List<RaceDto>> GetRaces()
     {
         var listTemplates = _raceTemplateRepository.Get();
         var listDto = new List<RaceDto>();
@@ -32,7 +32,8 @@ public class RaceService : IRaceService
                 Name = val.Name,
                 Description = val.Description,
                 System = val.System,
-                WorldId = val.WorldId
+                WorldId = val.WorldId,
+                Skills = val.SkillTemplate.ToList()
             };
             listDto.Add(dto);
         }

@@ -21,7 +21,7 @@ public class BackgroundService : IBackgroundService
         _skillTemplateRepository = skillTemplateRepository;
     }
 
-    public Task<List<BackgroundDto>> GetBackgrounds(string login)
+    public Task<List<BackgroundDto>> GetBackgrounds()
     {
         var listTemplates = _backgroundTemplateRepository.Get();
         var listDto = new List<BackgroundDto>();
@@ -32,7 +32,8 @@ public class BackgroundService : IBackgroundService
                 Name = val.Name,
                 Description = val.Description,
                 System = val.System,
-                WorldId = val.WorldId
+                WorldId = val.WorldId,
+                Skills = val.SkillTemplate.ToList()
             };
             listDto.Add(dto);
         }

@@ -21,7 +21,7 @@ public class ClassService : IClassService
         _skillTemplateRepository = skillTemplateRepository;
     }
 
-    public Task<List<ClassDto>> GetClasses(string login)
+    public Task<List<ClassDto>> GetClasses()
     {
         var listTemplates = _classTemplateRepository.Get();
         var listDto = new List<ClassDto>();
@@ -32,7 +32,8 @@ public class ClassService : IClassService
                 Name = val.Name,
                 Description = val.Description,
                 System = val.System,
-                WorldId = val.WorldId
+                WorldId = val.WorldId,
+                Skills = val.SkillTemplate.ToList()
             };
             listDto.Add(dto);
         }
