@@ -12,9 +12,8 @@ public class ClassInstance
     public ICollection<SkillInstance> SkillInstance { get; set; }
     public ICollection<Character> Character { get; set; }
 
-    public ClassInstance(int id, string name, string description, SystemEnum system)
+    public ClassInstance(string name, string description, SystemEnum system)
     {
-        Id = id;
         Name = name;
         Description = description;
         System = system;

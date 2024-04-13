@@ -7,9 +7,8 @@ public class WikiPage
     public string Header { get; set; }
     public string Text { get; set; }
 
-    public WikiPage(int id, string header, string text)
+    public WikiPage(string header, string text)
     {
-        Id = id;
         Header = header;
         Text = text;
     }

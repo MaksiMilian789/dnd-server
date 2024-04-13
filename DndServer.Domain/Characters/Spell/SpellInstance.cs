@@ -19,10 +19,9 @@ public class SpellInstance
     public ICollection<SkillInstance> SkillInstance { get; set; }
     public ICollection<Character> Character { get; set; }
 
-    public SpellInstance(int id, string name, string description, int level, int distance, ActionTypesEnum actionType,
+    public SpellInstance(string name, string description, int level, int distance, ActionTypesEnum actionType,
         SystemEnum system)
     {
-        Id = id;
         Name = name;
         Description = description;
         Level = level;

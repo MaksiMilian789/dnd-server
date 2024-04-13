@@ -10,9 +10,8 @@ public class WorldLinks
     public World World { get; set; } = null!;
     public RoleEnum Role { get; set; }
 
-    public WorldLinks(int id, RoleEnum role)
+    public WorldLinks(RoleEnum role)
     {
-        Id = id;
         Role = role;
     }
 }

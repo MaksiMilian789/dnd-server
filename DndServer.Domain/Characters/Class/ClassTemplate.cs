@@ -9,8 +9,8 @@ public class ClassTemplate : ClassInstance
     public int? WorldId { get; set; }
     public ICollection<SkillTemplate> SkillTemplate { get; set; }
 
-    public ClassTemplate(int id, string name, string description, SystemEnum system, int authorId, int? worldId) : base(
-        id, name, description, system)
+    public ClassTemplate(string name, string description, SystemEnum system, int authorId, int? worldId) : base(name,
+        description, system)
     {
         AuthorId = authorId;
         WorldId = worldId;

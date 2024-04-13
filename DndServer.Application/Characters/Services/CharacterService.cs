@@ -5,8 +5,8 @@ using DndServer.Application.Interfaces.Characters.Background;
 using DndServer.Application.Interfaces.Characters.Class;
 using DndServer.Application.Interfaces.Characters.Race;
 using DndServer.Application.Interfaces.Characters.Skill;
+using DndServer.Application.Shared;
 using DndServer.Domain.Characters;
-using DndServer.Domain.Characters.Skill;
 
 namespace DndServer.Application.Characters.Services;
 
@@ -48,16 +48,20 @@ public class CharacterService : ICharacterService
 
     public Task CreateCharacter(CharacterCreateDto dto)
     {
-        var character = new Character(dto.Name, dto.Level, dto.Age, dto.Gender, dto.Ideology, dto.System);
+        var character = new Character(dto.Name, dto.Level, dto.Age, dto.Gender, dto.Ideology, dto.System,
+            dto.Characteristics);
 
         var classInstance = _classTemplateRepository.Get(x => x.Id == dto.ClassId).FirstOrDefault();
         var raceInstance = _raceTemplateRepository.Get(x => x.Id == dto.RaceId).FirstOrDefault();
         var backgroundInstance = _backgroundTemplateRepository.Get(x => x.Id == dto.BackgroundId).FirstOrDefault();
 
         if (classInstance == null || raceInstance == null || backgroundInstance == null) throw new Exception();
-        classInstance.SkillInstance = CreateSkillsInstances(classInstance.SkillTemplate);
-        raceInstance.SkillInstance = CreateSkillsInstances(raceInstance.SkillTemplate);
-        backgroundInstance.SkillInstance = CreateSkillsInstances(backgroundInstance.SkillTemplate);
+        classInstance.SkillInstance =
+            SkillsModelCreator.CreateSkillsInstances(classInstance.SkillTemplate, _skillInstanceRepository);
+        raceInstance.SkillInstance =
+            SkillsModelCreator.CreateSkillsInstances(raceInstance.SkillTemplate, _skillInstanceRepository);
+        backgroundInstance.SkillInstance =
+            SkillsModelCreator.CreateSkillsInstances(backgroundInstance.SkillTemplate, _skillInstanceRepository);
 
         _classInstanceRepository.Create(classInstance);
         _raceInstanceRepository.Create(raceInstance);
@@ -69,20 +73,5 @@ public class CharacterService : ICharacterService
         _characterRepository.Create(character);
 
         return Task.CompletedTask;
-    }
-
-    private ICollection<SkillInstance> CreateSkillsInstances(IEnumerable<SkillTemplate> instance)
-    {
-        var skillInstances = new List<SkillInstance>();
-        foreach (var skillTemplate in instance)
-        {
-            var skill = new SkillInstance(skillTemplate.Name, skillTemplate.Description, skillTemplate.ActionType,
-                skillTemplate.SkillType, skillTemplate.Distance, skillTemplate.Passive, skillTemplate.Recharge,
-                skillTemplate.Charges, skillTemplate.System);
-            _skillInstanceRepository.Create(skill);
-            skillInstances.Add(skill);
-        }
-
-        return skillInstances;
     }
 }

@@ -9,9 +9,8 @@ public class RaceTemplate : RaceInstance
     public int? WorldId { get; set; }
     public ICollection<SkillTemplate> SkillTemplate { get; set; }
 
-    public RaceTemplate(int id, string name, string description, SystemEnum system, int authorId,
-        int? worldId) : base(
-        id, name, description, system)
+    public RaceTemplate(string name, string description, SystemEnum system, int authorId,
+        int? worldId) : base(name, description, system)
     {
         AuthorId = authorId;
         WorldId = worldId;

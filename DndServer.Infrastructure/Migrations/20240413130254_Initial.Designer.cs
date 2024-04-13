@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DndServer.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240413111514_Initial")]
+    [Migration("20240413130254_Initial")]
     partial class Initial
     {
         /// <inheritdoc />

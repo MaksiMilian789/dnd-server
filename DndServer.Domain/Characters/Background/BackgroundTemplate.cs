@@ -9,9 +9,8 @@ public class BackgroundTemplate : BackgroundInstance
     public int? WorldId { get; set; }
     public ICollection<SkillTemplate> SkillTemplate { get; set; }
 
-    public BackgroundTemplate(int id, string name, string description, SystemEnum system, int authorId,
-        int? worldId) : base(
-        id, name, description, system)
+    public BackgroundTemplate(string name, string description, SystemEnum system, int authorId,
+        int? worldId) : base(name, description, system)
     {
         AuthorId = authorId;
         WorldId = worldId;

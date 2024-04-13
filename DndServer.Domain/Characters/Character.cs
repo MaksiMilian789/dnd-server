@@ -45,4 +45,20 @@ public class Character
         SkillInstance = new List<SkillInstance>();
         SpellInstance = new List<SpellInstance>();
     }
+
+    public Character(string name, int level, int age, GenderEnum gender, IdeologyEnum ideology,
+        SystemEnum system, Characteristics characteristics)
+    {
+        Name = name;
+        Level = level;
+        Age = age;
+        Gender = gender;
+        Ideology = ideology;
+        Conditions = new List<Conditions>();
+        ObjectInstance = new List<ObjectInstance>();
+        Note = new List<Note>();
+        SkillInstance = new List<SkillInstance>();
+        SpellInstance = new List<SpellInstance>();
+        Characteristics = characteristics;
+    }
 }

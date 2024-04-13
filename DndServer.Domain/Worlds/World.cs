@@ -11,9 +11,8 @@ public class World
     public Wiki Wiki { get; set; } = null!;
     public int WikiKey { get; set; }
 
-    public World(int id, string name, string description)
+    public World(string name, string description)
     {
-        Id = id;
         Name = name;
         Description = description;
         WorldLinks = new List<WorldLinks>();

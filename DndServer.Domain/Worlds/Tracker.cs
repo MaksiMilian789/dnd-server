@@ -9,9 +9,8 @@ public class Tracker
     public string? Color { get; set; }
     public string? Icon { get; set; }
 
-    public Tracker(int id, string name, double initiative, string? color, string? icon)
+    public Tracker(string name, double initiative, string? color, string? icon)
     {
-        Id = id;
         Name = name;
         Initiative = initiative;
         Color = color;

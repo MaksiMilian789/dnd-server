@@ -16,10 +16,9 @@ public class ObjectInstance
     public ICollection<SkillInstance> SkillInstance { get; set; }
     public ICollection<Character> Character { get; set; }
 
-    public ObjectInstance(int id, string name, string description, AttackTypesEnum attackType,
+    public ObjectInstance(string name, string description, AttackTypesEnum attackType,
         int? distance, SystemEnum system)
     {
-        Id = id;
         Name = name;
         Description = description;
         AttackType = attackType;

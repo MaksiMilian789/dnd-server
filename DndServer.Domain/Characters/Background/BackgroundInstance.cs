@@ -12,9 +12,8 @@ public class BackgroundInstance
     public ICollection<SkillInstance> SkillInstance { get; set; }
     public ICollection<Character> Character { get; set; }
 
-    public BackgroundInstance(int id, string name, string description, SystemEnum system)
+    public BackgroundInstance(string name, string description, SystemEnum system)
     {
-        Id = id;
         Name = name;
         Description = description;
         System = system;

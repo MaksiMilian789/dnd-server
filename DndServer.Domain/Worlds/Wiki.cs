@@ -7,9 +7,8 @@ public class Wiki
     public string Name { get; set; }
     public ICollection<WikiPage> WikiPage { get; set; }
 
-    public Wiki(int id, string name)
+    public Wiki(string name)
     {
-        Id = id;
         Name = name;
         WikiPage = new List<WikiPage>();
     }
