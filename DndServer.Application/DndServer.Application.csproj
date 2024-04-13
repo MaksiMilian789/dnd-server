@@ -16,4 +16,8 @@
     <ProjectReference Include="..\DndServer.Domain\DndServer.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="World\" />
+  </ItemGroup>
+
 </Project>
