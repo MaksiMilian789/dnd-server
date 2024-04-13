@@ -39,6 +39,8 @@ public static class ConfigureServices
 
         services.AddScoped<IWorldRepository, WorldRepository>();
         services.AddScoped<IWorldLinksRepository, WorldLinksRepository>();
+        services.AddScoped<ITrackerRepository, TrackerRepository>();
+        services.AddScoped<ITrackerUnitRepository, TrackerUnitRepository>();
         services.AddScoped<IWikiRepository, WikiRepository>();
         services.AddScoped<IWikiPageRepository, WikiPageRepository>();
         services.AddScoped<IUserRepository, UserRepository>();

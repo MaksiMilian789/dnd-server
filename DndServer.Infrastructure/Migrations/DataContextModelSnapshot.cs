@@ -799,6 +799,19 @@ namespace DndServer.Infrastructure.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.HasKey("Id");
+
+                    b.ToTable("Tracker");
+                });
+
+            modelBuilder.Entity("DndServer.Domain.Worlds.TrackerUnit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<string>("Color")
                         .HasColumnType("longtext");
 
@@ -812,9 +825,14 @@ namespace DndServer.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<int>("TrackerId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Tracker");
+                    b.HasIndex("TrackerId");
+
+                    b.ToTable("TrackerUnit");
                 });
 
             modelBuilder.Entity("DndServer.Domain.Worlds.Wiki", b =>
@@ -1257,6 +1275,17 @@ namespace DndServer.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("DndServer.Domain.Worlds.TrackerUnit", b =>
+                {
+                    b.HasOne("DndServer.Domain.Worlds.Tracker", "Tracker")
+                        .WithMany("TrackerUnits")
+                        .HasForeignKey("TrackerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Tracker");
+                });
+
             modelBuilder.Entity("DndServer.Domain.Worlds.WikiPage", b =>
                 {
                     b.HasOne("DndServer.Domain.Worlds.Wiki", "Wiki")
@@ -1420,6 +1449,8 @@ namespace DndServer.Infrastructure.Migrations
 
             modelBuilder.Entity("DndServer.Domain.Worlds.Tracker", b =>
                 {
+                    b.Navigation("TrackerUnits");
+
                     b.Navigation("World")
                         .IsRequired();
                 });

@@ -247,14 +247,7 @@ namespace DndServer.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Initiative = table.Column<double>(type: "double", nullable: false),
-                    Color = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    Icon = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
                 },
                 constraints: table =>
                 {
@@ -539,6 +532,33 @@ namespace DndServer.Infrastructure.Migrations
                         name: "FK_SkillTemplateSpellTemplate_SpellInstance_SpellTemplateId",
                         column: x => x.SpellTemplateId,
                         principalTable: "SpellInstance",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "TrackerUnit",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Initiative = table.Column<double>(type: "double", nullable: false),
+                    Color = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Icon = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    TrackerId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TrackerUnit", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TrackerUnit_Tracker_TrackerId",
+                        column: x => x.TrackerId,
+                        principalTable: "Tracker",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
@@ -902,6 +922,11 @@ namespace DndServer.Infrastructure.Migrations
                 column: "SpellTemplateId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TrackerUnit_TrackerId",
+                table: "TrackerUnit",
+                column: "TrackerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_User_Login",
                 table: "User",
                 column: "Login",
@@ -982,6 +1007,9 @@ namespace DndServer.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "SkillTemplateSpellTemplate");
+
+            migrationBuilder.DropTable(
+                name: "TrackerUnit");
 
             migrationBuilder.DropTable(
                 name: "WikiPage");

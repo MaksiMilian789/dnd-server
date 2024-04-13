@@ -32,8 +32,8 @@ public class CharacterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<List<ShortCharacterDto>>> GetListCharacters(string login) =>
-        await _characterService.GetShortListCharacters(login);
+    public async Task<ActionResult<List<ShortCharacterDto>>> GetListCharacters(int id) =>
+        await _characterService.GetShortListCharacters(id);
 
     /// <summary>
     ///     Персонаж
@@ -52,8 +52,8 @@ public class CharacterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task CreateCharacter([FromBody] CharacterCreateDto dto) =>
-        await _characterService.CreateCharacter(dto);
+    public async Task CreateCharacter([FromBody] CharacterCreateDto dto, int userId) =>
+        await _characterService.CreateCharacter(dto, userId);
 
     /// <summary>
     ///     Список шаблонов классов

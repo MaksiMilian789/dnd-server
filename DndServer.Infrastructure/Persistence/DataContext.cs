@@ -43,6 +43,7 @@ public class DataContext : DbContext
     public DbSet<SpellTemplate> SpellTemplate => Set<SpellTemplate>();
     public DbSet<Character> Character => Set<Character>();
     public DbSet<Tracker> Tracker => Set<Tracker>();
+    public DbSet<TrackerUnit> TrackerUnit => Set<TrackerUnit>();
     public DbSet<Wiki> Wiki => Set<Wiki>();
     public DbSet<WikiPage> WikiPage => Set<WikiPage>();
     public DbSet<World> World => Set<World>();
@@ -73,6 +74,7 @@ public class DataContext : DbContext
         modelBuilder.ApplyConfiguration(new CharacterConfiguration());
         modelBuilder.ApplyConfiguration(new UserConfiguration());
         modelBuilder.ApplyConfiguration(new TrackerConfiguration());
+        modelBuilder.ApplyConfiguration(new TrackerUnitConfiguration());
         modelBuilder.ApplyConfiguration(new WikiConfiguration());
         modelBuilder.ApplyConfiguration(new WikiPageConfiguration());
         modelBuilder.ApplyConfiguration(new WorldConfiguration());
