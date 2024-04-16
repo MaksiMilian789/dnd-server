@@ -45,7 +45,10 @@ public class CharacterService : ICharacterService
         var charList = _characterRepository.Get(x => x.User.Id == userId);
         var shortList = charList.Select(character =>
             new ShortCharacterDto
-                { Name = character.Name, Level = character.Level, ClassName = character.ClassInstance.Name }).ToList();
+            {
+                Name = character.Name, Level = character.Level, ClassName = character.ClassInstance.Name,
+                System = character.System
+            }).ToList();
 
         return Task.FromResult(shortList);
     }
