@@ -52,8 +52,8 @@ public class CharacterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task CreateCharacter([FromBody] CharacterCreateDto dto, int userId) =>
-        await _characterService.CreateCharacter(dto, userId);
+    public async Task CreateCharacter([FromBody] CharacterCreateDto character, int userId) =>
+        await _characterService.CreateCharacter(character, userId);
 
     /// <summary>
     ///     Список шаблонов классов
@@ -72,8 +72,8 @@ public class CharacterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task CreateClass([FromBody] ClassCreateDto dto) =>
-        await _classService.CreateClassTemplate(dto);
+    public async Task CreateClass([FromBody] ClassCreateDto classs) =>
+        await _classService.CreateClassTemplate(classs);
 
     /// <summary>
     ///     Список шаблонов рас
@@ -92,8 +92,8 @@ public class CharacterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task CreateRace([FromBody] RaceCreateDto dto) =>
-        await _raceService.CreateRaceTemplate(dto);
+    public async Task CreateRace([FromBody] RaceCreateDto race) =>
+        await _raceService.CreateRaceTemplate(race);
 
     /// <summary>
     ///     Список шаблонов предысторий
@@ -112,6 +112,6 @@ public class CharacterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task CreateBackground([FromBody] BackgroundCreateDto dto) =>
-        await _backgroundService.CreateBackgroundTemplate(dto);
+    public async Task CreateBackground([FromBody] BackgroundCreateDto background) =>
+        await _backgroundService.CreateBackgroundTemplate(background);
 }
