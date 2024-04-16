@@ -12,10 +12,12 @@ namespace DndServer.API.Controllers;
 public class WorldController : ControllerBase
 {
     private readonly IWorldService _worldService;
+    private readonly ITrackerService _trackerService;
 
-    public WorldController(IWorldService worldService)
+    public WorldController(IWorldService worldService, ITrackerService trackerService)
     {
         _worldService = worldService;
+        _trackerService = trackerService;
     }
 
     /// <summary>
@@ -25,8 +27,18 @@ public class WorldController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<List<ShortWorldDto>>> GetListCharacters(int userId, RoleEnum role) =>
+    public async Task<ActionResult<List<ShortWorldDto>>> GetListWorlds(int userId, RoleEnum role) =>
         await _worldService.GetWorlds(userId, role);
+
+    /// <summary>
+    ///     Мир
+    /// </summary>
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesDefaultResponseType]
+    public async Task<ActionResult<WorldDto>> GetWorld(int id) =>
+        await _worldService.GetWorld(id);
 
     /// <summary>
     ///     Создание мира
@@ -35,6 +47,26 @@ public class WorldController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task CreateCharacter([FromBody] WorldCreateDto dto, int userId) =>
+    public async Task CreateWorld([FromBody] WorldCreateDto dto, int userId) =>
         await _worldService.CreateWorld(dto, userId);
+
+    /// <summary>
+    ///     Трекер
+    /// </summary>
+    [HttpGet("getTracker")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesDefaultResponseType]
+    public async Task<ActionResult<TrackerDto>> GetTracker(int worldId) =>
+        await _trackerService.GetTracker(worldId);
+
+    /// <summary>
+    ///     Трекер
+    /// </summary>
+    [HttpPut("getTracker")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesDefaultResponseType]
+    public async Task<ActionResult<TrackerDto>> GetTracker(int worldId, [FromBody] List<TrackerUnitDto> list) =>
+        await _trackerService.SetTracker(worldId, list);
 }

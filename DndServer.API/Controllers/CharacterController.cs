@@ -38,7 +38,7 @@ public class CharacterController : ControllerBase
     /// <summary>
     ///     Персонаж
     /// </summary>
-    [HttpGet("character")]
+    [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]

@@ -1,7 +1,6 @@
 ﻿using DndServer.Application.Interfaces.Worlds;
 using DndServer.Application.Worlds.Interfaces;
 using DndServer.Application.Worlds.Models;
-using DndServer.Domain.Shared.Enums;
 using DndServer.Domain.Worlds;
 
 namespace DndServer.Application.Worlds.Services;
@@ -22,24 +21,6 @@ public class WorldService : IWorldService
         _trackerRepository = trackerRepository;
     }
 
-    public Task<List<ShortWorldDto>> GetWorlds(int userId, RoleEnum role)
-    {
-        var worldsList = _worldRepository.Get(x => x.WorldLinks.Any(x => x.User.Id == userId && x.Role == role));
-        var shortList = new List<ShortWorldDto>();
-        foreach (var world in worldsList)
-        {
-            var worldDto = new ShortWorldDto
-            {
-                Id = world.Id,
-                Name = world.Name,
-                Description = world.Description
-            };
-            shortList.Add(worldDto);
-        }
-
-        return Task.FromResult(shortList);
-    }
-
 
     public Task CreateWorld(WorldCreateDto dto, int userId)
     {
@@ -55,5 +36,22 @@ public class WorldService : IWorldService
         _worldRepository.Create(world);
 
         return Task.CompletedTask;
+    }
+
+    public Task<WorldDto> GetWorlds(int worldId)
+    {
+        var world = _worldRepository.Get(x => x.WorldLinks.Any(x => x.Id == worldId)).FirstOrDefault();
+        if (world == null) throw new Exception();
+
+        var worldDto = new WorldDto
+        {
+            Id = world.Id,
+            Name = world.Name,
+            Description = world.Description,
+            Tracker = world.Tracker,
+            Wiki = world.Wiki
+        };
+
+        return Task.FromResult(worldDto);
     }
 }

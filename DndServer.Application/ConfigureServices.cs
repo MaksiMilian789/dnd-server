@@ -24,6 +24,7 @@ public static class ConfigureServices
         services.AddScoped<IClassService, ClassService>();
         services.AddScoped<IRaceService, RaceService>();
         services.AddScoped<IWorldService, WorldService>();
+        services.AddScoped<ITrackerService, TrackerService>();
 
         return services;
     }
