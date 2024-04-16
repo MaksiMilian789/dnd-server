@@ -2,8 +2,8 @@
 
 public enum RechargeEnum
 {
-    shortRest,
-    longRest,
+    ShortRest,
+    LongRest,
     d2,
     d4,
     d6,
