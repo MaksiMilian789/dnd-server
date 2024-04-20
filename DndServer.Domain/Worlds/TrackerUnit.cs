@@ -7,7 +7,7 @@ public class TrackerUnit
     public double Initiative { get; set; }
     public string? Color { get; set; }
     public string? Icon { get; set; }
-    public Tracker Tracker { get; set; } = null!;
+    public virtual Tracker Tracker { get; set; } = null!;
 
     public TrackerUnit(string name, double initiative, string? color, string? icon)
     {

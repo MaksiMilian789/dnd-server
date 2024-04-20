@@ -25,15 +25,31 @@ namespace DndServer.Infrastructure.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Description = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    System = table.Column<int>(type: "int", nullable: false),
-                    Discriminator = table.Column<string>(type: "varchar(21)", maxLength: 21, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    AuthorId = table.Column<int>(type: "int", nullable: true),
-                    WorldId = table.Column<int>(type: "int", nullable: true)
+                    System = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_BackgroundInstance", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "BackgroundTemplate",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Description = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    System = table.Column<int>(type: "int", nullable: false),
+                    AuthorId = table.Column<int>(type: "int", nullable: false),
+                    WorldId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BackgroundTemplate", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -47,15 +63,31 @@ namespace DndServer.Infrastructure.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Description = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    System = table.Column<int>(type: "int", nullable: false),
-                    Discriminator = table.Column<string>(type: "varchar(13)", maxLength: 13, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    AuthorId = table.Column<int>(type: "int", nullable: true),
-                    WorldId = table.Column<int>(type: "int", nullable: true)
+                    System = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ClassInstance", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "ClassTemplate",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Description = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    System = table.Column<int>(type: "int", nullable: false),
+                    AuthorId = table.Column<int>(type: "int", nullable: false),
+                    WorldId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ClassTemplate", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -106,21 +138,46 @@ namespace DndServer.Infrastructure.Migrations
                     AttackType = table.Column<int>(type: "int", nullable: false),
                     Distance = table.Column<int>(type: "int", nullable: true),
                     System = table.Column<int>(type: "int", nullable: false),
-                    Discriminator = table.Column<string>(type: "varchar(21)", maxLength: 21, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Damage_Flat = table.Column<int>(type: "int", nullable: false),
                     Damage_Heal = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Damage_DamageRoll_Dice = table.Column<int>(type: "int", nullable: false),
                     Damage_DamageRoll_Rolls = table.Column<int>(type: "int", nullable: false),
                     Damage_Type_Id = table.Column<int>(type: "int", nullable: false),
                     Damage_Type_Name = table.Column<string>(type: "longtext", nullable: false),
-                    Damage_Type_System = table.Column<int>(type: "int", nullable: false),
-                    AuthorId = table.Column<int>(type: "int", nullable: true),
-                    WorldId = table.Column<int>(type: "int", nullable: true)
+                    Damage_Type_System = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ObjectInstance", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "ObjectTemplate",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Description = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    AttackType = table.Column<int>(type: "int", nullable: false),
+                    Distance = table.Column<int>(type: "int", nullable: true),
+                    System = table.Column<int>(type: "int", nullable: false),
+                    AuthorId = table.Column<int>(type: "int", nullable: false),
+                    WorldId = table.Column<int>(type: "int", nullable: true),
+                    Damage_Flat = table.Column<int>(type: "int", nullable: false),
+                    Damage_Heal = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Damage_DamageRoll_Dice = table.Column<int>(type: "int", nullable: false),
+                    Damage_DamageRoll_Rolls = table.Column<int>(type: "int", nullable: false),
+                    Damage_Type_Id = table.Column<int>(type: "int", nullable: false),
+                    Damage_Type_Name = table.Column<string>(type: "longtext", nullable: false),
+                    Damage_Type_System = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ObjectTemplate", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -134,15 +191,31 @@ namespace DndServer.Infrastructure.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Description = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    System = table.Column<int>(type: "int", nullable: false),
-                    Discriminator = table.Column<string>(type: "varchar(13)", maxLength: 13, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    AuthorId = table.Column<int>(type: "int", nullable: true),
-                    WorldId = table.Column<int>(type: "int", nullable: true)
+                    System = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_RaceInstance", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "RaceTemplate",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Description = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    System = table.Column<int>(type: "int", nullable: false),
+                    AuthorId = table.Column<int>(type: "int", nullable: false),
+                    WorldId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RaceTemplate", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -163,8 +236,6 @@ namespace DndServer.Infrastructure.Migrations
                     Recharge = table.Column<int>(type: "int", nullable: false),
                     Charges = table.Column<int>(type: "int", nullable: false),
                     System = table.Column<int>(type: "int", nullable: false),
-                    Discriminator = table.Column<string>(type: "varchar(13)", maxLength: 13, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
                     Value_Type = table.Column<int>(type: "int", nullable: false),
                     Value_AttackBonus_AccuracyBonus = table.Column<int>(type: "int", nullable: false),
                     Value_AttackBonus_Advantage = table.Column<bool>(type: "tinyint(1)", nullable: false),
@@ -197,13 +268,70 @@ namespace DndServer.Infrastructure.Migrations
                     Value_Resistance_DamageType_Id = table.Column<int>(type: "int", nullable: false),
                     Value_Resistance_DamageType_Name = table.Column<string>(type: "longtext", nullable: false),
                     Value_Resistance_DamageType_System = table.Column<int>(type: "int", nullable: false),
-                    Value_TypeVision_Name = table.Column<string>(type: "longtext", nullable: false),
-                    AuthorId = table.Column<int>(type: "int", nullable: true),
-                    WorldId = table.Column<int>(type: "int", nullable: true)
+                    Value_TypeVision_Name = table.Column<string>(type: "longtext", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SkillInstance", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "SkillTemplate",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Description = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ActionType = table.Column<int>(type: "int", nullable: false),
+                    SkillType = table.Column<int>(type: "int", nullable: false),
+                    Distance = table.Column<int>(type: "int", nullable: true),
+                    Passive = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Recharge = table.Column<int>(type: "int", nullable: false),
+                    Charges = table.Column<int>(type: "int", nullable: false),
+                    System = table.Column<int>(type: "int", nullable: false),
+                    AuthorId = table.Column<int>(type: "int", nullable: false),
+                    WorldId = table.Column<int>(type: "int", nullable: true),
+                    Value_Type = table.Column<int>(type: "int", nullable: false),
+                    Value_AttackBonus_AccuracyBonus = table.Column<int>(type: "int", nullable: false),
+                    Value_AttackBonus_Advantage = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Value_AttackBonus_DisAdvantage = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Value_AttackBonus_Type = table.Column<int>(type: "int", nullable: false),
+                    Value_AttackBonus_Damage_Flat = table.Column<int>(type: "int", nullable: false),
+                    Value_AttackBonus_Damage_Heal = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Value_AttackBonus_Damage_DamageRoll_Dice = table.Column<int>(type: "int", nullable: false),
+                    Value_AttackBonus_Damage_DamageRoll_Rolls = table.Column<int>(type: "int", nullable: false),
+                    Value_AttackBonus_Damage_Type_Id = table.Column<int>(type: "int", nullable: false),
+                    Value_AttackBonus_Damage_Type_Name = table.Column<string>(type: "longtext", nullable: false),
+                    Value_AttackBonus_Damage_Type_System = table.Column<int>(type: "int", nullable: false),
+                    Value_Damage_Flat = table.Column<int>(type: "int", nullable: false),
+                    Value_Damage_Heal = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Value_Damage_DamageRoll_Dice = table.Column<int>(type: "int", nullable: false),
+                    Value_Damage_DamageRoll_Rolls = table.Column<int>(type: "int", nullable: false),
+                    Value_Damage_Type_Id = table.Column<int>(type: "int", nullable: false),
+                    Value_Damage_Type_Name = table.Column<string>(type: "longtext", nullable: false),
+                    Value_Damage_Type_System = table.Column<int>(type: "int", nullable: false),
+                    Value_Effect_Advantage = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Value_Effect_Competent = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Value_Effect_DisAdvantage = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Value_Effect_Dynamic = table.Column<int>(type: "int", nullable: false),
+                    Value_Effect_Flat = table.Column<int>(type: "int", nullable: false),
+                    Value_Effect_Mastery = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Value_Effect_SaveRoll = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Value_PerLevel_Dynamic = table.Column<int>(type: "int", nullable: false),
+                    Value_PerLevel_Flat = table.Column<int>(type: "int", nullable: false),
+                    Value_Resistance_Flat = table.Column<int>(type: "int", nullable: true),
+                    Value_Resistance_DamageType_Id = table.Column<int>(type: "int", nullable: false),
+                    Value_Resistance_DamageType_Name = table.Column<string>(type: "longtext", nullable: false),
+                    Value_Resistance_DamageType_System = table.Column<int>(type: "int", nullable: false),
+                    Value_TypeVision_Name = table.Column<string>(type: "longtext", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SkillTemplate", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -221,8 +349,6 @@ namespace DndServer.Infrastructure.Migrations
                     Distance = table.Column<int>(type: "int", nullable: false),
                     ActionType = table.Column<int>(type: "int", nullable: false),
                     System = table.Column<int>(type: "int", nullable: false),
-                    Discriminator = table.Column<string>(type: "varchar(13)", maxLength: 13, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
                     ActionTime_Concentrate = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     ActionTime_Time = table.Column<TimeSpan>(type: "time(6)", nullable: false),
                     Components_Capacity = table.Column<int>(type: "int", nullable: false),
@@ -232,13 +358,44 @@ namespace DndServer.Infrastructure.Migrations
                     Damage_DamageRoll_Rolls = table.Column<int>(type: "int", nullable: false),
                     Damage_Type_Id = table.Column<int>(type: "int", nullable: false),
                     Damage_Type_Name = table.Column<string>(type: "longtext", nullable: false),
-                    Damage_Type_System = table.Column<int>(type: "int", nullable: false),
-                    AuthorId = table.Column<int>(type: "int", nullable: true),
-                    WorldId = table.Column<int>(type: "int", nullable: true)
+                    Damage_Type_System = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SpellInstance", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "SpellTemplate",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Description = table.Column<string>(type: "longtext", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Level = table.Column<int>(type: "int", nullable: false),
+                    Distance = table.Column<int>(type: "int", nullable: false),
+                    ActionType = table.Column<int>(type: "int", nullable: false),
+                    System = table.Column<int>(type: "int", nullable: false),
+                    AuthorId = table.Column<int>(type: "int", nullable: false),
+                    WorldId = table.Column<int>(type: "int", nullable: true),
+                    ActionTime_Concentrate = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    ActionTime_Time = table.Column<TimeSpan>(type: "time(6)", nullable: false),
+                    Components_Capacity = table.Column<int>(type: "int", nullable: false),
+                    Damage_Flat = table.Column<int>(type: "int", nullable: false),
+                    Damage_Heal = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Damage_DamageRoll_Dice = table.Column<int>(type: "int", nullable: false),
+                    Damage_DamageRoll_Rolls = table.Column<int>(type: "int", nullable: false),
+                    Damage_Type_Id = table.Column<int>(type: "int", nullable: false),
+                    Damage_Type_Name = table.Column<string>(type: "longtext", nullable: false),
+                    Damage_Type_System = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SpellTemplate", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -313,31 +470,6 @@ namespace DndServer.Infrastructure.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "BackgroundTemplateSkillTemplate",
-                columns: table => new
-                {
-                    BackgroundTemplateId = table.Column<int>(type: "int", nullable: false),
-                    SkillTemplateId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BackgroundTemplateSkillTemplate", x => new { x.BackgroundTemplateId, x.SkillTemplateId });
-                    table.ForeignKey(
-                        name: "FK_BackgroundTemplateSkillTemplate_BackgroundInstance_Backgroun~",
-                        column: x => x.BackgroundTemplateId,
-                        principalTable: "BackgroundInstance",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_BackgroundTemplateSkillTemplate_SkillInstance_SkillTemplateId",
-                        column: x => x.SkillTemplateId,
-                        principalTable: "SkillInstance",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "ClassInstanceSkillInstance",
                 columns: table => new
                 {
@@ -356,31 +488,6 @@ namespace DndServer.Infrastructure.Migrations
                     table.ForeignKey(
                         name: "FK_ClassInstanceSkillInstance_SkillInstance_SkillInstanceId",
                         column: x => x.SkillInstanceId,
-                        principalTable: "SkillInstance",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "ClassTemplateSkillTemplate",
-                columns: table => new
-                {
-                    ClassTemplateId = table.Column<int>(type: "int", nullable: false),
-                    SkillTemplateId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ClassTemplateSkillTemplate", x => new { x.ClassTemplateId, x.SkillTemplateId });
-                    table.ForeignKey(
-                        name: "FK_ClassTemplateSkillTemplate_ClassInstance_ClassTemplateId",
-                        column: x => x.ClassTemplateId,
-                        principalTable: "ClassInstance",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ClassTemplateSkillTemplate_SkillInstance_SkillTemplateId",
-                        column: x => x.SkillTemplateId,
                         principalTable: "SkillInstance",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -413,31 +520,6 @@ namespace DndServer.Infrastructure.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "ObjectTemplateSkillTemplate",
-                columns: table => new
-                {
-                    ObjectTemplateId = table.Column<int>(type: "int", nullable: false),
-                    SkillTemplateId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ObjectTemplateSkillTemplate", x => new { x.ObjectTemplateId, x.SkillTemplateId });
-                    table.ForeignKey(
-                        name: "FK_ObjectTemplateSkillTemplate_ObjectInstance_ObjectTemplateId",
-                        column: x => x.ObjectTemplateId,
-                        principalTable: "ObjectInstance",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ObjectTemplateSkillTemplate_SkillInstance_SkillTemplateId",
-                        column: x => x.SkillTemplateId,
-                        principalTable: "SkillInstance",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "RaceInstanceSkillInstance",
                 columns: table => new
                 {
@@ -463,6 +545,81 @@ namespace DndServer.Infrastructure.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "BackgroundTemplateSkillTemplate",
+                columns: table => new
+                {
+                    BackgroundTemplateId = table.Column<int>(type: "int", nullable: false),
+                    SkillTemplateId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BackgroundTemplateSkillTemplate", x => new { x.BackgroundTemplateId, x.SkillTemplateId });
+                    table.ForeignKey(
+                        name: "FK_BackgroundTemplateSkillTemplate_BackgroundTemplate_Backgroun~",
+                        column: x => x.BackgroundTemplateId,
+                        principalTable: "BackgroundTemplate",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BackgroundTemplateSkillTemplate_SkillTemplate_SkillTemplateId",
+                        column: x => x.SkillTemplateId,
+                        principalTable: "SkillTemplate",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "ClassTemplateSkillTemplate",
+                columns: table => new
+                {
+                    ClassTemplateId = table.Column<int>(type: "int", nullable: false),
+                    SkillTemplateId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ClassTemplateSkillTemplate", x => new { x.ClassTemplateId, x.SkillTemplateId });
+                    table.ForeignKey(
+                        name: "FK_ClassTemplateSkillTemplate_ClassTemplate_ClassTemplateId",
+                        column: x => x.ClassTemplateId,
+                        principalTable: "ClassTemplate",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ClassTemplateSkillTemplate_SkillTemplate_SkillTemplateId",
+                        column: x => x.SkillTemplateId,
+                        principalTable: "SkillTemplate",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "ObjectTemplateSkillTemplate",
+                columns: table => new
+                {
+                    ObjectTemplateId = table.Column<int>(type: "int", nullable: false),
+                    SkillTemplateId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ObjectTemplateSkillTemplate", x => new { x.ObjectTemplateId, x.SkillTemplateId });
+                    table.ForeignKey(
+                        name: "FK_ObjectTemplateSkillTemplate_ObjectTemplate_ObjectTemplateId",
+                        column: x => x.ObjectTemplateId,
+                        principalTable: "ObjectTemplate",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ObjectTemplateSkillTemplate_SkillTemplate_SkillTemplateId",
+                        column: x => x.SkillTemplateId,
+                        principalTable: "SkillTemplate",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "RaceTemplateSkillTemplate",
                 columns: table => new
                 {
@@ -473,15 +630,15 @@ namespace DndServer.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_RaceTemplateSkillTemplate", x => new { x.RaceTemplateId, x.SkillTemplateId });
                     table.ForeignKey(
-                        name: "FK_RaceTemplateSkillTemplate_RaceInstance_RaceTemplateId",
+                        name: "FK_RaceTemplateSkillTemplate_RaceTemplate_RaceTemplateId",
                         column: x => x.RaceTemplateId,
-                        principalTable: "RaceInstance",
+                        principalTable: "RaceTemplate",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_RaceTemplateSkillTemplate_SkillInstance_SkillTemplateId",
+                        name: "FK_RaceTemplateSkillTemplate_SkillTemplate_SkillTemplateId",
                         column: x => x.SkillTemplateId,
-                        principalTable: "SkillInstance",
+                        principalTable: "SkillTemplate",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
@@ -523,15 +680,15 @@ namespace DndServer.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_SkillTemplateSpellTemplate", x => new { x.SkillTemplateId, x.SpellTemplateId });
                     table.ForeignKey(
-                        name: "FK_SkillTemplateSpellTemplate_SkillInstance_SkillTemplateId",
+                        name: "FK_SkillTemplateSpellTemplate_SkillTemplate_SkillTemplateId",
                         column: x => x.SkillTemplateId,
-                        principalTable: "SkillInstance",
+                        principalTable: "SkillTemplate",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_SkillTemplateSpellTemplate_SpellInstance_SpellTemplateId",
+                        name: "FK_SkillTemplateSpellTemplate_SpellTemplate_SpellTemplateId",
                         column: x => x.SpellTemplateId,
-                        principalTable: "SpellInstance",
+                        principalTable: "SpellTemplate",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
@@ -1018,6 +1175,9 @@ namespace DndServer.Infrastructure.Migrations
                 name: "WorldLinks");
 
             migrationBuilder.DropTable(
+                name: "BackgroundTemplate");
+
+            migrationBuilder.DropTable(
                 name: "Conditions");
 
             migrationBuilder.DropTable(
@@ -1027,13 +1187,28 @@ namespace DndServer.Infrastructure.Migrations
                 name: "Character");
 
             migrationBuilder.DropTable(
+                name: "ClassTemplate");
+
+            migrationBuilder.DropTable(
                 name: "ObjectInstance");
+
+            migrationBuilder.DropTable(
+                name: "ObjectTemplate");
+
+            migrationBuilder.DropTable(
+                name: "RaceTemplate");
 
             migrationBuilder.DropTable(
                 name: "SkillInstance");
 
             migrationBuilder.DropTable(
                 name: "SpellInstance");
+
+            migrationBuilder.DropTable(
+                name: "SkillTemplate");
+
+            migrationBuilder.DropTable(
+                name: "SpellTemplate");
 
             migrationBuilder.DropTable(
                 name: "World");

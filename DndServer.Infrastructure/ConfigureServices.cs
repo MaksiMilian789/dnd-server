@@ -34,7 +34,11 @@ public static class ConfigureServices
         var connectionString = configuration.GetConnectionString("default");
         services
             .AddDbContext<DataContext>(
-                options => { options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)); }
+                options =>
+                {
+                    options.UseLazyLoadingProxies().UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+                        .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+                }
             );
 
         services.AddScoped<IWorldRepository, WorldRepository>();

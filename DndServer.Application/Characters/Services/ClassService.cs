@@ -2,22 +2,20 @@
 using DndServer.Application.Characters.Models;
 using DndServer.Application.Interfaces.Characters.Class;
 using DndServer.Application.Interfaces.Characters.Skill;
-using DndServer.Application.Shared;
 using DndServer.Domain.Characters.Class;
+using DndServer.Domain.Characters.Skill;
 
 namespace DndServer.Application.Characters.Services;
 
 public class ClassService : IClassService
 {
     private readonly IClassTemplateRepository _classTemplateRepository;
-    private readonly ISkillInstanceRepository _skillInstanceRepository;
     private readonly ISkillTemplateRepository _skillTemplateRepository;
 
     public ClassService(IClassTemplateRepository classTemplateRepository,
-        ISkillInstanceRepository skillInstanceRepository, ISkillTemplateRepository skillTemplateRepository)
+        ISkillTemplateRepository skillTemplateRepository)
     {
         _classTemplateRepository = classTemplateRepository;
-        _skillInstanceRepository = skillInstanceRepository;
         _skillTemplateRepository = skillTemplateRepository;
     }
 
@@ -29,6 +27,7 @@ public class ClassService : IClassService
         {
             var dto = new ClassDto
             {
+                Id = val.Id,
                 Name = val.Name,
                 Description = val.Description,
                 System = val.System,
@@ -45,8 +44,7 @@ public class ClassService : IClassService
     {
         var classTemplate = new ClassTemplate(dto.Name, dto.Description, dto.System, dto.AuthorId, dto.WorldId);
         var skillTemplates = _skillTemplateRepository.Get(x => dto.SkillIds.Contains(x.Id));
-        var skillInstances = SkillsModelCreator.CreateSkillsInstances(skillTemplates, _skillInstanceRepository);
-        classTemplate.SkillInstance = skillInstances;
+        classTemplate.SkillTemplate = (ICollection<SkillTemplate>)skillTemplates;
         _classTemplateRepository.Create(classTemplate);
 
         return Task.CompletedTask;

@@ -13,8 +13,8 @@ public class ObjectInstance
     public AttackTypesEnum AttackType { get; set; }
     public int? Distance { get; set; }
     public SystemEnum System { get; set; }
-    public ICollection<SkillInstance> SkillInstance { get; set; }
-    public ICollection<Character> Character { get; set; }
+    public virtual ICollection<SkillInstance> SkillInstance { get; set; }
+    public virtual ICollection<Character> Character { get; set; }
 
     public ObjectInstance(string name, string description, AttackTypesEnum attackType,
         int? distance, SystemEnum system)

@@ -21,15 +21,19 @@ public class Character
     public IdeologyEnum Ideology { get; set; }
     public SystemEnum System { get; set; }
     public Characteristics Characteristics { get; set; } = null!;
-    public ClassInstance ClassInstance { get; set; } = null!;
-    public RaceInstance RaceInstance { get; set; } = null!;
-    public BackgroundInstance BackgroundInstance { get; set; } = null!;
-    public User User { get; set; } = null!;
-    public ICollection<Conditions> Conditions { get; set; }
-    public ICollection<ObjectInstance> ObjectInstance { get; set; }
-    public ICollection<Note> Note { get; set; }
-    public ICollection<SkillInstance> SkillInstance { get; set; }
-    public ICollection<SpellInstance> SpellInstance { get; set; }
+    public virtual ClassInstance ClassInstance { get; set; } = null!;
+    public int ClassInstanceId { get; set; }
+    public virtual RaceInstance RaceInstance { get; set; } = null!;
+    public int RaceInstanceId { get; set; }
+    public virtual BackgroundInstance BackgroundInstance { get; set; } = null!;
+    public int BackgroundInstanceId { get; set; }
+    public virtual User User { get; set; } = null!;
+    public int UserId { get; set; }
+    public virtual ICollection<Conditions> Conditions { get; set; }
+    public virtual ICollection<ObjectInstance> ObjectInstance { get; set; }
+    public virtual ICollection<Note> Note { get; set; }
+    public virtual ICollection<SkillInstance> SkillInstance { get; set; }
+    public virtual ICollection<SpellInstance> SpellInstance { get; set; }
 
     public Character(string name, int level, int age, GenderEnum gender, IdeologyEnum ideology,
         SystemEnum system)

@@ -2,22 +2,20 @@
 using DndServer.Application.Characters.Models;
 using DndServer.Application.Interfaces.Characters.Race;
 using DndServer.Application.Interfaces.Characters.Skill;
-using DndServer.Application.Shared;
 using DndServer.Domain.Characters.Race;
+using DndServer.Domain.Characters.Skill;
 
 namespace DndServer.Application.Characters.Services;
 
 public class RaceService : IRaceService
 {
     private readonly IRaceTemplateRepository _raceTemplateRepository;
-    private readonly ISkillInstanceRepository _skillInstanceRepository;
     private readonly ISkillTemplateRepository _skillTemplateRepository;
 
-    public RaceService(IRaceTemplateRepository raceTemplateRepository, ISkillInstanceRepository skillInstanceRepository,
+    public RaceService(IRaceTemplateRepository raceTemplateRepository,
         ISkillTemplateRepository skillTemplateRepository)
     {
         _raceTemplateRepository = raceTemplateRepository;
-        _skillInstanceRepository = skillInstanceRepository;
         _skillTemplateRepository = skillTemplateRepository;
     }
 
@@ -29,6 +27,7 @@ public class RaceService : IRaceService
         {
             var dto = new RaceDto
             {
+                Id = val.Id,
                 Name = val.Name,
                 Description = val.Description,
                 System = val.System,
@@ -45,8 +44,7 @@ public class RaceService : IRaceService
     {
         var race = new RaceTemplate(dto.Name, dto.Description, dto.System, dto.AuthorId, dto.WorldId);
         var skillTemplates = _skillTemplateRepository.Get(x => dto.SkillIds.Contains(x.Id));
-        var skillInstances = SkillsModelCreator.CreateSkillsInstances(skillTemplates, _skillInstanceRepository);
-        race.SkillInstance = skillInstances;
+        race.SkillTemplate = (ICollection<SkillTemplate>)skillTemplates;
         _raceTemplateRepository.Create(race);
 
         return Task.CompletedTask;

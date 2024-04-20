@@ -8,5 +8,11 @@ public class ObjectTemplateConfiguration : IEntityTypeConfiguration<ObjectTempla
 {
     public void Configure(EntityTypeBuilder<ObjectTemplate> builder)
     {
+        builder.HasKey(x => x.Id);
+        builder.ComplexProperty(x => x.Damage, b =>
+        {
+            b.ComplexProperty(z => z.DamageRoll);
+            b.ComplexProperty(z => z.Type);
+        });
     }
 }

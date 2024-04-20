@@ -3,7 +3,7 @@
 public class WikiPage
 {
     public int Id { get; set; }
-    public Wiki Wiki { get; set; } = null!;
+    public virtual Wiki Wiki { get; set; } = null!;
     public string Header { get; set; }
     public string Text { get; set; }
 

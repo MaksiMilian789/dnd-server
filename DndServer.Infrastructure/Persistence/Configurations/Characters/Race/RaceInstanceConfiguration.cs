@@ -9,6 +9,6 @@ public class RaceInstanceConfiguration : IEntityTypeConfiguration<RaceInstance>
     public void Configure(EntityTypeBuilder<RaceInstance> builder)
     {
         builder.HasKey(x => x.Id);
-        builder.HasMany(x => x.Character).WithOne(x => x.RaceInstance);
+        builder.HasMany(x => x.Character).WithOne(x => x.RaceInstance).HasForeignKey(x => x.RaceInstanceId);
     }
 }

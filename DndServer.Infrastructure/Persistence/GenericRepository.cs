@@ -24,12 +24,6 @@ internal class GenericRepository<T> : IGenericRepository<T> where T : class
     public T? FindById(int id) =>
         _dbSet.Find(id);
 
-    public void Create(T item)
-    {
-        _dbSet.Add(item);
-        _context.SaveChanges();
-    }
-
     public void Update(T item)
     {
         _dbSet.Update(item);
@@ -40,6 +34,13 @@ internal class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         _dbSet.Remove(item);
         _context.SaveChanges();
+    }
+
+    public T Create(T item)
+    {
+        var res = _dbSet.Add(item);
+        _context.SaveChanges();
+        return res.Entity;
     }
 
     public IEnumerable<T> GetWithInclude(params Expression<Func<T, object>>[] includeProperties) =>

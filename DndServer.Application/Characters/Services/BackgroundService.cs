@@ -2,22 +2,20 @@
 using DndServer.Application.Characters.Models;
 using DndServer.Application.Interfaces.Characters.Background;
 using DndServer.Application.Interfaces.Characters.Skill;
-using DndServer.Application.Shared;
 using DndServer.Domain.Characters.Background;
+using DndServer.Domain.Characters.Skill;
 
 namespace DndServer.Application.Characters.Services;
 
 public class BackgroundService : IBackgroundService
 {
     private readonly IBackgroundTemplateRepository _backgroundTemplateRepository;
-    private readonly ISkillInstanceRepository _skillInstanceRepository;
     private readonly ISkillTemplateRepository _skillTemplateRepository;
 
     public BackgroundService(IBackgroundTemplateRepository backgroundTemplateRepository,
-        ISkillInstanceRepository skillInstanceRepository, ISkillTemplateRepository skillTemplateRepository)
+        ISkillTemplateRepository skillTemplateRepository)
     {
         _backgroundTemplateRepository = backgroundTemplateRepository;
-        _skillInstanceRepository = skillInstanceRepository;
         _skillTemplateRepository = skillTemplateRepository;
     }
 
@@ -29,6 +27,7 @@ public class BackgroundService : IBackgroundService
         {
             var dto = new BackgroundDto
             {
+                Id = val.Id,
                 Name = val.Name,
                 Description = val.Description,
                 System = val.System,
@@ -45,8 +44,7 @@ public class BackgroundService : IBackgroundService
     {
         var background = new BackgroundTemplate(dto.Name, dto.Description, dto.System, dto.AuthorId, dto.WorldId);
         var skillTemplates = _skillTemplateRepository.Get(x => dto.SkillIds.Contains(x.Id));
-        var skillInstances = SkillsModelCreator.CreateSkillsInstances(skillTemplates, _skillInstanceRepository);
-        background.SkillInstance = skillInstances;
+        background.SkillTemplate = (ICollection<SkillTemplate>)skillTemplates;
         _backgroundTemplateRepository.Create(background);
 
         return Task.CompletedTask;

@@ -9,8 +9,8 @@ public class ClassInstance
     public string Name { get; set; }
     public string Description { get; set; }
     public SystemEnum System { get; set; }
-    public ICollection<SkillInstance> SkillInstance { get; set; }
-    public ICollection<Character> Character { get; set; }
+    public virtual ICollection<SkillInstance> SkillInstance { get; set; }
+    public virtual ICollection<Character> Character { get; set; }
 
     public ClassInstance(string name, string description, SystemEnum system)
     {

@@ -16,8 +16,8 @@ public class SpellInstance
     public ActionTime ActionTime { get; set; } = null!;
     public List<SpellComponents> Components { get; set; } = null!;
     public SystemEnum System { get; set; }
-    public ICollection<SkillInstance> SkillInstance { get; set; }
-    public ICollection<Character> Character { get; set; }
+    public virtual ICollection<SkillInstance> SkillInstance { get; set; }
+    public virtual ICollection<Character> Character { get; set; }
 
     public SpellInstance(string name, string description, int level, int distance, ActionTypesEnum actionType,
         SystemEnum system)

@@ -1,8 +1,12 @@
-﻿using DndServer.Domain.Worlds;
-
-namespace DndServer.Application.Worlds.Models;
+﻿namespace DndServer.Application.Worlds.Models;
 
 public class TrackerDto
 {
-    public Tracker Tracker { get; set; } = null!;
+    public int Id { get; set; }
+    public List<TrackerUnitDto> TrackerUnitDto { get; set; }
+
+    public TrackerDto(List<TrackerUnitDto> trackerUnitDto)
+    {
+        TrackerUnitDto = trackerUnitDto;
+    }
 }
