@@ -9,10 +9,6 @@ public class ObjectInstanceConfiguration : IEntityTypeConfiguration<ObjectInstan
     public void Configure(EntityTypeBuilder<ObjectInstance> builder)
     {
         builder.HasKey(x => x.Id);
-        builder.ComplexProperty(x => x.Damage, b =>
-        {
-            b.ComplexProperty(z => z.DamageRoll);
-            b.ComplexProperty(z => z.Type);
-        });
+        builder.ComplexProperty(x => x.Damage, b => { b.ComplexProperty(z => z.DamageRoll); });
     }
 }

@@ -1,4 +1,5 @@
-﻿using DndServer.Application.Interfaces.Worlds;
+﻿using DndServer.Application.Interfaces;
+using DndServer.Application.Interfaces.Worlds;
 using DndServer.Application.Worlds.Interfaces;
 using DndServer.Application.Worlds.Models;
 using DndServer.Domain.Worlds;
@@ -7,13 +8,16 @@ namespace DndServer.Application.Worlds.Services;
 
 public class TrackerService : ITrackerService
 {
+    private readonly IUnitOfWork _unitOfWork;
     private readonly ITrackerRepository _trackerRepository;
     private readonly ITrackerUnitRepository _trackerUnitRepository;
 
-    public TrackerService(ITrackerRepository trackerRepository, ITrackerUnitRepository trackerUnitRepository)
+    public TrackerService(ITrackerRepository trackerRepository, ITrackerUnitRepository trackerUnitRepository,
+        IUnitOfWork unitOfWork)
     {
         _trackerRepository = trackerRepository;
         _trackerUnitRepository = trackerUnitRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public Task<TrackerDto> GetTracker(int worldId)
@@ -47,6 +51,8 @@ public class TrackerService : ITrackerService
 
         tracker.TrackerUnits = trackerUnits;
         _trackerRepository.Update(tracker);
+
+        _unitOfWork.SaveChanges();
         return Task.CompletedTask;
     }
 }

@@ -3,8 +3,8 @@ using DndServer.Application.Characters.Models.Create;
 
 namespace DndServer.Application.Characters.Interfaces;
 
-public interface IClassService
+public interface ISkillService
 {
-    public Task<List<ClassDto>> GetClasses();
-    public Task CreateClassTemplate(ClassCreateDto dto);
+    public Task<List<SkillDto>> GetSkills();
+    public Task CreateSkillTemplate(SkillCreateDto dto);
 }

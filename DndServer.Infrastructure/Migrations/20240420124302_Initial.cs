@@ -138,13 +138,11 @@ namespace DndServer.Infrastructure.Migrations
                     AttackType = table.Column<int>(type: "int", nullable: false),
                     Distance = table.Column<int>(type: "int", nullable: true),
                     System = table.Column<int>(type: "int", nullable: false),
+                    Damage_DamageType = table.Column<int>(type: "int", nullable: false),
                     Damage_Flat = table.Column<int>(type: "int", nullable: false),
                     Damage_Heal = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Damage_DamageRoll_Dice = table.Column<int>(type: "int", nullable: false),
-                    Damage_DamageRoll_Rolls = table.Column<int>(type: "int", nullable: false),
-                    Damage_Type_Id = table.Column<int>(type: "int", nullable: false),
-                    Damage_Type_Name = table.Column<string>(type: "longtext", nullable: false),
-                    Damage_Type_System = table.Column<int>(type: "int", nullable: false)
+                    Damage_DamageRoll_Rolls = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -167,13 +165,11 @@ namespace DndServer.Infrastructure.Migrations
                     System = table.Column<int>(type: "int", nullable: false),
                     AuthorId = table.Column<int>(type: "int", nullable: false),
                     WorldId = table.Column<int>(type: "int", nullable: true),
+                    Damage_DamageType = table.Column<int>(type: "int", nullable: false),
                     Damage_Flat = table.Column<int>(type: "int", nullable: false),
                     Damage_Heal = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Damage_DamageRoll_Dice = table.Column<int>(type: "int", nullable: false),
-                    Damage_DamageRoll_Rolls = table.Column<int>(type: "int", nullable: false),
-                    Damage_Type_Id = table.Column<int>(type: "int", nullable: false),
-                    Damage_Type_Name = table.Column<string>(type: "longtext", nullable: false),
-                    Damage_Type_System = table.Column<int>(type: "int", nullable: false)
+                    Damage_DamageRoll_Rolls = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -241,20 +237,16 @@ namespace DndServer.Infrastructure.Migrations
                     Value_AttackBonus_Advantage = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Value_AttackBonus_DisAdvantage = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Value_AttackBonus_Type = table.Column<int>(type: "int", nullable: false),
+                    Value_AttackBonus_Damage_DamageType = table.Column<int>(type: "int", nullable: false),
                     Value_AttackBonus_Damage_Flat = table.Column<int>(type: "int", nullable: false),
                     Value_AttackBonus_Damage_Heal = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Value_AttackBonus_Damage_DamageRoll_Dice = table.Column<int>(type: "int", nullable: false),
                     Value_AttackBonus_Damage_DamageRoll_Rolls = table.Column<int>(type: "int", nullable: false),
-                    Value_AttackBonus_Damage_Type_Id = table.Column<int>(type: "int", nullable: false),
-                    Value_AttackBonus_Damage_Type_Name = table.Column<string>(type: "longtext", nullable: false),
-                    Value_AttackBonus_Damage_Type_System = table.Column<int>(type: "int", nullable: false),
+                    Value_Damage_DamageType = table.Column<int>(type: "int", nullable: false),
                     Value_Damage_Flat = table.Column<int>(type: "int", nullable: false),
                     Value_Damage_Heal = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Value_Damage_DamageRoll_Dice = table.Column<int>(type: "int", nullable: false),
                     Value_Damage_DamageRoll_Rolls = table.Column<int>(type: "int", nullable: false),
-                    Value_Damage_Type_Id = table.Column<int>(type: "int", nullable: false),
-                    Value_Damage_Type_Name = table.Column<string>(type: "longtext", nullable: false),
-                    Value_Damage_Type_System = table.Column<int>(type: "int", nullable: false),
                     Value_Effect_Advantage = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Value_Effect_Competent = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Value_Effect_DisAdvantage = table.Column<bool>(type: "tinyint(1)", nullable: false),
@@ -265,9 +257,7 @@ namespace DndServer.Infrastructure.Migrations
                     Value_PerLevel_Dynamic = table.Column<int>(type: "int", nullable: false),
                     Value_PerLevel_Flat = table.Column<int>(type: "int", nullable: false),
                     Value_Resistance_Flat = table.Column<int>(type: "int", nullable: true),
-                    Value_Resistance_DamageType_Id = table.Column<int>(type: "int", nullable: false),
-                    Value_Resistance_DamageType_Name = table.Column<string>(type: "longtext", nullable: false),
-                    Value_Resistance_DamageType_System = table.Column<int>(type: "int", nullable: false),
+                    Value_Resistance_DamageType_value__ = table.Column<int>(type: "int", nullable: false),
                     Value_TypeVision_Name = table.Column<string>(type: "longtext", nullable: false)
                 },
                 constraints: table =>
@@ -300,20 +290,16 @@ namespace DndServer.Infrastructure.Migrations
                     Value_AttackBonus_Advantage = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Value_AttackBonus_DisAdvantage = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Value_AttackBonus_Type = table.Column<int>(type: "int", nullable: false),
+                    Value_AttackBonus_Damage_DamageType = table.Column<int>(type: "int", nullable: false),
                     Value_AttackBonus_Damage_Flat = table.Column<int>(type: "int", nullable: false),
                     Value_AttackBonus_Damage_Heal = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Value_AttackBonus_Damage_DamageRoll_Dice = table.Column<int>(type: "int", nullable: false),
                     Value_AttackBonus_Damage_DamageRoll_Rolls = table.Column<int>(type: "int", nullable: false),
-                    Value_AttackBonus_Damage_Type_Id = table.Column<int>(type: "int", nullable: false),
-                    Value_AttackBonus_Damage_Type_Name = table.Column<string>(type: "longtext", nullable: false),
-                    Value_AttackBonus_Damage_Type_System = table.Column<int>(type: "int", nullable: false),
+                    Value_Damage_DamageType = table.Column<int>(type: "int", nullable: false),
                     Value_Damage_Flat = table.Column<int>(type: "int", nullable: false),
                     Value_Damage_Heal = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Value_Damage_DamageRoll_Dice = table.Column<int>(type: "int", nullable: false),
                     Value_Damage_DamageRoll_Rolls = table.Column<int>(type: "int", nullable: false),
-                    Value_Damage_Type_Id = table.Column<int>(type: "int", nullable: false),
-                    Value_Damage_Type_Name = table.Column<string>(type: "longtext", nullable: false),
-                    Value_Damage_Type_System = table.Column<int>(type: "int", nullable: false),
                     Value_Effect_Advantage = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Value_Effect_Competent = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Value_Effect_DisAdvantage = table.Column<bool>(type: "tinyint(1)", nullable: false),
@@ -324,9 +310,7 @@ namespace DndServer.Infrastructure.Migrations
                     Value_PerLevel_Dynamic = table.Column<int>(type: "int", nullable: false),
                     Value_PerLevel_Flat = table.Column<int>(type: "int", nullable: false),
                     Value_Resistance_Flat = table.Column<int>(type: "int", nullable: true),
-                    Value_Resistance_DamageType_Id = table.Column<int>(type: "int", nullable: false),
-                    Value_Resistance_DamageType_Name = table.Column<string>(type: "longtext", nullable: false),
-                    Value_Resistance_DamageType_System = table.Column<int>(type: "int", nullable: false),
+                    Value_Resistance_DamageType_value__ = table.Column<int>(type: "int", nullable: false),
                     Value_TypeVision_Name = table.Column<string>(type: "longtext", nullable: false)
                 },
                 constraints: table =>
@@ -352,13 +336,11 @@ namespace DndServer.Infrastructure.Migrations
                     ActionTime_Concentrate = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     ActionTime_Time = table.Column<TimeSpan>(type: "time(6)", nullable: false),
                     Components_Capacity = table.Column<int>(type: "int", nullable: false),
+                    Damage_DamageType = table.Column<int>(type: "int", nullable: false),
                     Damage_Flat = table.Column<int>(type: "int", nullable: false),
                     Damage_Heal = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Damage_DamageRoll_Dice = table.Column<int>(type: "int", nullable: false),
-                    Damage_DamageRoll_Rolls = table.Column<int>(type: "int", nullable: false),
-                    Damage_Type_Id = table.Column<int>(type: "int", nullable: false),
-                    Damage_Type_Name = table.Column<string>(type: "longtext", nullable: false),
-                    Damage_Type_System = table.Column<int>(type: "int", nullable: false)
+                    Damage_DamageRoll_Rolls = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -385,13 +367,11 @@ namespace DndServer.Infrastructure.Migrations
                     ActionTime_Concentrate = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     ActionTime_Time = table.Column<TimeSpan>(type: "time(6)", nullable: false),
                     Components_Capacity = table.Column<int>(type: "int", nullable: false),
+                    Damage_DamageType = table.Column<int>(type: "int", nullable: false),
                     Damage_Flat = table.Column<int>(type: "int", nullable: false),
                     Damage_Heal = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Damage_DamageRoll_Dice = table.Column<int>(type: "int", nullable: false),
-                    Damage_DamageRoll_Rolls = table.Column<int>(type: "int", nullable: false),
-                    Damage_Type_Id = table.Column<int>(type: "int", nullable: false),
-                    Damage_Type_Name = table.Column<string>(type: "longtext", nullable: false),
-                    Damage_Type_System = table.Column<int>(type: "int", nullable: false)
+                    Damage_DamageRoll_Rolls = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

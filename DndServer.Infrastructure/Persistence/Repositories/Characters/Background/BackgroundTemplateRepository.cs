@@ -12,4 +12,7 @@ internal sealed class BackgroundTemplateRepository : GenericRepository<Backgroun
     {
         _context = context;
     }
+
+    public void Save() =>
+        _context.SaveChangesAsync();
 }

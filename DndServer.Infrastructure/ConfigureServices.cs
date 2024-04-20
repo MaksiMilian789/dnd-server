@@ -1,4 +1,5 @@
-﻿using DndServer.Application.Interfaces.Characters;
+﻿using DndServer.Application.Interfaces;
+using DndServer.Application.Interfaces.Characters;
 using DndServer.Application.Interfaces.Characters.Background;
 using DndServer.Application.Interfaces.Characters.Class;
 using DndServer.Application.Interfaces.Characters.Condition;
@@ -40,6 +41,7 @@ public static class ConfigureServices
                         .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
                 }
             );
+        services.AddScoped<IUnitOfWork>(provider => provider.GetRequiredService<DataContext>());
 
         services.AddScoped<IWorldRepository, WorldRepository>();
         services.AddScoped<IWorldLinksRepository, WorldLinksRepository>();

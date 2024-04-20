@@ -1,4 +1,4 @@
-﻿using DndServer.Application.Interfaces.Users;
+﻿using DndServer.Application.Interfaces;
 using DndServer.Application.Interfaces.Worlds;
 using DndServer.Application.Worlds.Interfaces;
 using DndServer.Application.Worlds.Models;
@@ -9,20 +9,16 @@ namespace DndServer.Application.Worlds.Services;
 
 public class WorldService : IWorldService
 {
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IWorldRepository _worldRepository;
     private readonly IWorldLinksRepository _worldLinksRepository;
-    private readonly IWikiRepository _wikiRepository;
-    private readonly ITrackerRepository _trackerRepository;
-    private readonly IUserRepository _userRepository;
 
     public WorldService(IWorldRepository worldRepository, IWorldLinksRepository worldLinksRepository,
-        IWikiRepository wikiRepository, ITrackerRepository trackerRepository, IUserRepository userRepository)
+        IUnitOfWork unitOfWork)
     {
         _worldRepository = worldRepository;
         _worldLinksRepository = worldLinksRepository;
-        _wikiRepository = wikiRepository;
-        _trackerRepository = trackerRepository;
-        _userRepository = userRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public Task CreateWorld(WorldCreateDto dto, int userId)
@@ -36,11 +32,12 @@ public class WorldService : IWorldService
 
         var newWorldLink = new WorldLinks(RoleEnum.Master)
         {
-            UserId = _userRepository.Get(x => x.Id == userId).FirstOrDefault()!.Id,
+            UserId = userId,
             World = world
         };
         _worldLinksRepository.Create(newWorldLink);
 
+        _unitOfWork.SaveChanges();
         return Task.CompletedTask;
     }
 

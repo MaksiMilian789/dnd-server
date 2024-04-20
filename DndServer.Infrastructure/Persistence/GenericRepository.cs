@@ -6,8 +6,8 @@ namespace DndServer.Infrastructure.Persistence;
 
 internal class GenericRepository<T> : IGenericRepository<T> where T : class
 {
-    private readonly DbContext _context;
     private readonly DbSet<T> _dbSet;
+    private readonly DbContext _context;
 
     public GenericRepository(DbContext context)
     {
@@ -16,30 +16,23 @@ internal class GenericRepository<T> : IGenericRepository<T> where T : class
     }
 
     public IEnumerable<T> Get() =>
-        _dbSet.AsNoTracking().ToList();
+        _dbSet.ToList();
 
     public IEnumerable<T> Get(Func<T, bool> predicate) =>
-        _dbSet.AsNoTracking().AsEnumerable().Where(predicate).ToList();
+        _dbSet.AsEnumerable().Where(predicate).ToList();
 
     public T? FindById(int id) =>
         _dbSet.Find(id);
 
-    public void Update(T item)
-    {
+    public void Update(T item) =>
         _dbSet.Update(item);
-        _context.SaveChanges();
-    }
 
-    public void Remove(T item)
-    {
+    public void Remove(T item) =>
         _dbSet.Remove(item);
-        _context.SaveChanges();
-    }
 
     public T Create(T item)
     {
         var res = _dbSet.Add(item);
-        _context.SaveChanges();
         return res.Entity;
     }
 

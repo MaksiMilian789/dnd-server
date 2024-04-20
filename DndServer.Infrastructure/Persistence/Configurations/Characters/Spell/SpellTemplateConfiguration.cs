@@ -9,11 +9,7 @@ public class SpellTemplateConfiguration : IEntityTypeConfiguration<SpellTemplate
     public void Configure(EntityTypeBuilder<SpellTemplate> builder)
     {
         builder.HasKey(x => x.Id);
-        builder.ComplexProperty(x => x.Damage, b =>
-        {
-            b.ComplexProperty(z => z.DamageRoll);
-            b.ComplexProperty(z => z.Type);
-        });
+        builder.ComplexProperty(x => x.Damage, b => { b.ComplexProperty(z => z.DamageRoll); });
         builder.ComplexProperty(x => x.ActionTime);
         builder.ComplexProperty(x => x.Components);
     }

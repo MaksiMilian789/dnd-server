@@ -394,6 +394,9 @@ namespace DndServer.Infrastructure.Migrations
                         {
                             b1.IsRequired();
 
+                            b1.Property<int>("DamageType")
+                                .HasColumnType("int");
+
                             b1.Property<int>("Flat")
                                 .HasColumnType("int");
 
@@ -408,21 +411,6 @@ namespace DndServer.Infrastructure.Migrations
                                         .HasColumnType("int");
 
                                     b2.Property<int>("Rolls")
-                                        .HasColumnType("int");
-                                });
-
-                            b1.ComplexProperty<Dictionary<string, object>>("Type", "DndServer.Domain.Characters.Inventory.ObjectInstance.Damage#Damage.Type#DamageType", b2 =>
-                                {
-                                    b2.IsRequired();
-
-                                    b2.Property<int>("Id")
-                                        .HasColumnType("int");
-
-                                    b2.Property<string>("Name")
-                                        .IsRequired()
-                                        .HasColumnType("longtext");
-
-                                    b2.Property<int>("System")
                                         .HasColumnType("int");
                                 });
                         });
@@ -467,6 +455,9 @@ namespace DndServer.Infrastructure.Migrations
                         {
                             b1.IsRequired();
 
+                            b1.Property<int>("DamageType")
+                                .HasColumnType("int");
+
                             b1.Property<int>("Flat")
                                 .HasColumnType("int");
 
@@ -481,21 +472,6 @@ namespace DndServer.Infrastructure.Migrations
                                         .HasColumnType("int");
 
                                     b2.Property<int>("Rolls")
-                                        .HasColumnType("int");
-                                });
-
-                            b1.ComplexProperty<Dictionary<string, object>>("Type", "DndServer.Domain.Characters.Inventory.ObjectTemplate.Damage#Damage.Type#DamageType", b2 =>
-                                {
-                                    b2.IsRequired();
-
-                                    b2.Property<int>("Id")
-                                        .HasColumnType("int");
-
-                                    b2.Property<string>("Name")
-                                        .IsRequired()
-                                        .HasColumnType("longtext");
-
-                                    b2.Property<int>("System")
                                         .HasColumnType("int");
                                 });
                         });
@@ -644,6 +620,9 @@ namespace DndServer.Infrastructure.Migrations
                                         {
                                             b3.IsRequired();
 
+                                            b3.Property<int>("DamageType")
+                                                .HasColumnType("int");
+
                                             b3.Property<int>("Flat")
                                                 .HasColumnType("int");
 
@@ -660,27 +639,15 @@ namespace DndServer.Infrastructure.Migrations
                                                     b4.Property<int>("Rolls")
                                                         .HasColumnType("int");
                                                 });
-
-                                            b3.ComplexProperty<Dictionary<string, object>>("Type", "DndServer.Domain.Characters.Skill.SkillInstance.Value#SkillValue.AttackBonus#AttackBonus.Damage#Damage.Type#DamageType", b4 =>
-                                                {
-                                                    b4.IsRequired();
-
-                                                    b4.Property<int>("Id")
-                                                        .HasColumnType("int");
-
-                                                    b4.Property<string>("Name")
-                                                        .IsRequired()
-                                                        .HasColumnType("longtext");
-
-                                                    b4.Property<int>("System")
-                                                        .HasColumnType("int");
-                                                });
                                         });
                                 });
 
                             b1.ComplexProperty<Dictionary<string, object>>("Damage", "DndServer.Domain.Characters.Skill.SkillInstance.Value#SkillValue.Damage#Damage", b2 =>
                                 {
                                     b2.IsRequired();
+
+                                    b2.Property<int>("DamageType")
+                                        .HasColumnType("int");
 
                                     b2.Property<int>("Flat")
                                         .HasColumnType("int");
@@ -696,21 +663,6 @@ namespace DndServer.Infrastructure.Migrations
                                                 .HasColumnType("int");
 
                                             b3.Property<int>("Rolls")
-                                                .HasColumnType("int");
-                                        });
-
-                                    b2.ComplexProperty<Dictionary<string, object>>("Type", "DndServer.Domain.Characters.Skill.SkillInstance.Value#SkillValue.Damage#Damage.Type#DamageType", b3 =>
-                                        {
-                                            b3.IsRequired();
-
-                                            b3.Property<int>("Id")
-                                                .HasColumnType("int");
-
-                                            b3.Property<string>("Name")
-                                                .IsRequired()
-                                                .HasColumnType("longtext");
-
-                                            b3.Property<int>("System")
                                                 .HasColumnType("int");
                                         });
                                 });
@@ -759,18 +711,9 @@ namespace DndServer.Infrastructure.Migrations
                                     b2.Property<int?>("Flat")
                                         .HasColumnType("int");
 
-                                    b2.ComplexProperty<Dictionary<string, object>>("DamageType", "DndServer.Domain.Characters.Skill.SkillInstance.Value#SkillValue.Resistance#Resistance.DamageType#DamageType", b3 =>
+                                    b2.ComplexProperty<Dictionary<string, object>>("DamageType", "DndServer.Domain.Characters.Skill.SkillInstance.Value#SkillValue.Resistance#Resistance.DamageType#DamageTypeEnum", b3 =>
                                         {
-                                            b3.IsRequired();
-
-                                            b3.Property<int>("Id")
-                                                .HasColumnType("int");
-
-                                            b3.Property<string>("Name")
-                                                .IsRequired()
-                                                .HasColumnType("longtext");
-
-                                            b3.Property<int>("System")
+                                            b3.Property<int>("value__")
                                                 .HasColumnType("int");
                                         });
                                 });
@@ -860,6 +803,9 @@ namespace DndServer.Infrastructure.Migrations
                                         {
                                             b3.IsRequired();
 
+                                            b3.Property<int>("DamageType")
+                                                .HasColumnType("int");
+
                                             b3.Property<int>("Flat")
                                                 .HasColumnType("int");
 
@@ -876,27 +822,15 @@ namespace DndServer.Infrastructure.Migrations
                                                     b4.Property<int>("Rolls")
                                                         .HasColumnType("int");
                                                 });
-
-                                            b3.ComplexProperty<Dictionary<string, object>>("Type", "DndServer.Domain.Characters.Skill.SkillTemplate.Value#SkillValue.AttackBonus#AttackBonus.Damage#Damage.Type#DamageType", b4 =>
-                                                {
-                                                    b4.IsRequired();
-
-                                                    b4.Property<int>("Id")
-                                                        .HasColumnType("int");
-
-                                                    b4.Property<string>("Name")
-                                                        .IsRequired()
-                                                        .HasColumnType("longtext");
-
-                                                    b4.Property<int>("System")
-                                                        .HasColumnType("int");
-                                                });
                                         });
                                 });
 
                             b1.ComplexProperty<Dictionary<string, object>>("Damage", "DndServer.Domain.Characters.Skill.SkillTemplate.Value#SkillValue.Damage#Damage", b2 =>
                                 {
                                     b2.IsRequired();
+
+                                    b2.Property<int>("DamageType")
+                                        .HasColumnType("int");
 
                                     b2.Property<int>("Flat")
                                         .HasColumnType("int");
@@ -912,21 +846,6 @@ namespace DndServer.Infrastructure.Migrations
                                                 .HasColumnType("int");
 
                                             b3.Property<int>("Rolls")
-                                                .HasColumnType("int");
-                                        });
-
-                                    b2.ComplexProperty<Dictionary<string, object>>("Type", "DndServer.Domain.Characters.Skill.SkillTemplate.Value#SkillValue.Damage#Damage.Type#DamageType", b3 =>
-                                        {
-                                            b3.IsRequired();
-
-                                            b3.Property<int>("Id")
-                                                .HasColumnType("int");
-
-                                            b3.Property<string>("Name")
-                                                .IsRequired()
-                                                .HasColumnType("longtext");
-
-                                            b3.Property<int>("System")
                                                 .HasColumnType("int");
                                         });
                                 });
@@ -975,18 +894,9 @@ namespace DndServer.Infrastructure.Migrations
                                     b2.Property<int?>("Flat")
                                         .HasColumnType("int");
 
-                                    b2.ComplexProperty<Dictionary<string, object>>("DamageType", "DndServer.Domain.Characters.Skill.SkillTemplate.Value#SkillValue.Resistance#Resistance.DamageType#DamageType", b3 =>
+                                    b2.ComplexProperty<Dictionary<string, object>>("DamageType", "DndServer.Domain.Characters.Skill.SkillTemplate.Value#SkillValue.Resistance#Resistance.DamageType#DamageTypeEnum", b3 =>
                                         {
-                                            b3.IsRequired();
-
-                                            b3.Property<int>("Id")
-                                                .HasColumnType("int");
-
-                                            b3.Property<string>("Name")
-                                                .IsRequired()
-                                                .HasColumnType("longtext");
-
-                                            b3.Property<int>("System")
+                                            b3.Property<int>("value__")
                                                 .HasColumnType("int");
                                         });
                                 });
@@ -1057,6 +967,9 @@ namespace DndServer.Infrastructure.Migrations
                         {
                             b1.IsRequired();
 
+                            b1.Property<int>("DamageType")
+                                .HasColumnType("int");
+
                             b1.Property<int>("Flat")
                                 .HasColumnType("int");
 
@@ -1071,21 +984,6 @@ namespace DndServer.Infrastructure.Migrations
                                         .HasColumnType("int");
 
                                     b2.Property<int>("Rolls")
-                                        .HasColumnType("int");
-                                });
-
-                            b1.ComplexProperty<Dictionary<string, object>>("Type", "DndServer.Domain.Characters.Spell.SpellInstance.Damage#Damage.Type#DamageType", b2 =>
-                                {
-                                    b2.IsRequired();
-
-                                    b2.Property<int>("Id")
-                                        .HasColumnType("int");
-
-                                    b2.Property<string>("Name")
-                                        .IsRequired()
-                                        .HasColumnType("longtext");
-
-                                    b2.Property<int>("System")
                                         .HasColumnType("int");
                                 });
                         });
@@ -1152,6 +1050,9 @@ namespace DndServer.Infrastructure.Migrations
                         {
                             b1.IsRequired();
 
+                            b1.Property<int>("DamageType")
+                                .HasColumnType("int");
+
                             b1.Property<int>("Flat")
                                 .HasColumnType("int");
 
@@ -1166,21 +1067,6 @@ namespace DndServer.Infrastructure.Migrations
                                         .HasColumnType("int");
 
                                     b2.Property<int>("Rolls")
-                                        .HasColumnType("int");
-                                });
-
-                            b1.ComplexProperty<Dictionary<string, object>>("Type", "DndServer.Domain.Characters.Spell.SpellTemplate.Damage#Damage.Type#DamageType", b2 =>
-                                {
-                                    b2.IsRequired();
-
-                                    b2.Property<int>("Id")
-                                        .HasColumnType("int");
-
-                                    b2.Property<string>("Name")
-                                        .IsRequired()
-                                        .HasColumnType("longtext");
-
-                                    b2.Property<int>("System")
                                         .HasColumnType("int");
                                 });
                         });

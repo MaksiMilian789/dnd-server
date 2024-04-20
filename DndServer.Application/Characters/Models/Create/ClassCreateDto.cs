@@ -1,6 +1,6 @@
 ﻿using DndServer.Domain.Shared.Enums;
 
-namespace DndServer.Application.Characters.Models;
+namespace DndServer.Application.Characters.Models.Create;
 
 public class ClassCreateDto
 {

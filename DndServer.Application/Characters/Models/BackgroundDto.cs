@@ -1,5 +1,4 @@
-﻿using DndServer.Domain.Characters.Skill;
-using DndServer.Domain.Shared.Enums;
+﻿using DndServer.Domain.Shared.Enums;
 
 namespace DndServer.Application.Characters.Models;
 
@@ -10,5 +9,6 @@ public class BackgroundDto
     public string Description { get; set; } = "";
     public SystemEnum System { get; set; }
     public int? WorldId { get; set; }
-    public List<SkillTemplate> Skills { get; set; } = new();
+    public int? AuthorId { get; set; }
+    public List<SkillDto> Skills { get; set; } = new();
 }

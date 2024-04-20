@@ -1,5 +1,6 @@
 ﻿using DndServer.Application.Characters.Interfaces;
 using DndServer.Application.Characters.Models;
+using DndServer.Application.Characters.Models.Create;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,15 +15,17 @@ public class CharacterController : ControllerBase
     private readonly IBackgroundService _backgroundService;
     private readonly IRaceService _raceService;
     private readonly IClassService _classService;
+    private readonly ISkillService _skillService;
 
     public CharacterController(
         ICharacterService characterService, IBackgroundService backgroundService, IRaceService raceService,
-        IClassService classService)
+        IClassService classService, ISkillService skillService)
     {
         _characterService = characterService;
         _backgroundService = backgroundService;
         _raceService = raceService;
         _classService = classService;
+        _skillService = skillService;
     }
 
     /// <summary>
@@ -86,7 +89,7 @@ public class CharacterController : ControllerBase
         await _raceService.GetRaces();
 
     /// <summary>
-    ///     Создание шаблона предыстории
+    ///     Создание шаблона расы
     /// </summary>
     [HttpPost("race")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -114,4 +117,25 @@ public class CharacterController : ControllerBase
     [ProducesDefaultResponseType]
     public async Task CreateBackground([FromBody] BackgroundCreateDto background) =>
         await _backgroundService.CreateBackgroundTemplate(background);
+
+
+    /// <summary>
+    ///     Список шаблонов skill
+    /// </summary>
+    [HttpGet("getSkills")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesDefaultResponseType]
+    public async Task<ActionResult<List<SkillDto>>> GetSkills() =>
+        await _skillService.GetSkills();
+
+    /// <summary>
+    ///     Создание шаблона skill
+    /// </summary>
+    [HttpPost("skill")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesDefaultResponseType]
+    public async Task CreateSkill([FromBody] SkillCreateDto skill) =>
+        await _skillService.CreateSkillTemplate(skill);
 }

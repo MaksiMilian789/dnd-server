@@ -1,4 +1,5 @@
-﻿using DndServer.Application.Interfaces.Users;
+﻿using DndServer.Application.Interfaces;
+using DndServer.Application.Interfaces.Users;
 using DndServer.Application.Users.Interfaces;
 using DndServer.Domain.Users;
 
@@ -6,11 +7,13 @@ namespace DndServer.Application.Users.Services;
 
 public class UserService : IUserService
 {
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IUserRepository _userRepository;
 
-    public UserService(IUserRepository userRepository)
+    public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork)
     {
         _userRepository = userRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public Task<User?> GetByIdAsync(int id) =>
@@ -22,6 +25,9 @@ public class UserService : IUserService
         return Task.FromResult(userList.FirstOrDefault());
     }
 
-    public void CreateUser(User user) =>
+    public void CreateUser(User user)
+    {
         _userRepository.Create(user);
+        _unitOfWork.SaveChanges();
+    }
 }

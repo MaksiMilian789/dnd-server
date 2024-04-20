@@ -1,4 +1,5 @@
-﻿using DndServer.Domain.Characters;
+﻿using DndServer.Application.Interfaces;
+using DndServer.Domain.Characters;
 using DndServer.Domain.Characters.Background;
 using DndServer.Domain.Characters.Class;
 using DndServer.Domain.Characters.Condition;
@@ -24,7 +25,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DndServer.Infrastructure.Persistence;
 
-public class DataContext : DbContext
+public class DataContext : DbContext, IUnitOfWork
 {
     public DbSet<User> User => Set<User>();
     public DbSet<BackgroundInstance> BackgroundInstance => Set<BackgroundInstance>();
@@ -51,6 +52,9 @@ public class DataContext : DbContext
     public DataContext(DbContextOptions<DataContext> options) : base(options)
     {
     }
+
+    void IUnitOfWork.SaveChanges() =>
+        SaveChanges();
 
     public void Migrate() =>
         Database.Migrate();

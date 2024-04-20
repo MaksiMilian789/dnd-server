@@ -1,11 +1,11 @@
 ﻿using DndServer.Application.Characters.Interfaces;
 using DndServer.Application.Characters.Models;
 using DndServer.Application.Characters.Models.Instances;
+using DndServer.Application.Interfaces;
 using DndServer.Application.Interfaces.Characters;
 using DndServer.Application.Interfaces.Characters.Background;
 using DndServer.Application.Interfaces.Characters.Class;
 using DndServer.Application.Interfaces.Characters.Race;
-using DndServer.Application.Interfaces.Characters.Skill;
 using DndServer.Application.Interfaces.Users;
 using DndServer.Application.Shared;
 using DndServer.Domain.Characters;
@@ -17,31 +17,23 @@ namespace DndServer.Application.Characters.Services;
 
 public class CharacterService : ICharacterService
 {
+    private readonly IUnitOfWork _unitOfWork;
     private readonly ICharacterRepository _characterRepository;
-    private readonly IClassInstanceRepository _classInstanceRepository;
     private readonly IClassTemplateRepository _classTemplateRepository;
-    private readonly IRaceInstanceRepository _raceInstanceRepository;
     private readonly IRaceTemplateRepository _raceTemplateRepository;
-    private readonly IBackgroundInstanceRepository _backgroundInstanceRepository;
     private readonly IBackgroundTemplateRepository _backgroundTemplateRepository;
-    private readonly ISkillInstanceRepository _skillInstanceRepository;
     private readonly IUserRepository _userRepository;
 
-    public CharacterService(ICharacterRepository characterRepository, IClassInstanceRepository classInstanceRepository,
-        IClassTemplateRepository classTemplateRepository, IRaceInstanceRepository raceInstanceRepository,
-        IRaceTemplateRepository raceTemplateRepository, IBackgroundInstanceRepository backgroundInstanceRepository,
-        IBackgroundTemplateRepository backgroundTemplateRepository, ISkillInstanceRepository skillInstanceRepository,
-        IUserRepository userRepository)
+    public CharacterService(ICharacterRepository characterRepository, IClassTemplateRepository classTemplateRepository,
+        IRaceTemplateRepository raceTemplateRepository, IBackgroundTemplateRepository backgroundTemplateRepository,
+        IUserRepository userRepository, IUnitOfWork unitOfWork)
     {
         _characterRepository = characterRepository;
-        _classInstanceRepository = classInstanceRepository;
         _classTemplateRepository = classTemplateRepository;
-        _raceInstanceRepository = raceInstanceRepository;
         _raceTemplateRepository = raceTemplateRepository;
-        _backgroundInstanceRepository = backgroundInstanceRepository;
         _backgroundTemplateRepository = backgroundTemplateRepository;
-        _skillInstanceRepository = skillInstanceRepository;
         _userRepository = userRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public Task<List<ShortCharacterDto>> GetShortListCharacters(int userId)
@@ -52,6 +44,7 @@ public class CharacterService : ICharacterService
             var classInstance = character.ClassInstance;
             return new ShortCharacterDto
             {
+                Id = character.Id,
                 Name = character.Name,
                 Level = character.Level,
                 ClassName = classInstance.Name,
@@ -226,6 +219,7 @@ public class CharacterService : ICharacterService
         character.UserId = user!.Id;
         _characterRepository.Create(character);
 
+        _unitOfWork.SaveChanges();
         return Task.CompletedTask;
     }
 }

@@ -1,4 +1,5 @@
-﻿using DndServer.Application.Characters.Models.Instances;
+﻿using DndServer.Application.Characters.Models;
+using DndServer.Application.Characters.Models.Instances;
 using DndServer.Domain.Characters.Skill;
 
 namespace DndServer.Application.Shared;
@@ -12,7 +13,10 @@ public static class SkillUtilsService
         {
             var skill = new SkillInstance(skillTemplate.Name, skillTemplate.Description, skillTemplate.ActionType,
                 skillTemplate.SkillType, skillTemplate.Distance, skillTemplate.Passive, skillTemplate.Recharge,
-                skillTemplate.Charges, skillTemplate.System);
+                skillTemplate.Charges, skillTemplate.System)
+            {
+                Value = skillTemplate.Value
+            };
             skillInstances.Add(skill);
         }
 
@@ -42,5 +46,32 @@ public static class SkillUtilsService
         }
 
         return skillInstancesDto;
+    }
+
+    public static List<SkillDto> CreateSkillsTemplatesDto(IEnumerable<SkillTemplate> templates)
+    {
+        var skillTemplatesDto = new List<SkillDto>();
+        foreach (var template in templates)
+        {
+            var skill = new SkillDto
+            {
+                Id = template.Id,
+                Name = template.Name,
+                Description = template.Description,
+                ActionType = template.ActionType,
+                SkillType = template.SkillType,
+                Value = template.Value,
+                Distance = template.Distance,
+                Passive = template.Passive,
+                Recharge = template.Recharge,
+                Charges = template.Charges,
+                System = template.System,
+                AuthorId = template.AuthorId,
+                WorldId = template.WorldId
+            };
+            skillTemplatesDto.Add(skill);
+        }
+
+        return skillTemplatesDto;
     }
 }
