@@ -63,10 +63,10 @@ public class WorldController : ControllerBase
     /// <summary>
     ///     Трекер
     /// </summary>
-    [HttpPut("getTracker")]
+    [HttpPut("setTracker")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<TrackerDto>> GetTracker(int worldId, [FromBody] List<TrackerUnitDto> list) =>
+    public async Task SetTracker(int worldId, [FromBody] List<TrackerUnitDto> list) =>
         await _trackerService.SetTracker(worldId, list);
 }
