@@ -1,5 +1,6 @@
 ﻿using DndServer.Application.Characters.Models.Instances;
 using DndServer.Domain.Characters;
+using DndServer.Domain.Characters.Spell;
 using DndServer.Domain.Shared.Enums;
 
 namespace DndServer.Application.Characters.Models;
@@ -10,6 +11,10 @@ public class CharacterDto
     public string Name { get; set; } = "";
     public int Level { get; set; }
     public int Age { get; set; }
+    public int Hp { get; set; }
+    public int AddHp { get; set; }
+    public List<SpellSlot> SpellSlots { get; set; } = new();
+    public List<EnergySlot> EnergySlots { get; set; } = new();
     public GenderEnum Gender { get; set; }
     public IdeologyEnum Ideology { get; set; }
     public SystemEnum System { get; set; }

@@ -23,6 +23,25 @@ public static class SkillUtilsService
         return skillInstances;
     }
 
+    public static ICollection<SkillTemplate> CreateSkillsTemplateFromTemplate(IEnumerable<SkillTemplate> templates,
+        bool hidden = true)
+    {
+        var skillTemplates = new List<SkillTemplate>();
+        foreach (var skillTemplate in templates)
+        {
+            var skill = new SkillTemplate(skillTemplate.Name, skillTemplate.Description, skillTemplate.ActionType,
+                skillTemplate.SkillType, skillTemplate.Distance, skillTemplate.Passive, skillTemplate.Recharge,
+                skillTemplate.Charges, skillTemplate.System, skillTemplate.AuthorId, skillTemplate.WorldId)
+            {
+                Value = skillTemplate.Value,
+                Hidden = hidden
+            };
+            skillTemplates.Add(skill);
+        }
+
+        return skillTemplates;
+    }
+
     public static List<SkillInstanceDto> CreateSkillsInstancesDto(IEnumerable<SkillInstance> instances)
     {
         var skillInstancesDto = new List<SkillInstanceDto>();

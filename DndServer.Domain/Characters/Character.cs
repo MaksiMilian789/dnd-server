@@ -17,6 +17,10 @@ public class Character
     public string Name { get; set; }
     public int Level { get; set; }
     public int Age { get; set; }
+    public int Hp { get; set; }
+    public int AddHp { get; set; }
+    public List<SpellSlot> SpellSlots { get; set; }
+    public List<EnergySlot> EnergySlots { get; set; }
     public GenderEnum Gender { get; set; }
     public IdeologyEnum Ideology { get; set; }
     public SystemEnum System { get; set; }
@@ -64,5 +68,7 @@ public class Character
         SkillInstance = new List<SkillInstance>();
         SpellInstance = new List<SpellInstance>();
         Characteristics = characteristics;
+        SpellSlots = new List<SpellSlot>();
+        EnergySlots = new List<EnergySlot>();
     }
 }

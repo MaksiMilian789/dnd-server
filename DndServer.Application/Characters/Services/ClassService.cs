@@ -52,11 +52,9 @@ public class ClassService : IClassService
         _classTemplateRepository.Create(classTemplate);
 
         var skillTemplates = _skillTemplateRepository.Get(x => dto.SkillIds.Contains(x.Id));
-        foreach (var skillTemplate in skillTemplates)
-        {
-            skillTemplate.ClassTemplate.Add(classTemplate);
-            _skillTemplateRepository.Update(skillTemplate);
-        }
+        var skills = SkillUtilsService.CreateSkillsTemplateFromTemplate(skillTemplates);
+        foreach (var skill in skills) classTemplate.SkillTemplate.Add(skill);
+        _classTemplateRepository.Create(classTemplate);
 
         _unitOfWork.SaveChanges();
         return Task.CompletedTask;

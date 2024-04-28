@@ -223,6 +223,9 @@ namespace DndServer.Infrastructure.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("AddHp")
+                        .HasColumnType("int");
+
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
@@ -232,7 +235,14 @@ namespace DndServer.Infrastructure.Migrations
                     b.Property<int>("ClassInstanceId")
                         .HasColumnType("int");
 
+                    b.Property<string>("EnergySlots")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<int>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Hp")
                         .HasColumnType("int");
 
                     b.Property<int>("Ideology")
@@ -247,6 +257,10 @@ namespace DndServer.Infrastructure.Migrations
 
                     b.Property<int>("RaceInstanceId")
                         .HasColumnType("int");
+
+                    b.Property<string>("SpellSlots")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<int>("System")
                         .HasColumnType("int");
@@ -600,6 +614,10 @@ namespace DndServer.Infrastructure.Migrations
                             b1.Property<int>("Type")
                                 .HasColumnType("int");
 
+                            b1.Property<string>("UseSpell")
+                                .IsRequired()
+                                .HasColumnType("longtext");
+
                             b1.ComplexProperty<Dictionary<string, object>>("AttackBonus", "DndServer.Domain.Characters.Skill.SkillInstance.Value#SkillValue.AttackBonus#AttackBonus", b2 =>
                                 {
                                     b2.IsRequired();
@@ -757,6 +775,9 @@ namespace DndServer.Infrastructure.Migrations
                     b.Property<int?>("Distance")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Hidden")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -782,6 +803,10 @@ namespace DndServer.Infrastructure.Migrations
 
                             b1.Property<int>("Type")
                                 .HasColumnType("int");
+
+                            b1.Property<string>("UseSpell")
+                                .IsRequired()
+                                .HasColumnType("longtext");
 
                             b1.ComplexProperty<Dictionary<string, object>>("AttackBonus", "DndServer.Domain.Characters.Skill.SkillTemplate.Value#SkillValue.AttackBonus#AttackBonus", b2 =>
                                 {
@@ -927,6 +952,10 @@ namespace DndServer.Infrastructure.Migrations
                     b.Property<int>("ActionType")
                         .HasColumnType("int");
 
+                    b.Property<string>("Components")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -953,14 +982,6 @@ namespace DndServer.Infrastructure.Migrations
 
                             b1.Property<TimeSpan>("Time")
                                 .HasColumnType("time(6)");
-                        });
-
-                    b.ComplexProperty<Dictionary<string, object>>("Components", "DndServer.Domain.Characters.Spell.SpellInstance.Components#List<SpellComponents>", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<int>("Capacity")
-                                .HasColumnType("int");
                         });
 
                     b.ComplexProperty<Dictionary<string, object>>("Damage", "DndServer.Domain.Characters.Spell.SpellInstance.Damage#Damage", b1 =>
@@ -1007,6 +1028,10 @@ namespace DndServer.Infrastructure.Migrations
                     b.Property<int>("AuthorId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Components")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -1036,14 +1061,6 @@ namespace DndServer.Infrastructure.Migrations
 
                             b1.Property<TimeSpan>("Time")
                                 .HasColumnType("time(6)");
-                        });
-
-                    b.ComplexProperty<Dictionary<string, object>>("Components", "DndServer.Domain.Characters.Spell.SpellTemplate.Components#List<SpellComponents>", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<int>("Capacity")
-                                .HasColumnType("int");
                         });
 
                     b.ComplexProperty<Dictionary<string, object>>("Damage", "DndServer.Domain.Characters.Spell.SpellTemplate.Damage#Damage", b1 =>

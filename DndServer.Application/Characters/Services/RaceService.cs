@@ -51,11 +51,9 @@ public class RaceService : IRaceService
         _raceTemplateRepository.Create(race);
 
         var skillTemplates = _skillTemplateRepository.Get(x => dto.SkillIds.Contains(x.Id));
-        foreach (var skillTemplate in skillTemplates)
-        {
-            skillTemplate.RaceTemplate.Add(race);
-            _skillTemplateRepository.Update(skillTemplate);
-        }
+        var skills = SkillUtilsService.CreateSkillsTemplateFromTemplate(skillTemplates);
+        foreach (var skill in skills) race.SkillTemplate.Add(skill);
+        _raceTemplateRepository.Create(race);
 
         _unitOfWork.SaveChanges();
         return Task.CompletedTask;

@@ -19,6 +19,7 @@ public class SkillTemplate
     public bool Passive { get; set; }
     public int Recharge { get; set; }
     public int Charges { get; set; }
+    public bool Hidden { get; set; } = false;
     public SystemEnum System { get; set; }
     public int AuthorId { get; set; }
     public int? WorldId { get; set; }

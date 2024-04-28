@@ -51,14 +51,11 @@ public class BackgroundService : IBackgroundService
     public Task CreateBackgroundTemplate(BackgroundCreateDto dto)
     {
         var background = new BackgroundTemplate(dto.Name, dto.Description, dto.System, dto.AuthorId, dto.WorldId);
-        _backgroundTemplateRepository.Create(background);
 
         var skillTemplates = _skillTemplateRepository.Get(x => dto.SkillIds.Contains(x.Id));
-        foreach (var skillTemplate in skillTemplates)
-        {
-            skillTemplate.BackgroundTemplate.Add(background);
-            _skillTemplateRepository.Update(skillTemplate);
-        }
+        var skills = SkillUtilsService.CreateSkillsTemplateFromTemplate(skillTemplates);
+        foreach (var skill in skills) background.SkillTemplate.Add(skill);
+        _backgroundTemplateRepository.Create(background);
 
         _unitOfWork.SaveChanges();
         return Task.CompletedTask;
