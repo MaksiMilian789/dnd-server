@@ -7,4 +7,5 @@ public interface ICharacterService
     public Task<List<ShortCharacterDto>> GetShortListCharacters(int userId);
     public Task CreateCharacter(CharacterCreateDto dto, int userId);
     public Task<CharacterDto> GetCharacter(int id);
+    public Task SetHpCharacter(int id, int hp, int addHp);
 }

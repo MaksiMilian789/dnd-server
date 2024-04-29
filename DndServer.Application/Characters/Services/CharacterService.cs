@@ -226,4 +226,16 @@ public class CharacterService : ICharacterService
         _unitOfWork.SaveChanges();
         return Task.CompletedTask;
     }
+
+    public Task SetHpCharacter(int id, int hp, int addHp)
+    {
+        var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
+        if (character == null) throw new Exception();
+
+        character.Hp = hp;
+        character.AddHp = addHp;
+        _characterRepository.Update(character);
+        _unitOfWork.SaveChanges();
+        return Task.CompletedTask;
+    }
 }

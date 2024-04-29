@@ -59,6 +59,16 @@ public class CharacterController : ControllerBase
         await _characterService.CreateCharacter(character, userId);
 
     /// <summary>
+    ///     Изменение HP
+    /// </summary>
+    [HttpPut("hp")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesDefaultResponseType]
+    public async Task ChangeHp(int id, int hp, int addHp) =>
+        await _characterService.SetHpCharacter(id, hp, addHp);
+
+    /// <summary>
     ///     Список шаблонов классов
     /// </summary>
     [HttpGet("getClasses")]
