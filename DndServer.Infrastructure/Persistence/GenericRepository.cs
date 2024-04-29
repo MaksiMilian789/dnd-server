@@ -27,6 +27,9 @@ internal class GenericRepository<T> : IGenericRepository<T> where T : class
     public void Update(T item) =>
         _dbSet.Update(item);
 
+    public void Attach(T item) =>
+        _context.Attach(item);
+
     public void Remove(T item) =>
         _dbSet.Remove(item);
 

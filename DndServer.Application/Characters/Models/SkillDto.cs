@@ -15,6 +15,7 @@ public class SkillDto
     public bool Passive { get; set; }
     public int Recharge { get; set; }
     public int Charges { get; set; }
+    public bool Hidden { get; set; }
     public SystemEnum System { get; set; }
     public int? AuthorId { get; set; }
     public int? WorldId { get; set; }

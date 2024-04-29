@@ -6,12 +6,14 @@ using DndServer.Application.Interfaces.Characters;
 using DndServer.Application.Interfaces.Characters.Background;
 using DndServer.Application.Interfaces.Characters.Class;
 using DndServer.Application.Interfaces.Characters.Race;
+using DndServer.Application.Interfaces.Characters.Skill;
 using DndServer.Application.Interfaces.Users;
 using DndServer.Application.Shared;
 using DndServer.Domain.Characters;
 using DndServer.Domain.Characters.Background;
 using DndServer.Domain.Characters.Class;
 using DndServer.Domain.Characters.Race;
+using DndServer.Domain.Characters.Skill;
 
 namespace DndServer.Application.Characters.Services;
 
@@ -23,10 +25,13 @@ public class CharacterService : ICharacterService
     private readonly IRaceTemplateRepository _raceTemplateRepository;
     private readonly IBackgroundTemplateRepository _backgroundTemplateRepository;
     private readonly IUserRepository _userRepository;
+    private readonly ISkillTemplateRepository _skillTemplateRepository;
+    private readonly ISkillInstanceRepository _skillInstanceRepository;
 
     public CharacterService(ICharacterRepository characterRepository, IClassTemplateRepository classTemplateRepository,
         IRaceTemplateRepository raceTemplateRepository, IBackgroundTemplateRepository backgroundTemplateRepository,
-        IUserRepository userRepository, IUnitOfWork unitOfWork)
+        IUserRepository userRepository, IUnitOfWork unitOfWork, ISkillTemplateRepository skillTemplateRepository,
+        ISkillInstanceRepository skillInstanceRepository)
     {
         _characterRepository = characterRepository;
         _classTemplateRepository = classTemplateRepository;
@@ -34,6 +39,8 @@ public class CharacterService : ICharacterService
         _backgroundTemplateRepository = backgroundTemplateRepository;
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;
+        _skillTemplateRepository = skillTemplateRepository;
+        _skillInstanceRepository = skillInstanceRepository;
     }
 
     public Task<List<ShortCharacterDto>> GetShortListCharacters(int userId)
@@ -234,6 +241,24 @@ public class CharacterService : ICharacterService
 
         character.Hp = hp;
         character.AddHp = addHp;
+        _characterRepository.Update(character);
+        _unitOfWork.SaveChanges();
+        return Task.CompletedTask;
+    }
+
+    public Task AddSkill(int id, int skillId)
+    {
+        var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
+        if (character == null) throw new Exception();
+        _characterRepository.Attach(character);
+
+        var skillTemplate = _skillTemplateRepository.Get(x => x.Id == skillId).FirstOrDefault();
+        if (skillTemplate == null) throw new Exception();
+
+        var instance = SkillUtilsService.CreateSkillsInstancesFromTemplate(new List<SkillTemplate> { skillTemplate })
+            .FirstOrDefault();
+
+        if (instance != null) character.SkillInstance.Add(instance);
         _characterRepository.Update(character);
         _unitOfWork.SaveChanges();
         return Task.CompletedTask;

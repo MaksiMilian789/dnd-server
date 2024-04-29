@@ -36,6 +36,7 @@ public class SkillService : ISkillService
                 Passive = skill.Passive,
                 Recharge = skill.Recharge,
                 Charges = skill.Charges,
+                Hidden = skill.Hidden,
                 System = skill.System,
                 AuthorId = skill.AuthorId,
                 WorldId = skill.WorldId

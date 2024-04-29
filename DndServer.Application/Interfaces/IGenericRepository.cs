@@ -10,6 +10,7 @@ public interface IGenericRepository<T>
     IEnumerable<T> Get(Func<T, bool> predicate);
     void Remove(T item);
     void Update(T item);
+    void Attach(T item);
     IEnumerable<T> GetWithInclude(params Expression<Func<T, object>>[] includeProperties);
     IEnumerable<T> GetWithInclude(Func<T, bool> predicate, params Expression<Func<T, object>>[] includeProperties);
 }

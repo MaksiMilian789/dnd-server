@@ -69,6 +69,16 @@ public class CharacterController : ControllerBase
         await _characterService.SetHpCharacter(id, hp, addHp);
 
     /// <summary>
+    ///     Добавление скилла
+    /// </summary>
+    [HttpPut("addSkill")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesDefaultResponseType]
+    public async Task AddSkill(int id, int skillId) =>
+        await _characterService.AddSkill(id, skillId);
+
+    /// <summary>
     ///     Список шаблонов классов
     /// </summary>
     [HttpGet("getClasses")]
