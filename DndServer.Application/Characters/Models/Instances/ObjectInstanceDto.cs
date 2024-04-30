@@ -10,6 +10,8 @@ public class ObjectInstanceDto
     public string Description { get; set; } = "";
     public Damage Damage { get; set; } = null!;
     public AttackTypesEnum AttackType { get; set; }
+    public int Quantity { get; set; }
+    public int ImageId { get; set; }
     public int? Distance { get; set; }
     public SystemEnum System { get; set; }
     public List<SkillInstanceDto> SkillInstances { get; set; } = new();

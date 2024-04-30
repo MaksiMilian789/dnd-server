@@ -53,11 +53,15 @@ public class DataContext : DbContext, IUnitOfWork
     {
     }
 
-    void IUnitOfWork.SaveChanges() =>
+    void IUnitOfWork.SaveChanges()
+    {
         SaveChanges();
+    }
 
-    public void Migrate() =>
+    public void Migrate()
+    {
         Database.Migrate();
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

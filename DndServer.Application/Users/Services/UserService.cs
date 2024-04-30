@@ -16,8 +16,10 @@ public class UserService : IUserService
         _unitOfWork = unitOfWork;
     }
 
-    public Task<User?> GetByIdAsync(int id) =>
-        Task.FromResult(_userRepository.FindById(id));
+    public Task<User?> GetByIdAsync(int id)
+    {
+        return Task.FromResult(_userRepository.FindById(id));
+    }
 
     public Task<User?> GetByLoginAsync(string login)
     {

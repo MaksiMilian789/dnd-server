@@ -54,7 +54,11 @@ public class BackgroundService : IBackgroundService
 
         var skillTemplates = _skillTemplateRepository.Get(x => dto.SkillIds.Contains(x.Id));
         var skills = SkillUtilsService.CreateSkillsTemplateFromTemplate(skillTemplates);
-        foreach (var skill in skills) background.SkillTemplate.Add(skill);
+        foreach (var skill in skills)
+        {
+            background.SkillTemplate.Add(skill);
+        }
+
         _backgroundTemplateRepository.Create(background);
 
         _unitOfWork.SaveChanges();

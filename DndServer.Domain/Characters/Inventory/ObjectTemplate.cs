@@ -12,6 +12,8 @@ public class ObjectTemplate
     public Damage Damage { get; set; } = null!;
     public AttackTypesEnum AttackType { get; set; }
     public int? Distance { get; set; }
+    public int ImageId { get; set; }
+    public virtual Image Image { get; set; } = null!;
     public SystemEnum System { get; set; }
     public int AuthorId { get; set; }
     public int? WorldId { get; set; }

@@ -31,7 +31,10 @@ public class AuthController : ControllerBase
     public async Task<ActionResult<AuthResult>> Authenticate(TokenRequest request)
     {
         if (string.IsNullOrWhiteSpace(request.Login) || string.IsNullOrWhiteSpace(request.Password))
+        {
             return Unauthorized(CreateFailResponse(Errors.AuthFailed));
+        }
+
         try
         {
             var token = await _jwtService.LogIn(request);
@@ -47,5 +50,8 @@ public class AuthController : ControllerBase
         }
     }
 
-    private static ProblemDetails CreateFailResponse(string title) => new() { Title = title };
+    private static ProblemDetails CreateFailResponse(string title)
+    {
+        return new() { Title = title };
+    }
 }

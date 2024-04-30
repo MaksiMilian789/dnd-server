@@ -64,7 +64,10 @@ public class WorldService : IWorldService
     {
         var worlds = _worldRepository.Get();
         var world = worlds.FirstOrDefault(x => x.WorldLinks.Any(y => y.Id == worldId));
-        if (world == null) throw new Exception();
+        if (world == null)
+        {
+            throw new Exception();
+        }
 
         var worldDto = new WorldDto
         {
@@ -72,6 +75,7 @@ public class WorldService : IWorldService
             Name = world.Name,
             Description = world.Description,
             TrackerId = world.Tracker.Id,
+            ImageId = world.ImageId,
             WikiId = world.Wiki.Id
         };
 

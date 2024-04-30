@@ -23,7 +23,10 @@ public class TrackerService : ITrackerService
     public Task<TrackerDto> GetTracker(int worldId)
     {
         var tracker = _trackerRepository.Get(x => x.World.Id == worldId).FirstOrDefault();
-        if (tracker == null) throw new Exception();
+        if (tracker == null)
+        {
+            throw new Exception();
+        }
 
         var units = tracker.TrackerUnits.Select(unit => new TrackerUnitDto
             { Name = unit.Name, Initiative = unit.Initiative, Color = unit.Color, Icon = unit.Icon }).ToList();
@@ -38,9 +41,15 @@ public class TrackerService : ITrackerService
     public Task SetTracker(int worldId, List<TrackerUnitDto> trackerUnitsDto)
     {
         var tracker = _trackerRepository.Get(x => x.World.Id == worldId).FirstOrDefault();
-        if (tracker == null) throw new Exception();
+        if (tracker == null)
+        {
+            throw new Exception();
+        }
 
-        foreach (var unit in tracker.TrackerUnits) _trackerUnitRepository.Remove(unit);
+        foreach (var unit in tracker.TrackerUnits)
+        {
+            _trackerUnitRepository.Remove(unit);
+        }
 
         var trackerUnits = new List<TrackerUnit>();
         foreach (var unit in trackerUnitsDto)

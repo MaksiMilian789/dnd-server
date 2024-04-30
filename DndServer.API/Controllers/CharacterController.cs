@@ -35,8 +35,10 @@ public class CharacterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<List<ShortCharacterDto>>> GetListCharacters(int id) =>
-        await _characterService.GetShortListCharacters(id);
+    public async Task<ActionResult<List<ShortCharacterDto>>> GetListCharacters(int id)
+    {
+        return await _characterService.GetShortListCharacters(id);
+    }
 
     /// <summary>
     ///     Персонаж
@@ -45,8 +47,10 @@ public class CharacterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<CharacterDto>> GetCharacter(int id) =>
-        await _characterService.GetCharacter(id);
+    public async Task<ActionResult<CharacterDto>> GetCharacter(int id)
+    {
+        return await _characterService.GetCharacter(id);
+    }
 
     /// <summary>
     ///     Создание персонажа
@@ -55,8 +59,10 @@ public class CharacterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task CreateCharacter([FromBody] CharacterCreateDto character, int userId) =>
+    public async Task CreateCharacter([FromBody] CharacterCreateDto character, int userId)
+    {
         await _characterService.CreateCharacter(character, userId);
+    }
 
     /// <summary>
     ///     Изменение HP
@@ -65,8 +71,10 @@ public class CharacterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task ChangeHp(int id, int hp, int addHp) =>
+    public async Task ChangeHp(int id, int hp, int addHp)
+    {
         await _characterService.SetHpCharacter(id, hp, addHp);
+    }
 
     /// <summary>
     ///     Добавление скилла
@@ -75,8 +83,10 @@ public class CharacterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task AddSkill(int id, int skillId) =>
+    public async Task AddSkill(int id, int skillId)
+    {
         await _characterService.AddSkill(id, skillId);
+    }
 
     /// <summary>
     ///     Список шаблонов классов
@@ -85,8 +95,10 @@ public class CharacterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<List<ClassDto>>> GetClasses() =>
-        await _classService.GetClasses();
+    public async Task<ActionResult<List<ClassDto>>> GetClasses()
+    {
+        return await _classService.GetClasses();
+    }
 
     /// <summary>
     ///     Создание шаблона класса
@@ -95,8 +107,10 @@ public class CharacterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task CreateClass([FromBody] ClassCreateDto classs) =>
+    public async Task CreateClass([FromBody] ClassCreateDto classs)
+    {
         await _classService.CreateClassTemplate(classs);
+    }
 
     /// <summary>
     ///     Список шаблонов рас
@@ -105,8 +119,10 @@ public class CharacterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<List<RaceDto>>> GetRaces() =>
-        await _raceService.GetRaces();
+    public async Task<ActionResult<List<RaceDto>>> GetRaces()
+    {
+        return await _raceService.GetRaces();
+    }
 
     /// <summary>
     ///     Создание шаблона расы
@@ -115,8 +131,10 @@ public class CharacterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task CreateRace([FromBody] RaceCreateDto race) =>
+    public async Task CreateRace([FromBody] RaceCreateDto race)
+    {
         await _raceService.CreateRaceTemplate(race);
+    }
 
     /// <summary>
     ///     Список шаблонов предысторий
@@ -125,8 +143,10 @@ public class CharacterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<List<BackgroundDto>>> GetBackgrounds() =>
-        await _backgroundService.GetBackgrounds();
+    public async Task<ActionResult<List<BackgroundDto>>> GetBackgrounds()
+    {
+        return await _backgroundService.GetBackgrounds();
+    }
 
     /// <summary>
     ///     Создание шаблона предыстории
@@ -135,8 +155,10 @@ public class CharacterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task CreateBackground([FromBody] BackgroundCreateDto background) =>
+    public async Task CreateBackground([FromBody] BackgroundCreateDto background)
+    {
         await _backgroundService.CreateBackgroundTemplate(background);
+    }
 
 
     /// <summary>
@@ -146,8 +168,10 @@ public class CharacterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<List<SkillDto>>> GetSkills() =>
-        await _skillService.GetSkills();
+    public async Task<ActionResult<List<SkillDto>>> GetSkills()
+    {
+        return await _skillService.GetSkills();
+    }
 
     /// <summary>
     ///     Создание шаблона skill
@@ -156,6 +180,8 @@ public class CharacterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task CreateSkill([FromBody] SkillCreateDto skill) =>
+    public async Task CreateSkill([FromBody] SkillCreateDto skill)
+    {
         await _skillService.CreateSkillTemplate(skill);
+    }
 }

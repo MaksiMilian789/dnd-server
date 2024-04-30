@@ -6,6 +6,8 @@ namespace DndServer.Infrastructure.Persistence.Configurations.Worlds;
 
 public class TrackerUnitConfiguration : IEntityTypeConfiguration<TrackerUnit>
 {
-    public void Configure(EntityTypeBuilder<TrackerUnit> builder) =>
+    public void Configure(EntityTypeBuilder<TrackerUnit> builder)
+    {
         builder.HasKey(x => x.Id);
+    }
 }

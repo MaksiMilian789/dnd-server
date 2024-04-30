@@ -6,6 +6,8 @@ namespace DndServer.Infrastructure.Persistence.Configurations.Characters.Class;
 
 public class ClassTemplateConfiguration : IEntityTypeConfiguration<ClassTemplate>
 {
-    public void Configure(EntityTypeBuilder<ClassTemplate> builder) =>
+    public void Configure(EntityTypeBuilder<ClassTemplate> builder)
+    {
         builder.HasKey(x => x.Id);
+    }
 }

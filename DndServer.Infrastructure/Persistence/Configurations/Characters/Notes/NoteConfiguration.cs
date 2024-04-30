@@ -6,6 +6,8 @@ namespace DndServer.Infrastructure.Persistence.Configurations.Characters.Notes;
 
 public class NoteConfiguration : IEntityTypeConfiguration<Note>
 {
-    public void Configure(EntityTypeBuilder<Note> builder) =>
+    public void Configure(EntityTypeBuilder<Note> builder)
+    {
         builder.HasKey(x => x.Id);
+    }
 }

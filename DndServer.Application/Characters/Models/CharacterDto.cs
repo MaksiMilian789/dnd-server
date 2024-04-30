@@ -13,6 +13,7 @@ public class CharacterDto
     public int Age { get; set; }
     public int Hp { get; set; }
     public int AddHp { get; set; }
+    public int ImageId { get; set; }
     public List<SpellSlot> SpellSlots { get; set; } = new();
     public List<EnergySlot> EnergySlots { get; set; } = new();
     public GenderEnum Gender { get; set; }

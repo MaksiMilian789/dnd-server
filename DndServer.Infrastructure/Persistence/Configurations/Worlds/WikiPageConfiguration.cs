@@ -6,6 +6,8 @@ namespace DndServer.Infrastructure.Persistence.Configurations.Worlds;
 
 public class WikiPageConfiguration : IEntityTypeConfiguration<WikiPage>
 {
-    public void Configure(EntityTypeBuilder<WikiPage> builder) =>
+    public void Configure(EntityTypeBuilder<WikiPage> builder)
+    {
         builder.HasKey(x => x.Id);
+    }
 }

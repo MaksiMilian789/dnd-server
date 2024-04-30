@@ -1,13 +1,14 @@
 ﻿using DndServer.Domain.Characters;
 using DndServer.Domain.Shared.Enums;
 
-namespace DndServer.Application.Characters.Models;
+namespace DndServer.Application.Characters.Models.Create;
 
 public class CharacterCreateDto
 {
     public string Name { get; set; } = "";
     public int Level { get; set; }
     public int Age { get; set; }
+    public int? ImageId { get; set; }
     public GenderEnum Gender { get; set; }
     public IdeologyEnum Ideology { get; set; }
     public int ClassId { get; set; }

@@ -27,8 +27,10 @@ public class WorldController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<List<ShortWorldDto>>> GetListWorlds(int userId, RoleEnum role) =>
-        await _worldService.GetWorlds(userId, role);
+    public async Task<ActionResult<List<ShortWorldDto>>> GetListWorlds(int userId, RoleEnum role)
+    {
+        return await _worldService.GetWorlds(userId, role);
+    }
 
     /// <summary>
     ///     Мир
@@ -37,8 +39,10 @@ public class WorldController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<WorldDto>> GetWorld(int id) =>
-        await _worldService.GetWorld(id);
+    public async Task<ActionResult<WorldDto>> GetWorld(int id)
+    {
+        return await _worldService.GetWorld(id);
+    }
 
     /// <summary>
     ///     Создание мира
@@ -47,8 +51,10 @@ public class WorldController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task CreateWorld([FromBody] WorldCreateDto dto, int userId) =>
+    public async Task CreateWorld([FromBody] WorldCreateDto dto, int userId)
+    {
         await _worldService.CreateWorld(dto, userId);
+    }
 
     /// <summary>
     ///     Трекер
@@ -57,8 +63,10 @@ public class WorldController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<TrackerDto>> GetTracker(int worldId) =>
-        await _trackerService.GetTracker(worldId);
+    public async Task<ActionResult<TrackerDto>> GetTracker(int worldId)
+    {
+        return await _trackerService.GetTracker(worldId);
+    }
 
     /// <summary>
     ///     Трекер
@@ -67,6 +75,8 @@ public class WorldController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task SetTracker(int worldId, [FromBody] List<TrackerUnitDto> list) =>
+    public async Task SetTracker(int worldId, [FromBody] List<TrackerUnitDto> list)
+    {
         await _trackerService.SetTracker(worldId, list);
+    }
 }

@@ -1,5 +1,6 @@
 ﻿using DndServer.Application.Characters.Interfaces;
 using DndServer.Application.Characters.Models;
+using DndServer.Application.Characters.Models.Create;
 using DndServer.Application.Characters.Models.Instances;
 using DndServer.Application.Interfaces;
 using DndServer.Application.Interfaces.Characters;
@@ -65,7 +66,10 @@ public class CharacterService : ICharacterService
     public Task<CharacterDto> GetCharacter(int id)
     {
         var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
-        if (character == null) throw new Exception();
+        if (character == null)
+        {
+            throw new Exception();
+        }
 
         var conditions = new List<ConditionDto>();
         foreach (var item in character.Conditions)
@@ -90,6 +94,8 @@ public class CharacterService : ICharacterService
                 Damage = item.Damage,
                 AttackType = item.AttackType,
                 Distance = item.Distance,
+                ImageId = item.ImageId,
+                Quantity = item.Quantity,
                 System = item.System,
                 SkillInstances = SkillUtilsService.CreateSkillsInstancesDto(item.SkillInstance)
             };
@@ -156,6 +162,7 @@ public class CharacterService : ICharacterService
             Age = character.Age,
             Hp = character.Hp,
             AddHp = character.AddHp,
+            ImageId = character.ImageId,
             SpellSlots = character.SpellSlots,
             EnergySlots = character.EnergySlots,
             Gender = character.Gender,
@@ -201,11 +208,20 @@ public class CharacterService : ICharacterService
         var character = new Character(dto.Name, dto.Level, dto.Age, dto.Gender, dto.Ideology, dto.System,
             dto.Characteristics);
 
+        if (dto.ImageId != null)
+        {
+            character.ImageId = (int)dto.ImageId;
+        }
+
         var classTemplate = _classTemplateRepository.Get(x => x.Id == dto.ClassId).FirstOrDefault();
         var raceTemplate = _raceTemplateRepository.Get(x => x.Id == dto.RaceId).FirstOrDefault();
         var backgroundTemplate = _backgroundTemplateRepository.Get(x => x.Id == dto.BackgroundId).FirstOrDefault();
 
-        if (classTemplate == null || raceTemplate == null || backgroundTemplate == null) throw new Exception();
+        if (classTemplate == null || raceTemplate == null || backgroundTemplate == null)
+        {
+            throw new Exception();
+        }
+
         var classInstance = new ClassInstance(classTemplate.Name, classTemplate.Description, classTemplate.System)
         {
             SkillInstance = SkillUtilsService.CreateSkillsInstancesFromTemplate(classTemplate.SkillTemplate)
@@ -237,7 +253,10 @@ public class CharacterService : ICharacterService
     public Task SetHpCharacter(int id, int hp, int addHp)
     {
         var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
-        if (character == null) throw new Exception();
+        if (character == null)
+        {
+            throw new Exception();
+        }
 
         character.Hp = hp;
         character.AddHp = addHp;
@@ -249,16 +268,27 @@ public class CharacterService : ICharacterService
     public Task AddSkill(int id, int skillId)
     {
         var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
-        if (character == null) throw new Exception();
+        if (character == null)
+        {
+            throw new Exception();
+        }
+
         _characterRepository.Attach(character);
 
         var skillTemplate = _skillTemplateRepository.Get(x => x.Id == skillId).FirstOrDefault();
-        if (skillTemplate == null) throw new Exception();
+        if (skillTemplate == null)
+        {
+            throw new Exception();
+        }
 
         var instance = SkillUtilsService.CreateSkillsInstancesFromTemplate(new List<SkillTemplate> { skillTemplate })
             .FirstOrDefault();
 
-        if (instance != null) character.SkillInstance.Add(instance);
+        if (instance != null)
+        {
+            character.SkillInstance.Add(instance);
+        }
+
         _characterRepository.Update(character);
         _unitOfWork.SaveChanges();
         return Task.CompletedTask;

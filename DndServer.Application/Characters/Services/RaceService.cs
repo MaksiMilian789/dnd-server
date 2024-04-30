@@ -52,7 +52,11 @@ public class RaceService : IRaceService
 
         var skillTemplates = _skillTemplateRepository.Get(x => dto.SkillIds.Contains(x.Id));
         var skills = SkillUtilsService.CreateSkillsTemplateFromTemplate(skillTemplates);
-        foreach (var skill in skills) race.SkillTemplate.Add(skill);
+        foreach (var skill in skills)
+        {
+            race.SkillTemplate.Add(skill);
+        }
+
         _raceTemplateRepository.Create(race);
 
         _unitOfWork.SaveChanges();

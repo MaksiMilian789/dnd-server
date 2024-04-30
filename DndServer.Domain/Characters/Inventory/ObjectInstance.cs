@@ -12,6 +12,9 @@ public class ObjectInstance
     public Damage Damage { get; set; } = null!;
     public AttackTypesEnum AttackType { get; set; }
     public int? Distance { get; set; }
+    public int Quantity { get; set; }
+    public int ImageId { get; set; }
+    public virtual Image Image { get; set; } = null!;
     public SystemEnum System { get; set; }
     public virtual ICollection<SkillInstance> SkillInstance { get; set; }
     public virtual ICollection<Character> Character { get; set; }
