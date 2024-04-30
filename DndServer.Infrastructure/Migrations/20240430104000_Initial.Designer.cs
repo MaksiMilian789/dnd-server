@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DndServer.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240430103026_Initial")]
+    [Migration("20240430104000_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -162,6 +162,21 @@ namespace DndServer.Infrastructure.Migrations
                     b.HasIndex("SkillTemplateId");
 
                     b.ToTable("ClassTemplateSkillTemplate");
+                });
+
+            modelBuilder.Entity("ConditionsSkillInstance", b =>
+                {
+                    b.Property<int>("ConditionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SkillInstanceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ConditionId", "SkillInstanceId");
+
+                    b.HasIndex("SkillInstanceId");
+
+                    b.ToTable("ConditionsSkillInstance");
                 });
 
             modelBuilder.Entity("DndServer.Domain.Characters.Background.BackgroundInstance", b =>
@@ -377,6 +392,9 @@ namespace DndServer.Infrastructure.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("AuthorId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -384,6 +402,12 @@ namespace DndServer.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<int>("System")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("WorldId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -1579,6 +1603,21 @@ namespace DndServer.Infrastructure.Migrations
                     b.HasOne("DndServer.Domain.Characters.Skill.SkillTemplate", null)
                         .WithMany()
                         .HasForeignKey("SkillTemplateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ConditionsSkillInstance", b =>
+                {
+                    b.HasOne("DndServer.Domain.Characters.Condition.Conditions", null)
+                        .WithMany()
+                        .HasForeignKey("ConditionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DndServer.Domain.Characters.Skill.SkillInstance", null)
+                        .WithMany()
+                        .HasForeignKey("SkillInstanceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

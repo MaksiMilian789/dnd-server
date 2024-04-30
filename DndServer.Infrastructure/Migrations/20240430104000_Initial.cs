@@ -100,7 +100,10 @@ namespace DndServer.Infrastructure.Migrations
                     Name = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Description = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    AuthorId = table.Column<int>(type: "int", nullable: false),
+                    WorldId = table.Column<int>(type: "int", nullable: true),
+                    System = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -522,6 +525,31 @@ namespace DndServer.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ClassInstanceSkillInstance_SkillInstance_SkillInstanceId",
+                        column: x => x.SkillInstanceId,
+                        principalTable: "SkillInstance",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "ConditionsSkillInstance",
+                columns: table => new
+                {
+                    ConditionId = table.Column<int>(type: "int", nullable: false),
+                    SkillInstanceId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ConditionsSkillInstance", x => new { x.ConditionId, x.SkillInstanceId });
+                    table.ForeignKey(
+                        name: "FK_ConditionsSkillInstance_Conditions_ConditionId",
+                        column: x => x.ConditionId,
+                        principalTable: "Conditions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ConditionsSkillInstance_SkillInstance_SkillInstanceId",
                         column: x => x.SkillInstanceId,
                         principalTable: "SkillInstance",
                         principalColumn: "Id",
@@ -1117,6 +1145,11 @@ namespace DndServer.Infrastructure.Migrations
                 column: "SkillTemplateId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ConditionsSkillInstance_SkillInstanceId",
+                table: "ConditionsSkillInstance",
+                column: "SkillInstanceId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Note_ImageId",
                 table: "Note",
                 column: "ImageId");
@@ -1241,6 +1274,9 @@ namespace DndServer.Infrastructure.Migrations
                 name: "ClassTemplateSkillTemplate");
 
             migrationBuilder.DropTable(
+                name: "ConditionsSkillInstance");
+
+            migrationBuilder.DropTable(
                 name: "ObjectInstanceSkillInstance");
 
             migrationBuilder.DropTable(
@@ -1271,9 +1307,6 @@ namespace DndServer.Infrastructure.Migrations
                 name: "BackgroundTemplate");
 
             migrationBuilder.DropTable(
-                name: "Conditions");
-
-            migrationBuilder.DropTable(
                 name: "Note");
 
             migrationBuilder.DropTable(
@@ -1281,6 +1314,9 @@ namespace DndServer.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "ClassTemplate");
+
+            migrationBuilder.DropTable(
+                name: "Conditions");
 
             migrationBuilder.DropTable(
                 name: "ObjectInstance");
