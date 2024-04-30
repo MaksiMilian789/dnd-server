@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DndServer.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240430112536_Initial")]
+    [Migration("20240430130951_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -266,7 +266,7 @@ namespace DndServer.Infrastructure.Migrations
                     b.Property<int>("Ideology")
                         .HasColumnType("int");
 
-                    b.Property<int>("ImageId")
+                    b.Property<int?>("ImageId")
                         .HasColumnType("int");
 
                     b.Property<int>("Level")
@@ -438,7 +438,7 @@ namespace DndServer.Infrastructure.Migrations
                     b.Property<bool>("Equipped")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int>("ImageId")
+                    b.Property<int?>("ImageId")
                         .HasColumnType("int");
 
                     b.Property<int>("MainCharacteristic")
@@ -516,7 +516,7 @@ namespace DndServer.Infrastructure.Migrations
                     b.Property<int?>("Distance")
                         .HasColumnType("int");
 
-                    b.Property<int>("ImageId")
+                    b.Property<int?>("ImageId")
                         .HasColumnType("int");
 
                     b.Property<int>("MainCharacteristic")
@@ -582,7 +582,7 @@ namespace DndServer.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("ImageId")
+                    b.Property<int?>("ImageId")
                         .HasColumnType("int");
 
                     b.Property<string>("Text")
@@ -1299,7 +1299,7 @@ namespace DndServer.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("ImageId")
+                    b.Property<int?>("ImageId")
                         .HasColumnType("int");
 
                     b.Property<string>("Text")
@@ -1330,7 +1330,7 @@ namespace DndServer.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("ImageId")
+                    b.Property<int?>("ImageId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -1638,9 +1638,7 @@ namespace DndServer.Infrastructure.Migrations
 
                     b.HasOne("DndServer.Domain.Shared.Image", "Image")
                         .WithMany("Character")
-                        .HasForeignKey("ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ImageId");
 
                     b.HasOne("DndServer.Domain.Characters.Race.RaceInstance", "RaceInstance")
                         .WithMany("Character")
@@ -1669,9 +1667,7 @@ namespace DndServer.Infrastructure.Migrations
                 {
                     b.HasOne("DndServer.Domain.Shared.Image", "Image")
                         .WithMany("ObjectInstance")
-                        .HasForeignKey("ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ImageId");
 
                     b.Navigation("Image");
                 });
@@ -1680,9 +1676,7 @@ namespace DndServer.Infrastructure.Migrations
                 {
                     b.HasOne("DndServer.Domain.Shared.Image", "Image")
                         .WithMany("ObjectTemplate")
-                        .HasForeignKey("ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ImageId");
 
                     b.Navigation("Image");
                 });
@@ -1691,9 +1685,7 @@ namespace DndServer.Infrastructure.Migrations
                 {
                     b.HasOne("DndServer.Domain.Shared.Image", "Image")
                         .WithMany("Note")
-                        .HasForeignKey("ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ImageId");
 
                     b.Navigation("Image");
                 });
@@ -1713,9 +1705,7 @@ namespace DndServer.Infrastructure.Migrations
                 {
                     b.HasOne("DndServer.Domain.Shared.Image", "Image")
                         .WithMany("WikiPage")
-                        .HasForeignKey("ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ImageId");
 
                     b.HasOne("DndServer.Domain.Worlds.Wiki", "Wiki")
                         .WithMany("WikiPage")
@@ -1732,9 +1722,7 @@ namespace DndServer.Infrastructure.Migrations
                 {
                     b.HasOne("DndServer.Domain.Shared.Image", "Image")
                         .WithMany("World")
-                        .HasForeignKey("ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ImageId");
 
                     b.HasOne("DndServer.Domain.Worlds.Tracker", "Tracker")
                         .WithOne("World")

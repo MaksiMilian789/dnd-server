@@ -16,8 +16,8 @@ public class ObjectTemplate
     public ItemTypeEnum Type { get; set; }
     public CharacteristicsEnum MainCharacteristic { get; set; }
     public int? Distance { get; set; }
-    public int ImageId { get; set; }
-    public virtual Image Image { get; set; } = null!;
+    public int? ImageId { get; set; }
+    public virtual Image? Image { get; set; }
     public SystemEnum System { get; set; }
     public int AuthorId { get; set; }
     public int? WorldId { get; set; }

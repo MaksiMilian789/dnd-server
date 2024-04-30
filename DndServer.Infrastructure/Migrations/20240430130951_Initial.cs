@@ -392,7 +392,7 @@ namespace DndServer.Infrastructure.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Text = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ImageId = table.Column<int>(type: "int", nullable: false)
+                    ImageId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -401,8 +401,7 @@ namespace DndServer.Infrastructure.Migrations
                         name: "FK_Note_Image_ImageId",
                         column: x => x.ImageId,
                         principalTable: "Image",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -424,7 +423,7 @@ namespace DndServer.Infrastructure.Migrations
                     Equipped = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Distance = table.Column<int>(type: "int", nullable: true),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    ImageId = table.Column<int>(type: "int", nullable: false),
+                    ImageId = table.Column<int>(type: "int", nullable: true),
                     System = table.Column<int>(type: "int", nullable: false),
                     Damage_DamageType = table.Column<int>(type: "int", nullable: false),
                     Damage_Flat = table.Column<int>(type: "int", nullable: false),
@@ -439,8 +438,7 @@ namespace DndServer.Infrastructure.Migrations
                         name: "FK_ObjectInstance_Image_ImageId",
                         column: x => x.ImageId,
                         principalTable: "Image",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -460,7 +458,7 @@ namespace DndServer.Infrastructure.Migrations
                     Type = table.Column<int>(type: "int", nullable: false),
                     MainCharacteristic = table.Column<int>(type: "int", nullable: false),
                     Distance = table.Column<int>(type: "int", nullable: true),
-                    ImageId = table.Column<int>(type: "int", nullable: false),
+                    ImageId = table.Column<int>(type: "int", nullable: true),
                     System = table.Column<int>(type: "int", nullable: false),
                     AuthorId = table.Column<int>(type: "int", nullable: false),
                     WorldId = table.Column<int>(type: "int", nullable: true),
@@ -477,8 +475,7 @@ namespace DndServer.Infrastructure.Migrations
                         name: "FK_ObjectTemplate_Image_ImageId",
                         column: x => x.ImageId,
                         principalTable: "Image",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -758,7 +755,7 @@ namespace DndServer.Infrastructure.Migrations
                     RaceInstanceId = table.Column<int>(type: "int", nullable: false),
                     BackgroundInstanceId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    ImageId = table.Column<int>(type: "int", nullable: false),
+                    ImageId = table.Column<int>(type: "int", nullable: true),
                     Characteristics_Charisma = table.Column<int>(type: "int", nullable: false),
                     Characteristics_Constitution = table.Column<int>(type: "int", nullable: false),
                     Characteristics_Dexterity = table.Column<int>(type: "int", nullable: false),
@@ -785,8 +782,7 @@ namespace DndServer.Infrastructure.Migrations
                         name: "FK_Character_Image_ImageId",
                         column: x => x.ImageId,
                         principalTable: "Image",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Character_RaceInstance_RaceInstanceId",
                         column: x => x.RaceInstanceId,
@@ -813,7 +809,7 @@ namespace DndServer.Infrastructure.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Text = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ImageId = table.Column<int>(type: "int", nullable: false)
+                    ImageId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -822,8 +818,7 @@ namespace DndServer.Infrastructure.Migrations
                         name: "FK_WikiPage_Image_ImageId",
                         column: x => x.ImageId,
                         principalTable: "Image",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_WikiPage_Wiki_WikiId",
                         column: x => x.WikiId,
@@ -843,7 +838,7 @@ namespace DndServer.Infrastructure.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Description = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    ImageId = table.Column<int>(type: "int", nullable: false),
+                    ImageId = table.Column<int>(type: "int", nullable: true),
                     TrackerKey = table.Column<int>(type: "int", nullable: false),
                     WikiKey = table.Column<int>(type: "int", nullable: false)
                 },
@@ -854,8 +849,7 @@ namespace DndServer.Infrastructure.Migrations
                         name: "FK_World_Image_ImageId",
                         column: x => x.ImageId,
                         principalTable: "Image",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_World_Tracker_TrackerKey",
                         column: x => x.TrackerKey,

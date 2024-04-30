@@ -35,8 +35,8 @@ public class Character
     public int BackgroundInstanceId { get; set; }
     public virtual User User { get; set; } = null!;
     public int UserId { get; set; }
-    public int ImageId { get; set; }
-    public virtual Image Image { get; set; } = null!;
+    public int? ImageId { get; set; }
+    public virtual Image? Image { get; set; }
     public virtual ICollection<Conditions> Conditions { get; set; }
     public virtual ICollection<ObjectInstance> ObjectInstance { get; set; }
     public virtual ICollection<Note> Note { get; set; }

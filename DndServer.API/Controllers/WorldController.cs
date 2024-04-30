@@ -27,7 +27,7 @@ public class WorldController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task<ActionResult<List<ShortWorldDto>>> GetListWorlds(int userId, RoleEnum role)
+    public async Task<ActionResult<List<ShortWorldDto>>> GetListWorlds(int userId, RoleEnum? role)
     {
         return await _worldService.GetWorlds(userId, role);
     }

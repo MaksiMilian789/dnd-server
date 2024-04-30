@@ -18,8 +18,8 @@ public class ObjectInstance
     public bool Equipped { get; set; }
     public int? Distance { get; set; }
     public int Quantity { get; set; }
-    public int ImageId { get; set; }
-    public virtual Image Image { get; set; } = null!;
+    public int? ImageId { get; set; }
+    public virtual Image? Image { get; set; }
     public SystemEnum System { get; set; }
     public virtual ICollection<SkillInstance> SkillInstance { get; set; }
     public virtual ICollection<Character> Character { get; set; }

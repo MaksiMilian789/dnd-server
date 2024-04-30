@@ -41,10 +41,11 @@ public class WorldService : IWorldService
         return Task.CompletedTask;
     }
 
-    public Task<List<ShortWorldDto>> GetWorlds(int userId, RoleEnum role)
+    public Task<List<ShortWorldDto>> GetWorlds(int userId, RoleEnum? role)
     {
         var worlds = _worldRepository.Get();
-        var userWorlds = worlds.Where(x => x.WorldLinks.Any(y => y.UserId == userId && y.Role == role));
+        var userWorlds =
+            worlds.Where(x => x.WorldLinks.Any(y => y.UserId == userId && (role == null || y.Role == role)));
         var worldsDto = new List<ShortWorldDto>();
         foreach (var world in userWorlds)
         {
