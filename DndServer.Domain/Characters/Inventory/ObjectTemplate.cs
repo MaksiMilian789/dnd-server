@@ -11,6 +11,10 @@ public class ObjectTemplate
     public string Description { get; set; }
     public Damage Damage { get; set; } = null!;
     public AttackTypesEnum AttackType { get; set; }
+    public bool Attachment { get; set; }
+    public RareEnum Rare { get; set; }
+    public ItemTypeEnum Type { get; set; }
+    public CharacteristicsEnum MainCharacteristic { get; set; }
     public int? Distance { get; set; }
     public int ImageId { get; set; }
     public virtual Image Image { get; set; } = null!;

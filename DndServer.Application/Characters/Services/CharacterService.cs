@@ -96,6 +96,11 @@ public class CharacterService : ICharacterService
                 Distance = item.Distance,
                 ImageId = item.ImageId,
                 Quantity = item.Quantity,
+                Attachment = item.Attachment,
+                Type = item.Type,
+                Equipped = item.Equipped,
+                Rare = item.Rare,
+                MainCharacteristic = item.MainCharacteristic,
                 System = item.System,
                 SkillInstances = SkillUtilsService.CreateSkillsInstancesDto(item.SkillInstance)
             };
@@ -162,6 +167,7 @@ public class CharacterService : ICharacterService
             Age = character.Age,
             Hp = character.Hp,
             AddHp = character.AddHp,
+            MaxAttachments = character.MaxAttachments,
             ImageId = character.ImageId,
             SpellSlots = character.SpellSlots,
             EnergySlots = character.EnergySlots,
