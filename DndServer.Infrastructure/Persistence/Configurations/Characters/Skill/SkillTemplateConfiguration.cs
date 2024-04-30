@@ -14,6 +14,7 @@ public class SkillTemplateConfiguration : IEntityTypeConfiguration<SkillTemplate
         builder.HasMany(x => x.SpellTemplate).WithMany(x => x.SkillTemplate);
         builder.HasMany(x => x.ObjectTemplate).WithMany(x => x.SkillTemplate);
         builder.HasMany(x => x.ClassTemplate).WithMany(x => x.SkillTemplate);
+        builder.HasMany(x => x.Condition).WithMany(x => x.SkillTemplate);
         builder.ComplexProperty(x => x.Value);
 
         builder.ComplexProperty(x => x.Value, a =>

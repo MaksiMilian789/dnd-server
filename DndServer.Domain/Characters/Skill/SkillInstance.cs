@@ -1,6 +1,5 @@
 ﻿using DndServer.Domain.Characters.Background;
 using DndServer.Domain.Characters.Class;
-using DndServer.Domain.Characters.Condition;
 using DndServer.Domain.Characters.Inventory;
 using DndServer.Domain.Characters.Race;
 using DndServer.Domain.Characters.Spell;
@@ -27,7 +26,6 @@ public class SkillInstance
     public virtual ICollection<ObjectInstance> ObjectInstance { get; set; }
     public virtual ICollection<RaceInstance> RaceInstance { get; set; }
     public virtual ICollection<SpellInstance> SpellInstance { get; set; }
-    public virtual ICollection<Conditions> Condition { get; set; }
 
     public SkillInstance(string name, string description, ActionTypesEnum actionType, SkillTypesEnum skillType,
         int? distance, bool passive, int recharge, int charges, SystemEnum system)

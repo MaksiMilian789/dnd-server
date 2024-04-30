@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DndServer.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240430104000_Initial")]
+    [Migration("20240430112536_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -164,19 +164,19 @@ namespace DndServer.Infrastructure.Migrations
                     b.ToTable("ClassTemplateSkillTemplate");
                 });
 
-            modelBuilder.Entity("ConditionsSkillInstance", b =>
+            modelBuilder.Entity("ConditionsSkillTemplate", b =>
                 {
                     b.Property<int>("ConditionId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SkillInstanceId")
+                    b.Property<int>("SkillTemplateId")
                         .HasColumnType("int");
 
-                    b.HasKey("ConditionId", "SkillInstanceId");
+                    b.HasKey("ConditionId", "SkillTemplateId");
 
-                    b.HasIndex("SkillInstanceId");
+                    b.HasIndex("SkillTemplateId");
 
-                    b.ToTable("ConditionsSkillInstance");
+                    b.ToTable("ConditionsSkillTemplate");
                 });
 
             modelBuilder.Entity("DndServer.Domain.Characters.Background.BackgroundInstance", b =>
@@ -1607,7 +1607,7 @@ namespace DndServer.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ConditionsSkillInstance", b =>
+            modelBuilder.Entity("ConditionsSkillTemplate", b =>
                 {
                     b.HasOne("DndServer.Domain.Characters.Condition.Conditions", null)
                         .WithMany()
@@ -1615,9 +1615,9 @@ namespace DndServer.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DndServer.Domain.Characters.Skill.SkillInstance", null)
+                    b.HasOne("DndServer.Domain.Characters.Skill.SkillTemplate", null)
                         .WithMany()
-                        .HasForeignKey("SkillInstanceId")
+                        .HasForeignKey("SkillTemplateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -533,31 +533,6 @@ namespace DndServer.Infrastructure.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "ConditionsSkillInstance",
-                columns: table => new
-                {
-                    ConditionId = table.Column<int>(type: "int", nullable: false),
-                    SkillInstanceId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ConditionsSkillInstance", x => new { x.ConditionId, x.SkillInstanceId });
-                    table.ForeignKey(
-                        name: "FK_ConditionsSkillInstance_Conditions_ConditionId",
-                        column: x => x.ConditionId,
-                        principalTable: "Conditions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ConditionsSkillInstance_SkillInstance_SkillInstanceId",
-                        column: x => x.SkillInstanceId,
-                        principalTable: "SkillInstance",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "RaceInstanceSkillInstance",
                 columns: table => new
                 {
@@ -625,6 +600,31 @@ namespace DndServer.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ClassTemplateSkillTemplate_SkillTemplate_SkillTemplateId",
+                        column: x => x.SkillTemplateId,
+                        principalTable: "SkillTemplate",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "ConditionsSkillTemplate",
+                columns: table => new
+                {
+                    ConditionId = table.Column<int>(type: "int", nullable: false),
+                    SkillTemplateId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ConditionsSkillTemplate", x => new { x.ConditionId, x.SkillTemplateId });
+                    table.ForeignKey(
+                        name: "FK_ConditionsSkillTemplate_Conditions_ConditionId",
+                        column: x => x.ConditionId,
+                        principalTable: "Conditions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ConditionsSkillTemplate_SkillTemplate_SkillTemplateId",
                         column: x => x.SkillTemplateId,
                         principalTable: "SkillTemplate",
                         principalColumn: "Id",
@@ -1145,9 +1145,9 @@ namespace DndServer.Infrastructure.Migrations
                 column: "SkillTemplateId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ConditionsSkillInstance_SkillInstanceId",
-                table: "ConditionsSkillInstance",
-                column: "SkillInstanceId");
+                name: "IX_ConditionsSkillTemplate_SkillTemplateId",
+                table: "ConditionsSkillTemplate",
+                column: "SkillTemplateId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Note_ImageId",
@@ -1274,7 +1274,7 @@ namespace DndServer.Infrastructure.Migrations
                 name: "ClassTemplateSkillTemplate");
 
             migrationBuilder.DropTable(
-                name: "ConditionsSkillInstance");
+                name: "ConditionsSkillTemplate");
 
             migrationBuilder.DropTable(
                 name: "ObjectInstanceSkillInstance");

@@ -1,5 +1,6 @@
 ﻿using DndServer.Domain.Characters.Background;
 using DndServer.Domain.Characters.Class;
+using DndServer.Domain.Characters.Condition;
 using DndServer.Domain.Characters.Inventory;
 using DndServer.Domain.Characters.Race;
 using DndServer.Domain.Characters.Spell;
@@ -28,6 +29,7 @@ public class SkillTemplate
     public virtual ICollection<ObjectTemplate> ObjectTemplate { get; set; }
     public virtual ICollection<RaceTemplate> RaceTemplate { get; set; }
     public virtual ICollection<SpellTemplate> SpellTemplate { get; set; }
+    public virtual ICollection<Conditions> Condition { get; set; }
 
     public SkillTemplate(string name, string description, ActionTypesEnum actionType, SkillTypesEnum skillType,
         int? distance, bool passive, int recharge, int charges, SystemEnum system, int authorId,
@@ -49,5 +51,6 @@ public class SkillTemplate
         ObjectTemplate = new List<ObjectTemplate>();
         RaceTemplate = new List<RaceTemplate>();
         SpellTemplate = new List<SpellTemplate>();
+        Condition = new List<Conditions>();
     }
 }

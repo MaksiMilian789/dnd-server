@@ -14,7 +14,6 @@ public class SkillInstanceConfiguration : IEntityTypeConfiguration<SkillInstance
         builder.HasMany(x => x.ClassInstance).WithMany(x => x.SkillInstance);
         builder.HasMany(x => x.RaceInstance).WithMany(x => x.SkillInstance);
         builder.HasMany(x => x.ObjectInstance).WithMany(x => x.SkillInstance);
-        builder.HasMany(x => x.Condition).WithMany(x => x.SkillInstance);
         builder.ComplexProperty(x => x.Value);
 
         builder.ComplexProperty(x => x.Value, a =>
