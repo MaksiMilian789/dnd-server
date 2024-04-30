@@ -77,4 +77,16 @@ public class CharacterController : ControllerBase
     {
         await _characterService.AddSkill(id, skillId);
     }
+
+    /// <summary>
+    ///     Добавление состояния
+    /// </summary>
+    [HttpPut("addCondition")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesDefaultResponseType]
+    public async Task AddCondition(int id, int conditionId)
+    {
+        await _characterService.AddCondition(id, conditionId);
+    }
 }

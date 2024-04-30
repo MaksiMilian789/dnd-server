@@ -6,6 +6,7 @@ using DndServer.Application.Interfaces;
 using DndServer.Application.Interfaces.Characters;
 using DndServer.Application.Interfaces.Characters.Background;
 using DndServer.Application.Interfaces.Characters.Class;
+using DndServer.Application.Interfaces.Characters.Condition;
 using DndServer.Application.Interfaces.Characters.Race;
 using DndServer.Application.Interfaces.Characters.Skill;
 using DndServer.Application.Interfaces.Users;
@@ -28,11 +29,12 @@ public class CharacterService : ICharacterService
     private readonly IUserRepository _userRepository;
     private readonly ISkillTemplateRepository _skillTemplateRepository;
     private readonly ISkillInstanceRepository _skillInstanceRepository;
+    private readonly IConditionsRepository _conditionsRepository;
 
     public CharacterService(ICharacterRepository characterRepository, IClassTemplateRepository classTemplateRepository,
         IRaceTemplateRepository raceTemplateRepository, IBackgroundTemplateRepository backgroundTemplateRepository,
         IUserRepository userRepository, IUnitOfWork unitOfWork, ISkillTemplateRepository skillTemplateRepository,
-        ISkillInstanceRepository skillInstanceRepository)
+        ISkillInstanceRepository skillInstanceRepository, IConditionsRepository conditionsRepository)
     {
         _characterRepository = characterRepository;
         _classTemplateRepository = classTemplateRepository;
@@ -42,6 +44,7 @@ public class CharacterService : ICharacterService
         _unitOfWork = unitOfWork;
         _skillTemplateRepository = skillTemplateRepository;
         _skillInstanceRepository = skillInstanceRepository;
+        _conditionsRepository = conditionsRepository;
     }
 
     public Task<List<ShortCharacterDto>> GetShortListCharacters(int userId)
@@ -295,6 +298,31 @@ public class CharacterService : ICharacterService
             character.SkillInstance.Add(instance);
         }
 
+        _characterRepository.Update(character);
+        _unitOfWork.SaveChanges();
+        return Task.CompletedTask;
+    }
+
+
+    public Task AddCondition(int id, int conditionId)
+    {
+        var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
+        if (character == null)
+        {
+            throw new Exception();
+        }
+
+        _characterRepository.Attach(character);
+
+        var condition = _conditionsRepository.Get(x => x.Id == conditionId).FirstOrDefault();
+        if (condition == null)
+        {
+            throw new Exception();
+        }
+
+        _conditionsRepository.Attach(condition);
+
+        character.Conditions.Add(condition);
         _characterRepository.Update(character);
         _unitOfWork.SaveChanges();
         return Task.CompletedTask;

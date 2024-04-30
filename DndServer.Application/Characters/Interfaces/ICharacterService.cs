@@ -10,4 +10,5 @@ public interface ICharacterService
     public Task<CharacterDto> GetCharacter(int id);
     public Task SetHpCharacter(int id, int hp, int addHp);
     public Task AddSkill(int id, int skillId);
+    public Task AddCondition(int id, int conditionId);
 }
