@@ -2,6 +2,7 @@
 using DndServer.Application.Auth.Interfaces;
 using DndServer.Application.Auth.Models;
 using DndServer.Application.Users.Interfaces;
+using DndServer.Application.Users.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DndServer.API.Controllers.Auth;
@@ -19,6 +20,17 @@ public class AuthController : ControllerBase
     {
         _userService = userService;
         _jwtService = jwtService;
+    }
+
+    /// <summary>
+    ///     Регистрация
+    /// </summary>
+    [HttpPost("registration")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesDefaultResponseType]
+    public async Task CreateCharacter([FromBody] RegistrationDto dto)
+    {
+        await _userService.Registration(dto);
     }
 
     /// <summary>
@@ -52,6 +64,6 @@ public class AuthController : ControllerBase
 
     private static ProblemDetails CreateFailResponse(string title)
     {
-        return new() { Title = title };
+        return new ProblemDetails { Title = title };
     }
 }

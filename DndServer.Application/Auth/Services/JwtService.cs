@@ -29,7 +29,7 @@ public class JwtService : IJwtService
             throw new UnauthorizedAccessException();
         }
 
-        var user = await _userService.GetByLoginAsync(tokenRequest.Login);
+        var user = await _userService.GetDomainUserByLogin(tokenRequest.Login);
 
         if (user is null)
         {

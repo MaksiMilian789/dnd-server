@@ -20,8 +20,8 @@ public class Character
     public int Age { get; set; }
     public int Hp { get; set; }
     public int AddHp { get; set; }
-    public List<SpellSlot> SpellSlots { get; set; }
-    public List<EnergySlot> EnergySlots { get; set; }
+    public List<SpellSlot> SpellSlots { get; set; } = new();
+    public List<EnergySlot> EnergySlots { get; set; } = new();
     public GenderEnum Gender { get; set; }
     public IdeologyEnum Ideology { get; set; }
     public SystemEnum System { get; set; }

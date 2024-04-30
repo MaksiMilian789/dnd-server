@@ -40,16 +40,16 @@ public static class MigrateDatabaseExtensions
     {
         var hasher = services.GetService<IPasswordHasher<User>>();
         var userService = services.GetService<IUserService>();
-        var user = await userService?.GetByLoginAsync("admin")!;
+        var user = await userService?.GetDomainUserByLogin("admin")!;
 
         if (user is null)
         {
-            user = new User("admin", "");
+            var newUser = new User("admin", "");
 
-            var hashedPassword = hasher!.HashPassword(user, "123");
-            user.PasswordHash = hashedPassword;
+            var hashedPassword = hasher!.HashPassword(newUser, "123");
+            newUser.PasswordHash = hashedPassword;
 
-            userService.CreateUser(user);
+            userService.CreateUser(newUser);
         }
     }
 }
