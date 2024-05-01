@@ -1,11 +1,5 @@
-﻿using DndServer.Domain.Characters;
-using DndServer.Domain.Characters.Background;
-using DndServer.Domain.Characters.Class;
-using DndServer.Domain.Characters.Condition;
-using DndServer.Domain.Characters.Inventory;
-using DndServer.Domain.Characters.Notes;
-using DndServer.Domain.Characters.Race;
-using DndServer.Domain.Characters.Skill;
+﻿using DndServer.Application.Characters.Models.Instances;
+using DndServer.Domain.Characters;
 using DndServer.Domain.Characters.Spell;
 using DndServer.Domain.Shared.Enums;
 
@@ -17,16 +11,22 @@ public class CharacterDto
     public string Name { get; set; } = "";
     public int Level { get; set; }
     public int Age { get; set; }
+    public int Hp { get; set; }
+    public int AddHp { get; set; }
+    public int MaxAttachments { get; set; }
+    public int? ImageId { get; set; }
+    public List<SpellSlot> SpellSlots { get; set; } = new();
+    public List<EnergySlot> EnergySlots { get; set; } = new();
     public GenderEnum Gender { get; set; }
     public IdeologyEnum Ideology { get; set; }
     public SystemEnum System { get; set; }
     public Characteristics Characteristics { get; set; } = null!;
-    public ClassInstance ClassInstance { get; set; } = null!;
-    public RaceInstance RaceInstance { get; set; } = null!;
-    public BackgroundInstance BackgroundInstance { get; set; } = null!;
-    public ICollection<Conditions> Conditions { get; set; } = new List<Conditions>();
-    public ICollection<ObjectInstance> ObjectInstance { get; set; } = new List<ObjectInstance>();
-    public ICollection<Note> Note { get; set; } = new List<Note>();
-    public ICollection<SkillInstance> SkillInstance { get; set; } = new List<SkillInstance>();
-    public ICollection<SpellInstance> SpellInstance { get; set; } = new List<SpellInstance>();
+    public ClassInstanceDto ClassInstance { get; set; } = null!;
+    public RaceInstanceDto RaceInstance { get; set; } = null!;
+    public BackgroundInstanceDto BackgroundInstance { get; set; } = null!;
+    public ICollection<ConditionDto> Conditions { get; set; } = new List<ConditionDto>();
+    public ICollection<ObjectInstanceDto> ObjectInstance { get; set; } = new List<ObjectInstanceDto>();
+    public ICollection<NoteDto> Note { get; set; } = new List<NoteDto>();
+    public ICollection<SkillInstanceDto> SkillInstance { get; set; } = new List<SkillInstanceDto>();
+    public ICollection<SpellInstanceDto> SpellInstance { get; set; } = new List<SpellInstanceDto>();
 }

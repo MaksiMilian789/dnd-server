@@ -2,6 +2,7 @@
 using DndServer.Application.Auth.Interfaces;
 using DndServer.Application.Auth.Models;
 using DndServer.Application.Users.Interfaces;
+using DndServer.Application.Users.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DndServer.API.Controllers.Auth;
@@ -22,6 +23,17 @@ public class AuthController : ControllerBase
     }
 
     /// <summary>
+    ///     Регистрация
+    /// </summary>
+    [HttpPost("registration")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesDefaultResponseType]
+    public async Task CreateCharacter([FromBody] RegistrationDto dto)
+    {
+        await _userService.Registration(dto);
+    }
+
+    /// <summary>
     ///     Авторизует пользователя. При успешной авторизации возвращает JWT токен.
     /// </summary>
     [HttpPost]
@@ -31,7 +43,10 @@ public class AuthController : ControllerBase
     public async Task<ActionResult<AuthResult>> Authenticate(TokenRequest request)
     {
         if (string.IsNullOrWhiteSpace(request.Login) || string.IsNullOrWhiteSpace(request.Password))
+        {
             return Unauthorized(CreateFailResponse(Errors.AuthFailed));
+        }
+
         try
         {
             var token = await _jwtService.LogIn(request);
@@ -47,5 +62,8 @@ public class AuthController : ControllerBase
         }
     }
 
-    private static ProblemDetails CreateFailResponse(string title) => new() { Title = title };
+    private static ProblemDetails CreateFailResponse(string title)
+    {
+        return new ProblemDetails { Title = title };
+    }
 }

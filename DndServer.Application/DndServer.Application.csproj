@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Characters\Models\BackgroundDto - Копировать.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.4" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.5.1" />
@@ -14,10 +18,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DndServer.Domain\DndServer.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="World\" />
   </ItemGroup>
 
 </Project>

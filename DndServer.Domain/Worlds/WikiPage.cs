@@ -1,11 +1,15 @@
-﻿namespace DndServer.Domain.Worlds;
+﻿using DndServer.Domain.Shared;
+
+namespace DndServer.Domain.Worlds;
 
 public class WikiPage
 {
     public int Id { get; set; }
-    public Wiki Wiki { get; set; } = null!;
+    public virtual Wiki Wiki { get; set; } = null!;
     public string Header { get; set; }
     public string Text { get; set; }
+    public int? ImageId { get; set; }
+    public virtual Image? Image { get; set; }
 
     public WikiPage(string header, string text)
     {

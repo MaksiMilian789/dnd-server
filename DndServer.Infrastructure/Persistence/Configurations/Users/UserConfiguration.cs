@@ -10,6 +10,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
     {
         builder.HasKey(x => x.Id);
         builder.HasIndex(x => x.Login).IsUnique();
-        builder.HasMany(x => x.WorldLinks).WithOne(x => x.User);
+        builder.HasMany(x => x.WorldLinks).WithOne(x => x.User).HasForeignKey(x => x.UserId);
+        builder.HasMany(x => x.Character).WithOne(x => x.User).HasForeignKey(x => x.UserId);
     }
 }

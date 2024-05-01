@@ -1,5 +1,6 @@
 ﻿using DndServer.Application.Characters.Interfaces;
 using DndServer.Application.Characters.Models;
+using DndServer.Application.Interfaces;
 using DndServer.Application.Interfaces.Characters.Race;
 using DndServer.Application.Interfaces.Characters.Skill;
 using DndServer.Application.Shared;
@@ -9,16 +10,16 @@ namespace DndServer.Application.Characters.Services;
 
 public class RaceService : IRaceService
 {
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IRaceTemplateRepository _raceTemplateRepository;
-    private readonly ISkillInstanceRepository _skillInstanceRepository;
     private readonly ISkillTemplateRepository _skillTemplateRepository;
 
-    public RaceService(IRaceTemplateRepository raceTemplateRepository, ISkillInstanceRepository skillInstanceRepository,
-        ISkillTemplateRepository skillTemplateRepository)
+    public RaceService(IRaceTemplateRepository raceTemplateRepository,
+        ISkillTemplateRepository skillTemplateRepository, IUnitOfWork unitOfWork)
     {
         _raceTemplateRepository = raceTemplateRepository;
-        _skillInstanceRepository = skillInstanceRepository;
         _skillTemplateRepository = skillTemplateRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public Task<List<RaceDto>> GetRaces()
@@ -27,13 +28,16 @@ public class RaceService : IRaceService
         var listDto = new List<RaceDto>();
         foreach (var val in listTemplates)
         {
+            var skills = SkillUtilsService.CreateSkillsTemplatesDto(val.SkillTemplate);
             var dto = new RaceDto
             {
+                Id = val.Id,
                 Name = val.Name,
                 Description = val.Description,
                 System = val.System,
                 WorldId = val.WorldId,
-                Skills = val.SkillTemplate.ToList()
+                AuthorId = val.AuthorId,
+                Skills = skills
             };
             listDto.Add(dto);
         }
@@ -44,11 +48,18 @@ public class RaceService : IRaceService
     public Task CreateRaceTemplate(RaceCreateDto dto)
     {
         var race = new RaceTemplate(dto.Name, dto.Description, dto.System, dto.AuthorId, dto.WorldId);
-        var skillTemplates = _skillTemplateRepository.Get(x => dto.SkillIds.Contains(x.Id));
-        var skillInstances = SkillsModelCreator.CreateSkillsInstances(skillTemplates, _skillInstanceRepository);
-        race.SkillInstance = skillInstances;
         _raceTemplateRepository.Create(race);
 
+        var skillTemplates = _skillTemplateRepository.Get(x => dto.SkillIds.Contains(x.Id));
+        var skills = SkillUtilsService.CreateSkillsTemplateFromTemplate(skillTemplates);
+        foreach (var skill in skills)
+        {
+            race.SkillTemplate.Add(skill);
+        }
+
+        _raceTemplateRepository.Create(race);
+
+        _unitOfWork.SaveChanges();
         return Task.CompletedTask;
     }
 }

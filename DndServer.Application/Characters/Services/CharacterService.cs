@@ -1,84 +1,166 @@
 ﻿using DndServer.Application.Characters.Interfaces;
 using DndServer.Application.Characters.Models;
+using DndServer.Application.Characters.Models.Create;
+using DndServer.Application.Characters.Models.Instances;
+using DndServer.Application.Interfaces;
 using DndServer.Application.Interfaces.Characters;
 using DndServer.Application.Interfaces.Characters.Background;
 using DndServer.Application.Interfaces.Characters.Class;
+using DndServer.Application.Interfaces.Characters.Condition;
 using DndServer.Application.Interfaces.Characters.Race;
 using DndServer.Application.Interfaces.Characters.Skill;
+using DndServer.Application.Interfaces.Users;
 using DndServer.Application.Shared;
 using DndServer.Domain.Characters;
+using DndServer.Domain.Characters.Background;
+using DndServer.Domain.Characters.Class;
+using DndServer.Domain.Characters.Race;
+using DndServer.Domain.Characters.Skill;
 
 namespace DndServer.Application.Characters.Services;
 
 public class CharacterService : ICharacterService
 {
+    private readonly IUnitOfWork _unitOfWork;
     private readonly ICharacterRepository _characterRepository;
-    private readonly IClassInstanceRepository _classInstanceRepository;
     private readonly IClassTemplateRepository _classTemplateRepository;
-    private readonly IRaceInstanceRepository _raceInstanceRepository;
     private readonly IRaceTemplateRepository _raceTemplateRepository;
-    private readonly IBackgroundInstanceRepository _backgroundInstanceRepository;
     private readonly IBackgroundTemplateRepository _backgroundTemplateRepository;
+    private readonly IUserRepository _userRepository;
+    private readonly ISkillTemplateRepository _skillTemplateRepository;
     private readonly ISkillInstanceRepository _skillInstanceRepository;
+    private readonly IConditionsRepository _conditionsRepository;
 
-    public CharacterService(ICharacterRepository characterRepository, IClassInstanceRepository classInstanceRepository,
-        IClassTemplateRepository classTemplateRepository, IRaceInstanceRepository raceInstanceRepository,
-        IRaceTemplateRepository raceTemplateRepository, IBackgroundInstanceRepository backgroundInstanceRepository,
-        IBackgroundTemplateRepository backgroundTemplateRepository, ISkillInstanceRepository skillInstanceRepository)
+    public CharacterService(ICharacterRepository characterRepository, IClassTemplateRepository classTemplateRepository,
+        IRaceTemplateRepository raceTemplateRepository, IBackgroundTemplateRepository backgroundTemplateRepository,
+        IUserRepository userRepository, IUnitOfWork unitOfWork, ISkillTemplateRepository skillTemplateRepository,
+        ISkillInstanceRepository skillInstanceRepository, IConditionsRepository conditionsRepository)
     {
         _characterRepository = characterRepository;
-        _classInstanceRepository = classInstanceRepository;
         _classTemplateRepository = classTemplateRepository;
-        _raceInstanceRepository = raceInstanceRepository;
         _raceTemplateRepository = raceTemplateRepository;
-        _backgroundInstanceRepository = backgroundInstanceRepository;
         _backgroundTemplateRepository = backgroundTemplateRepository;
+        _userRepository = userRepository;
+        _unitOfWork = unitOfWork;
+        _skillTemplateRepository = skillTemplateRepository;
         _skillInstanceRepository = skillInstanceRepository;
+        _conditionsRepository = conditionsRepository;
     }
 
-    public Task<List<ShortCharacterDto>> GetShortListCharacters(string login)
+    public Task<List<ShortCharacterDto>> GetShortListCharacters(int userId)
     {
-        var charList = _characterRepository.Get();
+        var charList = _characterRepository.Get().Where(x => x.User.Id == userId);
         var shortList = charList.Select(character =>
-            new ShortCharacterDto
-                { Name = character.Name, Level = character.Level, ClassName = character.ClassInstance.Name }).ToList();
+        {
+            var classInstance = character.ClassInstance;
+            return new ShortCharacterDto
+            {
+                Id = character.Id,
+                Name = character.Name,
+                Level = character.Level,
+                ClassName = classInstance.Name,
+                System = character.System
+            };
+        }).ToList();
 
         return Task.FromResult(shortList);
-    }
-
-    public Task CreateCharacter(CharacterCreateDto dto)
-    {
-        var character = new Character(dto.Name, dto.Level, dto.Age, dto.Gender, dto.Ideology, dto.System,
-            dto.Characteristics);
-
-        var classInstance = _classTemplateRepository.Get(x => x.Id == dto.ClassId).FirstOrDefault();
-        var raceInstance = _raceTemplateRepository.Get(x => x.Id == dto.RaceId).FirstOrDefault();
-        var backgroundInstance = _backgroundTemplateRepository.Get(x => x.Id == dto.BackgroundId).FirstOrDefault();
-
-        if (classInstance == null || raceInstance == null || backgroundInstance == null) throw new Exception();
-        classInstance.SkillInstance =
-            SkillsModelCreator.CreateSkillsInstances(classInstance.SkillTemplate, _skillInstanceRepository);
-        raceInstance.SkillInstance =
-            SkillsModelCreator.CreateSkillsInstances(raceInstance.SkillTemplate, _skillInstanceRepository);
-        backgroundInstance.SkillInstance =
-            SkillsModelCreator.CreateSkillsInstances(backgroundInstance.SkillTemplate, _skillInstanceRepository);
-
-        _classInstanceRepository.Create(classInstance);
-        _raceInstanceRepository.Create(raceInstance);
-        _backgroundInstanceRepository.Create(backgroundInstance);
-
-        character.ClassInstance = classInstance;
-        character.RaceInstance = raceInstance;
-        character.BackgroundInstance = backgroundInstance;
-        _characterRepository.Create(character);
-
-        return Task.CompletedTask;
     }
 
     public Task<CharacterDto> GetCharacter(int id)
     {
         var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
-        if (character == null) throw new Exception();
+        if (character == null)
+        {
+            throw new Exception();
+        }
+
+        var conditions = new List<ConditionDto>();
+        foreach (var item in character.Conditions)
+        {
+            var dto = new ConditionDto
+            {
+                Id = item.Id,
+                Name = item.Name,
+                Description = item.Description
+            };
+            conditions.Add(dto);
+        }
+
+        var objectInstances = new List<ObjectInstanceDto>();
+        foreach (var item in character.ObjectInstance)
+        {
+            var dto = new ObjectInstanceDto
+            {
+                Id = item.Id,
+                Name = item.Name,
+                Description = item.Description,
+                Damage = item.Damage,
+                AttackType = item.AttackType,
+                Distance = item.Distance,
+                ImageId = item.ImageId,
+                Quantity = item.Quantity,
+                Attachment = item.Attachment,
+                Type = item.Type,
+                Equipped = item.Equipped,
+                Rare = item.Rare,
+                MainCharacteristic = item.MainCharacteristic,
+                System = item.System,
+                SkillInstances = SkillUtilsService.CreateSkillsInstancesDto(item.SkillInstance)
+            };
+            objectInstances.Add(dto);
+        }
+
+        var notes = new List<NoteDto>();
+        foreach (var item in character.Note)
+        {
+            var dto = new NoteDto
+            {
+                Id = item.Id,
+                Header = item.Header,
+                Text = item.Text
+            };
+            notes.Add(dto);
+        }
+
+        var skillInstances = new List<SkillInstanceDto>();
+        foreach (var item in character.SkillInstance)
+        {
+            var dto = new SkillInstanceDto
+            {
+                Id = item.Id,
+                Name = item.Name,
+                Description = item.Description,
+                ActionType = item.ActionType,
+                SkillType = item.SkillType,
+                Value = item.Value,
+                Distance = item.Distance,
+                Passive = item.Passive,
+                Recharge = item.Recharge,
+                Charges = item.Charges,
+                System = item.System
+            };
+            skillInstances.Add(dto);
+        }
+
+        var spellInstances = new List<SpellInstanceDto>();
+        foreach (var item in character.SpellInstance)
+        {
+            var dto = new SpellInstanceDto
+            {
+                Id = item.Id,
+                Name = item.Name,
+                Description = item.Description,
+                Level = item.Level,
+                Distance = item.Distance,
+                ActionType = item.ActionType,
+                Damage = item.Damage,
+                ActionTime = item.ActionTime,
+                Components = item.Components,
+                System = item.System,
+                SkillInstances = SkillUtilsService.CreateSkillsInstancesDto(item.SkillInstance)
+            };
+            spellInstances.Add(dto);
+        }
 
         var characterDto = new CharacterDto
         {
@@ -86,20 +168,163 @@ public class CharacterService : ICharacterService
             Name = character.Name,
             Level = character.Level,
             Age = character.Age,
+            Hp = character.Hp,
+            AddHp = character.AddHp,
+            MaxAttachments = character.MaxAttachments,
+            ImageId = character.ImageId,
+            SpellSlots = character.SpellSlots,
+            EnergySlots = character.EnergySlots,
             Gender = character.Gender,
             Ideology = character.Ideology,
             System = character.System,
             Characteristics = character.Characteristics,
-            ClassInstance = character.ClassInstance,
-            RaceInstance = character.RaceInstance,
-            BackgroundInstance = character.BackgroundInstance,
-            Conditions = character.Conditions,
-            ObjectInstance = character.ObjectInstance,
-            Note = character.Note,
-            SkillInstance = character.SkillInstance,
-            SpellInstance = character.SpellInstance
+            ClassInstance = new ClassInstanceDto
+            {
+                Id = character.ClassInstance.Id,
+                Name = character.ClassInstance.Name,
+                Description = character.ClassInstance.Description,
+                System = character.ClassInstance.System,
+                SkillInstances = SkillUtilsService.CreateSkillsInstancesDto(character.ClassInstance.SkillInstance)
+            },
+            RaceInstance = new RaceInstanceDto
+            {
+                Id = character.RaceInstance.Id,
+                Name = character.RaceInstance.Name,
+                Description = character.RaceInstance.Description,
+                System = character.RaceInstance.System,
+                SkillInstances = SkillUtilsService.CreateSkillsInstancesDto(character.RaceInstance.SkillInstance)
+            },
+            BackgroundInstance = new BackgroundInstanceDto
+            {
+                Id = character.BackgroundInstance.Id,
+                Name = character.BackgroundInstance.Name,
+                Description = character.BackgroundInstance.Description,
+                System = character.BackgroundInstance.System,
+                SkillInstances = SkillUtilsService.CreateSkillsInstancesDto(character.BackgroundInstance.SkillInstance)
+            },
+            Conditions = conditions,
+            ObjectInstance = objectInstances,
+            Note = notes,
+            SkillInstance = skillInstances,
+            SpellInstance = spellInstances
         };
 
         return Task.FromResult(characterDto);
+    }
+
+    public Task CreateCharacter(CharacterCreateDto dto, int userId)
+    {
+        var character = new Character(dto.Name, dto.Level, dto.Age, dto.Gender, dto.Ideology, dto.System,
+            dto.Characteristics);
+
+        if (dto.ImageId != null)
+        {
+            character.ImageId = (int)dto.ImageId;
+        }
+
+        var classTemplate = _classTemplateRepository.Get(x => x.Id == dto.ClassId).FirstOrDefault();
+        var raceTemplate = _raceTemplateRepository.Get(x => x.Id == dto.RaceId).FirstOrDefault();
+        var backgroundTemplate = _backgroundTemplateRepository.Get(x => x.Id == dto.BackgroundId).FirstOrDefault();
+
+        if (classTemplate == null || raceTemplate == null || backgroundTemplate == null)
+        {
+            throw new Exception();
+        }
+
+        var classInstance = new ClassInstance(classTemplate.Name, classTemplate.Description, classTemplate.System)
+        {
+            SkillInstance = SkillUtilsService.CreateSkillsInstancesFromTemplate(classTemplate.SkillTemplate)
+        };
+
+        var raceInstance = new RaceInstance(raceTemplate.Name, raceTemplate.Description, raceTemplate.System)
+        {
+            SkillInstance = SkillUtilsService.CreateSkillsInstancesFromTemplate(raceTemplate.SkillTemplate)
+        };
+
+        var backgroundInstance = new BackgroundInstance(backgroundTemplate.Name, backgroundTemplate.Description,
+            backgroundTemplate.System)
+        {
+            SkillInstance = SkillUtilsService.CreateSkillsInstancesFromTemplate(backgroundTemplate.SkillTemplate)
+        };
+
+        character.ClassInstance = classInstance;
+        character.RaceInstance = raceInstance;
+        character.BackgroundInstance = backgroundInstance;
+
+        var user = _userRepository.Get(x => x.Id == userId).FirstOrDefault();
+        character.UserId = user!.Id;
+        _characterRepository.Create(character);
+
+        _unitOfWork.SaveChanges();
+        return Task.CompletedTask;
+    }
+
+    public Task SetHpCharacter(int id, int hp, int addHp)
+    {
+        var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
+        if (character == null)
+        {
+            throw new Exception();
+        }
+
+        character.Hp = hp;
+        character.AddHp = addHp;
+        _characterRepository.Update(character);
+        _unitOfWork.SaveChanges();
+        return Task.CompletedTask;
+    }
+
+    public Task AddSkill(int id, int skillId)
+    {
+        var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
+        if (character == null)
+        {
+            throw new Exception();
+        }
+
+        _characterRepository.Attach(character);
+
+        var skillTemplate = _skillTemplateRepository.Get(x => x.Id == skillId).FirstOrDefault();
+        if (skillTemplate == null)
+        {
+            throw new Exception();
+        }
+
+        var instance = SkillUtilsService.CreateSkillsInstancesFromTemplate(new List<SkillTemplate> { skillTemplate })
+            .FirstOrDefault();
+
+        if (instance != null)
+        {
+            character.SkillInstance.Add(instance);
+        }
+
+        _characterRepository.Update(character);
+        _unitOfWork.SaveChanges();
+        return Task.CompletedTask;
+    }
+
+
+    public Task AddCondition(int id, int conditionId)
+    {
+        var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
+        if (character == null)
+        {
+            throw new Exception();
+        }
+
+        _characterRepository.Attach(character);
+
+        var condition = _conditionsRepository.Get(x => x.Id == conditionId).FirstOrDefault();
+        if (condition == null)
+        {
+            throw new Exception();
+        }
+
+        _conditionsRepository.Attach(condition);
+
+        character.Conditions.Add(condition);
+        _characterRepository.Update(character);
+        _unitOfWork.SaveChanges();
+        return Task.CompletedTask;
     }
 }

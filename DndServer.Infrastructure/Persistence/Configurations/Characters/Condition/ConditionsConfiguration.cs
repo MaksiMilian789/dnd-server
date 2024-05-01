@@ -6,6 +6,8 @@ namespace DndServer.Infrastructure.Persistence.Configurations.Characters.Conditi
 
 public class ConditionsConfiguration : IEntityTypeConfiguration<Conditions>
 {
-    public void Configure(EntityTypeBuilder<Conditions> builder) =>
+    public void Configure(EntityTypeBuilder<Conditions> builder)
+    {
         builder.HasKey(x => x.Id);
+    }
 }

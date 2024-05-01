@@ -10,5 +10,6 @@ public class TrackerConfiguration : IEntityTypeConfiguration<Tracker>
     {
         builder.HasKey(x => x.Id);
         builder.HasOne(x => x.World).WithOne(x => x.Tracker).HasForeignKey<World>(x => x.TrackerKey);
+        builder.HasMany(x => x.TrackerUnits).WithOne(x => x.Tracker);
     }
 }

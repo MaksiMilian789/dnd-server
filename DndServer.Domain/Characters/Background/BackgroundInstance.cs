@@ -9,8 +9,8 @@ public class BackgroundInstance
     public string Name { get; set; }
     public string Description { get; set; }
     public SystemEnum System { get; set; }
-    public ICollection<SkillInstance> SkillInstance { get; set; }
-    public ICollection<Character> Character { get; set; }
+    public virtual ICollection<SkillInstance> SkillInstance { get; set; }
+    public virtual ICollection<Character> Character { get; set; }
 
     public BackgroundInstance(string name, string description, SystemEnum system)
     {

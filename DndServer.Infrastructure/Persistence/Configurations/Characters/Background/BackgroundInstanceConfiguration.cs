@@ -9,6 +9,6 @@ public class BackgroundInstanceConfiguration : IEntityTypeConfiguration<Backgrou
     public void Configure(EntityTypeBuilder<BackgroundInstance> builder)
     {
         builder.HasKey(x => x.Id);
-        builder.HasMany(x => x.Character).WithOne(x => x.BackgroundInstance);
+        builder.HasMany(x => x.Character).WithOne(x => x.BackgroundInstance).HasForeignKey(x => x.BackgroundInstanceId);
     }
 }

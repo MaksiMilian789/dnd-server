@@ -8,5 +8,6 @@ public class BackgroundTemplateConfiguration : IEntityTypeConfiguration<Backgrou
 {
     public void Configure(EntityTypeBuilder<BackgroundTemplate> builder)
     {
+        builder.HasKey(x => x.Id);
     }
 }

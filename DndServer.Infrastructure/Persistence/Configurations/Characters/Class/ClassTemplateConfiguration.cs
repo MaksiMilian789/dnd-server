@@ -8,5 +8,6 @@ public class ClassTemplateConfiguration : IEntityTypeConfiguration<ClassTemplate
 {
     public void Configure(EntityTypeBuilder<ClassTemplate> builder)
     {
+        builder.HasKey(x => x.Id);
     }
 }

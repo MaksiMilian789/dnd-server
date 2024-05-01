@@ -1,4 +1,5 @@
-﻿using DndServer.Domain.Characters;
+﻿using DndServer.Application.Interfaces;
+using DndServer.Domain.Characters;
 using DndServer.Domain.Characters.Background;
 using DndServer.Domain.Characters.Class;
 using DndServer.Domain.Characters.Condition;
@@ -24,7 +25,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DndServer.Infrastructure.Persistence;
 
-public class DataContext : DbContext
+public class DataContext : DbContext, IUnitOfWork
 {
     public DbSet<User> User => Set<User>();
     public DbSet<BackgroundInstance> BackgroundInstance => Set<BackgroundInstance>();
@@ -43,6 +44,7 @@ public class DataContext : DbContext
     public DbSet<SpellTemplate> SpellTemplate => Set<SpellTemplate>();
     public DbSet<Character> Character => Set<Character>();
     public DbSet<Tracker> Tracker => Set<Tracker>();
+    public DbSet<TrackerUnit> TrackerUnit => Set<TrackerUnit>();
     public DbSet<Wiki> Wiki => Set<Wiki>();
     public DbSet<WikiPage> WikiPage => Set<WikiPage>();
     public DbSet<World> World => Set<World>();
@@ -51,8 +53,15 @@ public class DataContext : DbContext
     {
     }
 
-    public void Migrate() =>
+    void IUnitOfWork.SaveChanges()
+    {
+        SaveChanges();
+    }
+
+    public void Migrate()
+    {
         Database.Migrate();
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -73,6 +82,7 @@ public class DataContext : DbContext
         modelBuilder.ApplyConfiguration(new CharacterConfiguration());
         modelBuilder.ApplyConfiguration(new UserConfiguration());
         modelBuilder.ApplyConfiguration(new TrackerConfiguration());
+        modelBuilder.ApplyConfiguration(new TrackerUnitConfiguration());
         modelBuilder.ApplyConfiguration(new WikiConfiguration());
         modelBuilder.ApplyConfiguration(new WikiPageConfiguration());
         modelBuilder.ApplyConfiguration(new WorldConfiguration());

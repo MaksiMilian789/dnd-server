@@ -8,5 +8,6 @@ public class RaceTemplateConfiguration : IEntityTypeConfiguration<RaceTemplate>
 {
     public void Configure(EntityTypeBuilder<RaceTemplate> builder)
     {
+        builder.HasKey(x => x.Id);
     }
 }

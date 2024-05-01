@@ -12,4 +12,7 @@ public class SkillValue
     public Damage Damage { get; set; } = null!;
     public AttackBonus AttackBonus { get; set; } = null!;
     public PerLevel PerLevel { get; set; } = null!;
+    public string UseSpell { get; set; } = "";
+    public ItemTypeEnum ItemType { get; set; }
+    public LanguagesEnum Language { get; set; }
 }

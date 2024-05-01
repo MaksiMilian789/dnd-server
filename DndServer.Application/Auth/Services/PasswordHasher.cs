@@ -16,8 +16,10 @@ public class PasswordHasher : IPasswordHasher<User>
     }
 
     public PasswordVerificationResult VerifyHashedPassword(User user, string hashedPassword,
-        string providedPassword) =>
-        hashedPassword == HashPassword(user, providedPassword)
+        string providedPassword)
+    {
+        return hashedPassword == HashPassword(user, providedPassword)
             ? PasswordVerificationResult.Success
             : PasswordVerificationResult.Failed;
+    }
 }

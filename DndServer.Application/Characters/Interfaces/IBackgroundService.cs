@@ -1,4 +1,5 @@
 ﻿using DndServer.Application.Characters.Models;
+using DndServer.Application.Characters.Models.Create;
 
 namespace DndServer.Application.Characters.Interfaces;
 

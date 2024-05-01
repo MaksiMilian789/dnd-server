@@ -9,6 +9,6 @@ public class ClassInstanceConfiguration : IEntityTypeConfiguration<ClassInstance
     public void Configure(EntityTypeBuilder<ClassInstance> builder)
     {
         builder.HasKey(x => x.Id);
-        builder.HasMany(x => x.Character).WithOne(x => x.ClassInstance);
+        builder.HasMany(x => x.Character).WithOne(x => x.ClassInstance).HasForeignKey(x => x.ClassInstanceId);
     }
 }

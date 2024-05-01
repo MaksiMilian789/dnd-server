@@ -1,4 +1,5 @@
-﻿using DndServer.Application.Interfaces.Characters;
+﻿using DndServer.Application.Interfaces;
+using DndServer.Application.Interfaces.Characters;
 using DndServer.Application.Interfaces.Characters.Background;
 using DndServer.Application.Interfaces.Characters.Class;
 using DndServer.Application.Interfaces.Characters.Condition;
@@ -34,11 +35,18 @@ public static class ConfigureServices
         var connectionString = configuration.GetConnectionString("default");
         services
             .AddDbContext<DataContext>(
-                options => { options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)); }
+                options =>
+                {
+                    options.UseLazyLoadingProxies().UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking)
+                        .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+                }
             );
+        services.AddScoped<IUnitOfWork>(provider => provider.GetRequiredService<DataContext>());
 
         services.AddScoped<IWorldRepository, WorldRepository>();
         services.AddScoped<IWorldLinksRepository, WorldLinksRepository>();
+        services.AddScoped<ITrackerRepository, TrackerRepository>();
+        services.AddScoped<ITrackerUnitRepository, TrackerUnitRepository>();
         services.AddScoped<IWikiRepository, WikiRepository>();
         services.AddScoped<IWikiPageRepository, WikiPageRepository>();
         services.AddScoped<IUserRepository, UserRepository>();

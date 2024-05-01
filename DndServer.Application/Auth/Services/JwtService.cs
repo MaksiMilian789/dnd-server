@@ -25,16 +25,23 @@ public class JwtService : IJwtService
     public async Task<TokenResponse> LogIn(TokenRequest tokenRequest)
     {
         if (tokenRequest.Login is null || tokenRequest.Password is null)
+        {
             throw new UnauthorizedAccessException();
+        }
 
-        var user = await _userService.GetByLoginAsync(tokenRequest.Login);
+        var user = await _userService.GetDomainUserByLogin(tokenRequest.Login);
 
-        if (user is null) throw new UnauthorizedAccessException();
+        if (user is null)
+        {
+            throw new UnauthorizedAccessException();
+        }
 
         var hashedPassword = _passwordHasher.HashPassword(user, tokenRequest.Password);
 
         if (hashedPassword != user.PasswordHash)
+        {
             throw new UnauthorizedAccessException();
+        }
 
         var accessToken = CreateJwt(user);
 
@@ -52,7 +59,9 @@ public class JwtService : IJwtService
     private string CreateJwt(User user)
     {
         if (user == null)
+        {
             throw new ArgumentNullException(nameof(user));
+        }
 
         // Create access token
         var tokenHandler = new JwtSecurityTokenHandler();
@@ -76,7 +85,9 @@ public class JwtService : IJwtService
     private IEnumerable<Claim> BuildClaims(User user)
     {
         if (user == null)
+        {
             throw new ArgumentNullException(nameof(user));
+        }
 
         var claims = new List<Claim>
         {

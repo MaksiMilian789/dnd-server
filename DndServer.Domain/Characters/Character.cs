@@ -6,6 +6,7 @@ using DndServer.Domain.Characters.Notes;
 using DndServer.Domain.Characters.Race;
 using DndServer.Domain.Characters.Skill;
 using DndServer.Domain.Characters.Spell;
+using DndServer.Domain.Shared;
 using DndServer.Domain.Shared.Enums;
 using DndServer.Domain.Users;
 
@@ -17,19 +18,30 @@ public class Character
     public string Name { get; set; }
     public int Level { get; set; }
     public int Age { get; set; }
+    public int Hp { get; set; }
+    public int AddHp { get; set; }
+    public int MaxAttachments { get; set; }
+    public List<SpellSlot> SpellSlots { get; set; } = new();
+    public List<EnergySlot> EnergySlots { get; set; } = new();
     public GenderEnum Gender { get; set; }
     public IdeologyEnum Ideology { get; set; }
     public SystemEnum System { get; set; }
     public Characteristics Characteristics { get; set; } = null!;
-    public ClassInstance ClassInstance { get; set; } = null!;
-    public RaceInstance RaceInstance { get; set; } = null!;
-    public BackgroundInstance BackgroundInstance { get; set; } = null!;
-    public User User { get; set; } = null!;
-    public ICollection<Conditions> Conditions { get; set; }
-    public ICollection<ObjectInstance> ObjectInstance { get; set; }
-    public ICollection<Note> Note { get; set; }
-    public ICollection<SkillInstance> SkillInstance { get; set; }
-    public ICollection<SpellInstance> SpellInstance { get; set; }
+    public virtual ClassInstance ClassInstance { get; set; } = null!;
+    public int ClassInstanceId { get; set; }
+    public virtual RaceInstance RaceInstance { get; set; } = null!;
+    public int RaceInstanceId { get; set; }
+    public virtual BackgroundInstance BackgroundInstance { get; set; } = null!;
+    public int BackgroundInstanceId { get; set; }
+    public virtual User User { get; set; } = null!;
+    public int UserId { get; set; }
+    public int? ImageId { get; set; }
+    public virtual Image? Image { get; set; }
+    public virtual ICollection<Conditions> Conditions { get; set; }
+    public virtual ICollection<ObjectInstance> ObjectInstance { get; set; }
+    public virtual ICollection<Note> Note { get; set; }
+    public virtual ICollection<SkillInstance> SkillInstance { get; set; }
+    public virtual ICollection<SpellInstance> SpellInstance { get; set; }
 
     public Character(string name, int level, int age, GenderEnum gender, IdeologyEnum ideology,
         SystemEnum system)
@@ -60,5 +72,7 @@ public class Character
         SkillInstance = new List<SkillInstance>();
         SpellInstance = new List<SpellInstance>();
         Characteristics = characteristics;
+        SpellSlots = new List<SpellSlot>();
+        EnergySlots = new List<EnergySlot>();
     }
 }

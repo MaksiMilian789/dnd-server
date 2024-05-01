@@ -11,4 +11,15 @@ internal sealed class SkillTemplateRepository : GenericRepository<SkillTemplate>
     {
         _context = context;
     }
+
+    /*public void UpdateBackgroundSkill(IEnumerable<SkillTemplate> skillTemplates, BackgroundTemplate backgroundTemplate)
+    {
+        foreach (var skillTemplate in skillTemplates)
+        {
+            _context.Attach(skillTemplate);
+            skillTemplate.BackgroundTemplate.Add(backgroundTemplate);
+
+            _context.Update(skillTemplate);
+        }
+    }*/
 }

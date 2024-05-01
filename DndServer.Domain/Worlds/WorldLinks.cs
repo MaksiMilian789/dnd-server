@@ -6,8 +6,10 @@ namespace DndServer.Domain.Worlds;
 public class WorldLinks
 {
     public int Id { get; set; }
-    public User User { get; set; } = null!;
-    public World World { get; set; } = null!;
+    public virtual User User { get; set; } = null!;
+    public int UserId { get; set; }
+    public virtual World World { get; set; } = null!;
+    public int WorldId { get; set; }
     public RoleEnum Role { get; set; }
 
     public WorldLinks(RoleEnum role)

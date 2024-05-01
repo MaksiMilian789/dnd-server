@@ -20,12 +20,12 @@ public class SkillInstance
     public int Recharge { get; set; }
     public int Charges { get; set; }
     public SystemEnum System { get; set; }
-    public ICollection<Character> Character { get; set; }
-    public ICollection<BackgroundInstance> BackgroundInstance { get; set; }
-    public ICollection<ClassInstance> ClassInstance { get; set; }
-    public ICollection<ObjectInstance> ObjectInstance { get; set; }
-    public ICollection<RaceInstance> RaceInstance { get; set; }
-    public ICollection<SpellInstance> SpellInstance { get; set; }
+    public virtual ICollection<Character> Character { get; set; }
+    public virtual ICollection<BackgroundInstance> BackgroundInstance { get; set; }
+    public virtual ICollection<ClassInstance> ClassInstance { get; set; }
+    public virtual ICollection<ObjectInstance> ObjectInstance { get; set; }
+    public virtual ICollection<RaceInstance> RaceInstance { get; set; }
+    public virtual ICollection<SpellInstance> SpellInstance { get; set; }
 
     public SkillInstance(string name, string description, ActionTypesEnum actionType, SkillTypesEnum skillType,
         int? distance, bool passive, int recharge, int charges, SystemEnum system)

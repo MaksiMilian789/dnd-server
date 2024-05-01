@@ -11,10 +11,18 @@ public class ObjectInstance
     public string Description { get; set; }
     public Damage Damage { get; set; } = null!;
     public AttackTypesEnum AttackType { get; set; }
+    public bool Attachment { get; set; }
+    public RareEnum Rare { get; set; }
+    public ItemTypeEnum Type { get; set; }
+    public CharacteristicsEnum MainCharacteristic { get; set; }
+    public bool Equipped { get; set; }
     public int? Distance { get; set; }
+    public int Quantity { get; set; }
+    public int? ImageId { get; set; }
+    public virtual Image? Image { get; set; }
     public SystemEnum System { get; set; }
-    public ICollection<SkillInstance> SkillInstance { get; set; }
-    public ICollection<Character> Character { get; set; }
+    public virtual ICollection<SkillInstance> SkillInstance { get; set; }
+    public virtual ICollection<Character> Character { get; set; }
 
     public ObjectInstance(string name, string description, AttackTypesEnum attackType,
         int? distance, SystemEnum system)

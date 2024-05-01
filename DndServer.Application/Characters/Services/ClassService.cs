@@ -1,5 +1,7 @@
 ﻿using DndServer.Application.Characters.Interfaces;
 using DndServer.Application.Characters.Models;
+using DndServer.Application.Characters.Models.Create;
+using DndServer.Application.Interfaces;
 using DndServer.Application.Interfaces.Characters.Class;
 using DndServer.Application.Interfaces.Characters.Skill;
 using DndServer.Application.Shared;
@@ -9,16 +11,16 @@ namespace DndServer.Application.Characters.Services;
 
 public class ClassService : IClassService
 {
+    private readonly IUnitOfWork _unitOfWork;
     private readonly IClassTemplateRepository _classTemplateRepository;
-    private readonly ISkillInstanceRepository _skillInstanceRepository;
     private readonly ISkillTemplateRepository _skillTemplateRepository;
 
     public ClassService(IClassTemplateRepository classTemplateRepository,
-        ISkillInstanceRepository skillInstanceRepository, ISkillTemplateRepository skillTemplateRepository)
+        ISkillTemplateRepository skillTemplateRepository, IUnitOfWork unitOfWork)
     {
         _classTemplateRepository = classTemplateRepository;
-        _skillInstanceRepository = skillInstanceRepository;
         _skillTemplateRepository = skillTemplateRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public Task<List<ClassDto>> GetClasses()
@@ -27,13 +29,16 @@ public class ClassService : IClassService
         var listDto = new List<ClassDto>();
         foreach (var val in listTemplates)
         {
+            var skills = SkillUtilsService.CreateSkillsTemplatesDto(val.SkillTemplate);
             var dto = new ClassDto
             {
+                Id = val.Id,
                 Name = val.Name,
                 Description = val.Description,
                 System = val.System,
                 WorldId = val.WorldId,
-                Skills = val.SkillTemplate.ToList()
+                AuthorId = val.AuthorId,
+                Skills = skills
             };
             listDto.Add(dto);
         }
@@ -44,11 +49,18 @@ public class ClassService : IClassService
     public Task CreateClassTemplate(ClassCreateDto dto)
     {
         var classTemplate = new ClassTemplate(dto.Name, dto.Description, dto.System, dto.AuthorId, dto.WorldId);
-        var skillTemplates = _skillTemplateRepository.Get(x => dto.SkillIds.Contains(x.Id));
-        var skillInstances = SkillsModelCreator.CreateSkillsInstances(skillTemplates, _skillInstanceRepository);
-        classTemplate.SkillInstance = skillInstances;
         _classTemplateRepository.Create(classTemplate);
 
+        var skillTemplates = _skillTemplateRepository.Get(x => dto.SkillIds.Contains(x.Id));
+        var skills = SkillUtilsService.CreateSkillsTemplateFromTemplate(skillTemplates);
+        foreach (var skill in skills)
+        {
+            classTemplate.SkillTemplate.Add(skill);
+        }
+
+        _classTemplateRepository.Create(classTemplate);
+
+        _unitOfWork.SaveChanges();
         return Task.CompletedTask;
     }
 }
