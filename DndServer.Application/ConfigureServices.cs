@@ -28,6 +28,7 @@ public static class ConfigureServices
         services.AddScoped<ISkillService, SkillService>();
         services.AddScoped<IConditionService, ConditionService>();
         services.AddScoped<IObjectService, ObjectService>();
+        services.AddScoped<ISpellService, SpellService>();
 
         return services;
     }

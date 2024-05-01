@@ -2,10 +2,10 @@
 
 public class ActionTime
 {
-    public TimeSpan Time { get; set; }
+    public int Time { get; set; }
     public bool Concentrate { get; set; }
 
-    public ActionTime(TimeSpan time, bool concentrate)
+    public ActionTime(int time, bool concentrate)
     {
         Time = time;
         Concentrate = concentrate;
