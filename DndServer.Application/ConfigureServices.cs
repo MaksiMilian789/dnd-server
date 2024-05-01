@@ -27,6 +27,7 @@ public static class ConfigureServices
         services.AddScoped<ITrackerService, TrackerService>();
         services.AddScoped<ISkillService, SkillService>();
         services.AddScoped<IConditionService, ConditionService>();
+        services.AddScoped<IObjectService, ObjectService>();
 
         return services;
     }

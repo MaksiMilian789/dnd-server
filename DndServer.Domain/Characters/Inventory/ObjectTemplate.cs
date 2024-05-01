@@ -23,13 +23,19 @@ public class ObjectTemplate
     public int? WorldId { get; set; }
     public virtual ICollection<SkillTemplate> SkillTemplate { get; set; }
 
-    public ObjectTemplate(string name, string description, AttackTypesEnum attackType,
-        int? distance, SystemEnum system, int authorId, int? worldId)
+    public ObjectTemplate(string name, string description, AttackTypesEnum attackType, bool attachment,
+        RareEnum rare, ItemTypeEnum type, CharacteristicsEnum mainCharacteristic, int? distance, int? imageId,
+        SystemEnum system, int authorId, int? worldId)
     {
         Name = name;
         Description = description;
         AttackType = attackType;
+        Attachment = attachment;
+        Rare = rare;
+        Type = type;
+        MainCharacteristic = mainCharacteristic;
         Distance = distance;
+        ImageId = imageId;
         System = system;
         AuthorId = authorId;
         WorldId = worldId;

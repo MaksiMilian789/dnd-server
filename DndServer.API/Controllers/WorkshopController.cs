@@ -16,15 +16,18 @@ public class WorkshopController : ControllerBase
     private readonly IClassService _classService;
     private readonly ISkillService _skillService;
     private readonly IConditionService _conditionService;
+    private readonly IObjectService _objectService;
 
     public WorkshopController(IBackgroundService backgroundService, IRaceService raceService,
-        IClassService classService, ISkillService skillService, IConditionService conditionService)
+        IClassService classService, ISkillService skillService, IConditionService conditionService,
+        IObjectService objectService)
     {
         _backgroundService = backgroundService;
         _raceService = raceService;
         _classService = classService;
         _skillService = skillService;
         _conditionService = conditionService;
+        _objectService = objectService;
     }
 
     /// <summary>
@@ -123,7 +126,6 @@ public class WorkshopController : ControllerBase
         await _backgroundService.CreateBackgroundTemplate(background);
     }
 
-
     /// <summary>
     ///     Список шаблонов skill
     /// </summary>
@@ -146,5 +148,29 @@ public class WorkshopController : ControllerBase
     public async Task CreateSkill([FromBody] SkillCreateDto skill)
     {
         await _skillService.CreateSkillTemplate(skill);
+    }
+
+    /// <summary>
+    ///     Список шаблонов предметов
+    /// </summary>
+    [HttpGet("getObjects")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesDefaultResponseType]
+    public async Task<ActionResult<List<ObjectDto>>> GetObjects()
+    {
+        return await _objectService.GetObjects();
+    }
+
+    /// <summary>
+    ///     Создание шаблона предмета
+    /// </summary>
+    [HttpPost("object")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesDefaultResponseType]
+    public async Task CreateObject([FromBody] ObjectCreateDto objectDto)
+    {
+        await _objectService.CreateObjectTemplate(objectDto);
     }
 }
