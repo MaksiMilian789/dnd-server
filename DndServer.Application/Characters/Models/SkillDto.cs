@@ -13,7 +13,7 @@ public class SkillDto
     public SkillValue Value { get; set; } = null!;
     public int? Distance { get; set; }
     public bool Passive { get; set; }
-    public int Recharge { get; set; }
+    public RechargeEnum Recharge { get; set; }
     public int Charges { get; set; }
     public bool Hidden { get; set; }
     public SystemEnum System { get; set; }

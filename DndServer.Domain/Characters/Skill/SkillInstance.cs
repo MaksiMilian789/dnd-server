@@ -17,7 +17,7 @@ public class SkillInstance
     public SkillValue Value { get; set; } = null!;
     public int? Distance { get; set; }
     public bool Passive { get; set; }
-    public int Recharge { get; set; }
+    public RechargeEnum Recharge { get; set; }
     public int Charges { get; set; }
     public SystemEnum System { get; set; }
     public virtual ICollection<Character> Character { get; set; }
@@ -28,7 +28,7 @@ public class SkillInstance
     public virtual ICollection<SpellInstance> SpellInstance { get; set; }
 
     public SkillInstance(string name, string description, ActionTypesEnum actionType, SkillTypesEnum skillType,
-        int? distance, bool passive, int recharge, int charges, SystemEnum system)
+        int? distance, bool passive, RechargeEnum recharge, int charges, SystemEnum system)
     {
         Name = name;
         Description = description;

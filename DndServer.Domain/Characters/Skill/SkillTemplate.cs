@@ -18,7 +18,7 @@ public class SkillTemplate
     public SkillValue Value { get; set; } = null!;
     public int? Distance { get; set; }
     public bool Passive { get; set; }
-    public int Recharge { get; set; }
+    public RechargeEnum Recharge { get; set; }
     public int Charges { get; set; }
     public bool Hidden { get; set; } = false;
     public SystemEnum System { get; set; }
@@ -32,7 +32,7 @@ public class SkillTemplate
     public virtual ICollection<Conditions> Condition { get; set; }
 
     public SkillTemplate(string name, string description, ActionTypesEnum actionType, SkillTypesEnum skillType,
-        int? distance, bool passive, int recharge, int charges, SystemEnum system, int authorId,
+        int? distance, bool passive, RechargeEnum recharge, int charges, SystemEnum system, int authorId,
         int? worldId)
     {
         Name = name;

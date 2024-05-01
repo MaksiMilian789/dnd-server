@@ -12,7 +12,7 @@ public class SkillCreateDto
     public SkillValue Value { get; set; } = null!;
     public int? Distance { get; set; }
     public bool Passive { get; set; }
-    public int Recharge { get; set; }
+    public RechargeEnum Recharge { get; set; }
     public int Charges { get; set; }
     public SystemEnum System { get; set; }
     public int AuthorId { get; set; }
