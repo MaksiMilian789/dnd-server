@@ -2,6 +2,7 @@
 
 public enum CharacteristicsEnum
 {
+    None,
     Strength,
     Dexterity,
     Constitution,

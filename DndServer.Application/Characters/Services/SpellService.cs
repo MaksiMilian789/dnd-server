@@ -35,6 +35,8 @@ public class SpellService : ISpellService
                 Id = val.Id,
                 Name = val.Name,
                 Description = val.Description,
+                MagicSchool = val.MagicSchool,
+                HasDamage = val.HasDamage,
                 Level = val.Level,
                 Distance = val.Distance,
                 ActionType = val.ActionType,
@@ -56,7 +58,7 @@ public class SpellService : ISpellService
     public Task CreateSpellTemplate(SpellCreateDto dto)
     {
         var spellTemplate = new SpellTemplate(dto.Name, dto.Description, dto.Level, dto.Distance, dto.ActionType,
-            dto.System, dto.AuthorId, dto.WorldId)
+            dto.MagicSchool, dto.HasDamage, dto.System, dto.AuthorId, dto.WorldId)
         {
             Damage = dto.Damage,
             ActionTime = dto.ActionTime,

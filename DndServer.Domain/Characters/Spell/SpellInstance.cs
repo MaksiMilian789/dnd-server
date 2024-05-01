@@ -9,6 +9,8 @@ public class SpellInstance
     public int Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
+    public MagicSchoolEnum MagicSchool { get; set; }
+    public bool HasDamage { get; set; }
     public int Level { get; set; }
     public int Distance { get; set; }
     public ActionTypesEnum ActionType { get; set; }
@@ -20,10 +22,12 @@ public class SpellInstance
     public virtual ICollection<Character> Character { get; set; }
 
     public SpellInstance(string name, string description, int level, int distance, ActionTypesEnum actionType,
-        SystemEnum system)
+        MagicSchoolEnum magicSchool, bool hasDamage, SystemEnum system)
     {
         Name = name;
         Description = description;
+        MagicSchool = magicSchool;
+        HasDamage = hasDamage;
         Level = level;
         Distance = distance;
         ActionType = actionType;

@@ -9,6 +9,8 @@ public class SpellTemplate
     public int Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
+    public MagicSchoolEnum MagicSchool { get; set; }
+    public bool HasDamage { get; set; }
     public int Level { get; set; }
     public int Distance { get; set; }
     public ActionTypesEnum ActionType { get; set; }
@@ -21,10 +23,12 @@ public class SpellTemplate
     public virtual ICollection<SkillTemplate> SkillTemplate { get; set; }
 
     public SpellTemplate(string name, string description, int level, int distance, ActionTypesEnum actionType,
-        SystemEnum system, int authorId, int? worldId)
+        MagicSchoolEnum magicSchool, bool hasDamage, SystemEnum system, int authorId, int? worldId)
     {
         Name = name;
         Description = description;
+        MagicSchool = magicSchool;
+        HasDamage = hasDamage;
         Level = level;
         Distance = distance;
         ActionType = actionType;

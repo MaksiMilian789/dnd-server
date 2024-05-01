@@ -13,8 +13,6 @@ public class ObjectCreateDto
     public RareEnum Rare { get; set; }
     public ItemTypeEnum Type { get; set; }
     public CharacteristicsEnum MainCharacteristic { get; set; }
-    public bool Equipped { get; set; }
-    public int Quantity { get; set; }
     public int? ImageId { get; set; }
     public int? Distance { get; set; }
     public SystemEnum System { get; set; }

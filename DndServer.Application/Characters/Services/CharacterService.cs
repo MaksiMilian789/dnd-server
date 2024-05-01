@@ -150,6 +150,8 @@ public class CharacterService : ICharacterService
                 Id = item.Id,
                 Name = item.Name,
                 Description = item.Description,
+                MagicSchool = item.MagicSchool,
+                HasDamage = item.HasDamage,
                 Level = item.Level,
                 Distance = item.Distance,
                 ActionType = item.ActionType,

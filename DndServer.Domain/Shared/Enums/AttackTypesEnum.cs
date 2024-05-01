@@ -2,6 +2,7 @@
 
 public enum AttackTypesEnum
 {
+    NotWeapon,
     MeleeWeapon,
     RangeWeapon,
     MeleeCast,

@@ -7,6 +7,8 @@ public class SpellCreateDto
 {
     public string Name { get; set; } = "";
     public string Description { get; set; } = "";
+    public MagicSchoolEnum MagicSchool { get; set; }
+    public bool HasDamage { get; set; }
     public int Level { get; set; }
     public int Distance { get; set; }
     public ActionTypesEnum ActionType { get; set; }
