@@ -89,4 +89,28 @@ public class CharacterController : ControllerBase
     {
         await _characterService.AddCondition(id, conditionId);
     }
+
+    /// <summary>
+    ///     Добавление заклинания
+    /// </summary>
+    [HttpPut("addSpell")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesDefaultResponseType]
+    public async Task AddSpell(int id, int spellId)
+    {
+        await _characterService.AddSpell(id, spellId);
+    }
+
+    /// <summary>
+    ///     Добавление предмета в инвентарь
+    /// </summary>
+    [HttpPut("addObject")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesDefaultResponseType]
+    public async Task AddObject(int id, int objectId)
+    {
+        await _characterService.AddObject(id, objectId);
+    }
 }

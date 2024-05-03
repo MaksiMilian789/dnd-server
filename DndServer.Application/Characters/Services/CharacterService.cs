@@ -7,15 +7,19 @@ using DndServer.Application.Interfaces.Characters;
 using DndServer.Application.Interfaces.Characters.Background;
 using DndServer.Application.Interfaces.Characters.Class;
 using DndServer.Application.Interfaces.Characters.Condition;
+using DndServer.Application.Interfaces.Characters.Inventory;
 using DndServer.Application.Interfaces.Characters.Race;
 using DndServer.Application.Interfaces.Characters.Skill;
+using DndServer.Application.Interfaces.Characters.Spell;
 using DndServer.Application.Interfaces.Users;
 using DndServer.Application.Shared;
 using DndServer.Domain.Characters;
 using DndServer.Domain.Characters.Background;
 using DndServer.Domain.Characters.Class;
+using DndServer.Domain.Characters.Inventory;
 using DndServer.Domain.Characters.Race;
 using DndServer.Domain.Characters.Skill;
+using DndServer.Domain.Characters.Spell;
 
 namespace DndServer.Application.Characters.Services;
 
@@ -30,11 +34,17 @@ public class CharacterService : ICharacterService
     private readonly ISkillTemplateRepository _skillTemplateRepository;
     private readonly ISkillInstanceRepository _skillInstanceRepository;
     private readonly IConditionsRepository _conditionsRepository;
+    private readonly ISpellTemplateRepository _spellTemplateRepository;
+    private readonly ISpellInstanceRepository _spellInstanceRepository;
+    private readonly IObjectTemplateRepository _objectTemplateRepository;
+    private readonly IObjectInstanceRepository _objectInstanceRepository;
 
     public CharacterService(ICharacterRepository characterRepository, IClassTemplateRepository classTemplateRepository,
         IRaceTemplateRepository raceTemplateRepository, IBackgroundTemplateRepository backgroundTemplateRepository,
         IUserRepository userRepository, IUnitOfWork unitOfWork, ISkillTemplateRepository skillTemplateRepository,
-        ISkillInstanceRepository skillInstanceRepository, IConditionsRepository conditionsRepository)
+        ISkillInstanceRepository skillInstanceRepository, IConditionsRepository conditionsRepository,
+        ISpellTemplateRepository spellTemplateRepository, ISpellInstanceRepository spellInstanceRepository,
+        IObjectTemplateRepository objectTemplateRepository, IObjectInstanceRepository objectInstanceRepository)
     {
         _characterRepository = characterRepository;
         _classTemplateRepository = classTemplateRepository;
@@ -45,6 +55,10 @@ public class CharacterService : ICharacterService
         _skillTemplateRepository = skillTemplateRepository;
         _skillInstanceRepository = skillInstanceRepository;
         _conditionsRepository = conditionsRepository;
+        _spellTemplateRepository = spellTemplateRepository;
+        _spellInstanceRepository = spellInstanceRepository;
+        _objectTemplateRepository = objectTemplateRepository;
+        _objectInstanceRepository = objectInstanceRepository;
     }
 
     public Task<List<ShortCharacterDto>> GetShortListCharacters(int userId)
@@ -325,6 +339,71 @@ public class CharacterService : ICharacterService
         _conditionsRepository.Attach(condition);
 
         character.Conditions.Add(condition);
+        _characterRepository.Update(character);
+        _unitOfWork.SaveChanges();
+        return Task.CompletedTask;
+    }
+
+    public Task AddObject(int id, int objectId)
+    {
+        var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
+        if (character == null)
+        {
+            throw new Exception();
+        }
+
+        _characterRepository.Attach(character);
+
+        var objectTemplate = _objectTemplateRepository.Get(x => x.Id == objectId).FirstOrDefault();
+        if (objectTemplate == null)
+        {
+            throw new Exception();
+        }
+
+        var objectInstance = new ObjectInstance(objectTemplate.Name, objectTemplate.Description,
+            objectTemplate.AttackType, objectTemplate.Attachment, objectTemplate.Rare, objectTemplate.Type,
+            objectTemplate.MainCharacteristic, false, objectTemplate.Distance, 1, objectTemplate.ImageId,
+            objectTemplate.System)
+        {
+            Damage = objectTemplate.Damage
+        };
+        /*_objectInstanceRepository.Create(objectInstance);
+        _objectInstanceRepository.Attach(objectInstance);*/
+
+        character.ObjectInstance.Add(objectInstance);
+        _characterRepository.Update(character);
+        _unitOfWork.SaveChanges();
+        return Task.CompletedTask;
+    }
+
+    public Task AddSpell(int id, int spellId)
+    {
+        var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
+        if (character == null)
+        {
+            throw new Exception();
+        }
+
+        _characterRepository.Attach(character);
+
+        var spellTemplate = _spellTemplateRepository.Get(x => x.Id == spellId).FirstOrDefault();
+        if (spellTemplate == null)
+        {
+            throw new Exception();
+        }
+
+        var spellInstance = new SpellInstance(spellTemplate.Name, spellTemplate.Description, spellTemplate.Level,
+            spellTemplate.Distance, spellTemplate.ActionType, spellTemplate.MagicSchool, spellTemplate.HasDamage,
+            spellTemplate.System)
+        {
+            Damage = spellTemplate.Damage,
+            ActionTime = spellTemplate.ActionTime,
+            Components = spellTemplate.Components
+        };
+        /* _spellInstanceRepository.Create(spellInstance);
+         _spellInstanceRepository.Attach(spellInstance);*/
+
+        character.SpellInstance.Add(spellInstance);
         _characterRepository.Update(character);
         _unitOfWork.SaveChanges();
         return Task.CompletedTask;

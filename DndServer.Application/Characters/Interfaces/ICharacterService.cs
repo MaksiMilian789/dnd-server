@@ -11,4 +11,6 @@ public interface ICharacterService
     public Task SetHpCharacter(int id, int hp, int addHp);
     public Task AddSkill(int id, int skillId);
     public Task AddCondition(int id, int conditionId);
+    public Task AddObject(int id, int objectId);
+    public Task AddSpell(int id, int spellId);
 }

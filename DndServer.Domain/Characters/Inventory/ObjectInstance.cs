@@ -24,13 +24,21 @@ public class ObjectInstance
     public virtual ICollection<SkillInstance> SkillInstance { get; set; }
     public virtual ICollection<Character> Character { get; set; }
 
-    public ObjectInstance(string name, string description, AttackTypesEnum attackType,
-        int? distance, SystemEnum system)
+    public ObjectInstance(string name, string description, AttackTypesEnum attackType, bool attachment,
+        RareEnum rare, ItemTypeEnum type, CharacteristicsEnum mainCharacteristic, bool equipped, int? distance,
+        int quantity, int? imageId, SystemEnum system)
     {
         Name = name;
         Description = description;
         AttackType = attackType;
+        Attachment = attachment;
+        Rare = rare;
+        Type = type;
+        MainCharacteristic = mainCharacteristic;
+        Equipped = equipped;
         Distance = distance;
+        Quantity = quantity;
+        ImageId = imageId;
         System = system;
         SkillInstance = new List<SkillInstance>();
         Character = new List<Character>();
