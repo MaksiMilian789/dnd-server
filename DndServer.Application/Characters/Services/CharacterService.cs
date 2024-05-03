@@ -131,7 +131,8 @@ public class CharacterService : ICharacterService
             {
                 Id = item.Id,
                 Header = item.Header,
-                Text = item.Text
+                Text = item.Text,
+                ImageId = item.ImageId
             };
             notes.Add(dto);
         }
