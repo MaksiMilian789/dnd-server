@@ -8,6 +8,7 @@ using DndServer.Application.Interfaces.Characters.Background;
 using DndServer.Application.Interfaces.Characters.Class;
 using DndServer.Application.Interfaces.Characters.Condition;
 using DndServer.Application.Interfaces.Characters.Inventory;
+using DndServer.Application.Interfaces.Characters.Notes;
 using DndServer.Application.Interfaces.Characters.Race;
 using DndServer.Application.Interfaces.Characters.Skill;
 using DndServer.Application.Interfaces.Characters.Spell;
@@ -17,6 +18,7 @@ using DndServer.Domain.Characters;
 using DndServer.Domain.Characters.Background;
 using DndServer.Domain.Characters.Class;
 using DndServer.Domain.Characters.Inventory;
+using DndServer.Domain.Characters.Notes;
 using DndServer.Domain.Characters.Race;
 using DndServer.Domain.Characters.Skill;
 using DndServer.Domain.Characters.Spell;
@@ -38,13 +40,15 @@ public class CharacterService : ICharacterService
     private readonly ISpellInstanceRepository _spellInstanceRepository;
     private readonly IObjectTemplateRepository _objectTemplateRepository;
     private readonly IObjectInstanceRepository _objectInstanceRepository;
+    private readonly INoteRepository _noteRepository;
 
     public CharacterService(ICharacterRepository characterRepository, IClassTemplateRepository classTemplateRepository,
         IRaceTemplateRepository raceTemplateRepository, IBackgroundTemplateRepository backgroundTemplateRepository,
         IUserRepository userRepository, IUnitOfWork unitOfWork, ISkillTemplateRepository skillTemplateRepository,
         ISkillInstanceRepository skillInstanceRepository, IConditionsRepository conditionsRepository,
         ISpellTemplateRepository spellTemplateRepository, ISpellInstanceRepository spellInstanceRepository,
-        IObjectTemplateRepository objectTemplateRepository, IObjectInstanceRepository objectInstanceRepository)
+        IObjectTemplateRepository objectTemplateRepository, IObjectInstanceRepository objectInstanceRepository,
+        INoteRepository noteRepository)
     {
         _characterRepository = characterRepository;
         _classTemplateRepository = classTemplateRepository;
@@ -59,6 +63,7 @@ public class CharacterService : ICharacterService
         _spellInstanceRepository = spellInstanceRepository;
         _objectTemplateRepository = objectTemplateRepository;
         _objectInstanceRepository = objectInstanceRepository;
+        _noteRepository = noteRepository;
     }
 
     public Task<List<ShortCharacterDto>> GetShortListCharacters(int userId)
@@ -368,8 +373,6 @@ public class CharacterService : ICharacterService
         {
             Damage = objectTemplate.Damage
         };
-        /*_objectInstanceRepository.Create(objectInstance);
-        _objectInstanceRepository.Attach(objectInstance);*/
 
         character.ObjectInstance.Add(objectInstance);
         _characterRepository.Update(character);
@@ -401,10 +404,50 @@ public class CharacterService : ICharacterService
             ActionTime = spellTemplate.ActionTime,
             Components = spellTemplate.Components
         };
-        /* _spellInstanceRepository.Create(spellInstance);
-         _spellInstanceRepository.Attach(spellInstance);*/
 
         character.SpellInstance.Add(spellInstance);
+        _characterRepository.Update(character);
+        _unitOfWork.SaveChanges();
+        return Task.CompletedTask;
+    }
+
+    public Task SaveNote(int id, string header, string text, int? imageId, int? noteId)
+    {
+        var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
+        if (character == null)
+        {
+            throw new Exception();
+        }
+
+        _characterRepository.Attach(character);
+
+        if (noteId == null)
+        {
+            var newNote = new Note(header, text)
+            {
+                ImageId = imageId
+            };
+            character.Note.Add(newNote);
+        }
+        else
+        {
+            var note = _noteRepository.Get(x => x.Id == noteId).FirstOrDefault();
+            if (note == null)
+            {
+                throw new Exception();
+            }
+
+            _noteRepository.Attach(note);
+
+            note.Header = header;
+            note.Text = text;
+            note.ImageId = imageId;
+
+            character.Note.Remove(character.Note.FirstOrDefault(x => x.Id == noteId) ??
+                                  throw new InvalidOperationException());
+            character.Note.Add(note);
+        }
+
         _characterRepository.Update(character);
         _unitOfWork.SaveChanges();
         return Task.CompletedTask;

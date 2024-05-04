@@ -113,4 +113,16 @@ public class CharacterController : ControllerBase
     {
         await _characterService.AddObject(id, objectId);
     }
+
+    /// <summary>
+    ///     Сохранение заметки
+    /// </summary>
+    [HttpPut("note")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesDefaultResponseType]
+    public async Task SaveNote(int id, string header, string text, int? imageId, int? noteId)
+    {
+        await _characterService.SaveNote(id, header, text, imageId, noteId);
+    }
 }
