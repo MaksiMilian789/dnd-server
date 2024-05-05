@@ -22,7 +22,8 @@ public class TrackerService : ITrackerService
 
     public Task<TrackerDto> GetTracker(int worldId)
     {
-        var tracker = _trackerRepository.Get(x => x.World.Id == worldId).FirstOrDefault();
+        var trackers = _trackerRepository.Get();
+        var tracker = trackers.FirstOrDefault(x => x.World.Id == worldId);
         if (tracker == null)
         {
             throw new Exception();
@@ -40,7 +41,8 @@ public class TrackerService : ITrackerService
 
     public Task SetTracker(int worldId, List<TrackerUnitDto> trackerUnitsDto)
     {
-        var tracker = _trackerRepository.Get(x => x.World.Id == worldId).FirstOrDefault();
+        var trackers = _trackerRepository.Get();
+        var tracker = trackers.FirstOrDefault(x => x.World.Id == worldId);
         if (tracker == null)
         {
             throw new Exception();
