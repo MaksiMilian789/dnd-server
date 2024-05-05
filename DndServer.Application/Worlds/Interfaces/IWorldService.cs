@@ -9,4 +9,5 @@ public interface IWorldService
     public Task<WorldDto> GetWorld(int worldId);
     public Task CreateWorld(WorldCreateDto dto, int userId);
     public Task EditWorld(WorldDto dto);
+    public Task AddWikiPart(string name, int worldId);
 }

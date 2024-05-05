@@ -91,4 +91,16 @@ public class WorldController : ControllerBase
     {
         await _trackerService.SetTracker(worldId, list);
     }
+
+    /// <summary>
+    ///     Создать раздел вики
+    /// </summary>
+    [HttpPost("wikiPart")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesDefaultResponseType]
+    public async Task AddWikiPart(string name, int worldId)
+    {
+        await _worldService.AddWikiPart(name, worldId);
+    }
 }

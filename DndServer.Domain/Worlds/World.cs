@@ -12,13 +12,13 @@ public class World
     public virtual ICollection<WorldLinks> WorldLinks { get; set; }
     public virtual Tracker Tracker { get; set; } = null!;
     public int TrackerKey { get; set; }
-    public virtual Wiki Wiki { get; set; } = null!;
-    public int WikiKey { get; set; }
+    public virtual ICollection<Wiki> Wiki { get; set; }
 
     public World(string name, string description)
     {
         Name = name;
         Description = description;
         WorldLinks = new List<WorldLinks>();
+        Wiki = new List<Wiki>();
     }
 }

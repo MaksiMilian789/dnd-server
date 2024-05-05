@@ -10,6 +10,5 @@ public class WikiConfiguration : IEntityTypeConfiguration<Wiki>
     {
         builder.HasKey(x => x.Id);
         builder.HasMany(x => x.WikiPage).WithOne(x => x.Wiki);
-        builder.HasOne(x => x.World).WithOne(x => x.Wiki).HasForeignKey<World>(x => x.WikiKey);
     }
 }

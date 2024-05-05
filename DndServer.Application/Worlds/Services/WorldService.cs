@@ -27,10 +27,8 @@ public class WorldService : IWorldService
         {
             ImageId = dto.ImageId
         };
-        var newWiki = new Wiki(world.Name + " Вики");
         var newTracker = new Tracker(world);
 
-        world.Wiki = newWiki;
         world.Tracker = newTracker;
 
         var newWorldLink = new WorldLinks(RoleEnum.Master)
@@ -57,6 +55,24 @@ public class WorldService : IWorldService
         world.Description = dto.Description;
         world.Name = dto.Name;
         world.ImageId = dto.ImageId;
+
+        _worldRepository.Update(world);
+        _unitOfWork.SaveChanges();
+        return Task.CompletedTask;
+    }
+
+    public Task AddWikiPart(string name, int worldId)
+    {
+        var world = _worldRepository.Get(x => x.Id == worldId).FirstOrDefault();
+        if (world == null)
+        {
+            throw new Exception();
+        }
+
+        _worldRepository.Attach(world);
+
+        var wiki = new Wiki(name);
+        world.Wiki.Add(wiki);
 
         _worldRepository.Update(world);
         _unitOfWork.SaveChanges();
@@ -92,6 +108,31 @@ public class WorldService : IWorldService
             throw new Exception();
         }
 
+        var wikiList = new List<WikiDto>();
+        foreach (var wiki in world.Wiki)
+        {
+            var wikiPageList = new List<WikiPageDto>();
+            foreach (var page in wiki.WikiPage)
+            {
+                var wikiPage = new WikiPageDto
+                {
+                    Id = page.Id,
+                    Header = page.Header,
+                    Text = page.Text,
+                    ImageId = page.ImageId
+                };
+                wikiPageList.Add(wikiPage);
+            }
+
+            var wikiItem = new WikiDto
+            {
+                Id = wiki.Id,
+                Name = wiki.Name,
+                Pages = wikiPageList
+            };
+            wikiList.Add(wikiItem);
+        }
+
         var worldDto = new WorldDto
         {
             Id = world.Id,
@@ -99,7 +140,7 @@ public class WorldService : IWorldService
             Description = world.Description,
             TrackerId = world.Tracker.Id,
             ImageId = world.ImageId,
-            WikiId = world.Wiki.Id
+            Wiki = wikiList
         };
 
         return Task.FromResult(worldDto);
