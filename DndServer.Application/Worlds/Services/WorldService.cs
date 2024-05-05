@@ -23,7 +23,10 @@ public class WorldService : IWorldService
 
     public Task CreateWorld(WorldCreateDto dto, int userId)
     {
-        var world = new World(dto.Name, dto.Description);
+        var world = new World(dto.Name, dto.Description)
+        {
+            ImageId = dto.ImageId
+        };
         var newWiki = new Wiki(world.Name + " Вики");
         var newTracker = new Tracker(world);
 
@@ -37,6 +40,25 @@ public class WorldService : IWorldService
         };
         _worldLinksRepository.Create(newWorldLink);
 
+        _unitOfWork.SaveChanges();
+        return Task.CompletedTask;
+    }
+
+    public Task EditWorld(WorldDto dto)
+    {
+        var world = _worldRepository.Get(x => x.Id == dto.Id).FirstOrDefault();
+        if (world == null)
+        {
+            throw new Exception();
+        }
+
+        _worldRepository.Attach(world);
+
+        world.Description = dto.Description;
+        world.Name = dto.Name;
+        world.ImageId = dto.ImageId;
+
+        _worldRepository.Update(world);
         _unitOfWork.SaveChanges();
         return Task.CompletedTask;
     }

@@ -57,6 +57,18 @@ public class WorldController : ControllerBase
     }
 
     /// <summary>
+    ///     Редактирование мира
+    /// </summary>
+    [HttpPut]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesDefaultResponseType]
+    public async Task EditWorld([FromBody] WorldDto dto)
+    {
+        await _worldService.EditWorld(dto);
+    }
+
+    /// <summary>
     ///     Трекер
     /// </summary>
     [HttpGet("getTracker")]
