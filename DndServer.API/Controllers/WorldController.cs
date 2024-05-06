@@ -103,4 +103,16 @@ public class WorldController : ControllerBase
     {
         await _worldService.AddWikiPart(name, worldId);
     }
+
+    /// <summary>
+    ///     Добавить страницу вики
+    /// </summary>
+    [HttpPut("wikiPage")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesDefaultResponseType]
+    public async Task SaveWikiPage(string header, string text, int? imageId, int? pageId, int wikiId)
+    {
+        await _worldService.SaveWikiPage(header, text, imageId, pageId, wikiId);
+    }
 }

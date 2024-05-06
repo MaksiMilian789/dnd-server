@@ -12,13 +12,17 @@ public class WorldService : IWorldService
     private readonly IUnitOfWork _unitOfWork;
     private readonly IWorldRepository _worldRepository;
     private readonly IWorldLinksRepository _worldLinksRepository;
+    private readonly IWikiRepository _wikiRepository;
+    private readonly IWikiPageRepository _wikiPageRepository;
 
     public WorldService(IWorldRepository worldRepository, IWorldLinksRepository worldLinksRepository,
-        IUnitOfWork unitOfWork)
+        IUnitOfWork unitOfWork, IWikiRepository wikiRepository, IWikiPageRepository wikiPageRepository)
     {
         _worldRepository = worldRepository;
         _worldLinksRepository = worldLinksRepository;
         _unitOfWork = unitOfWork;
+        _wikiRepository = wikiRepository;
+        _wikiPageRepository = wikiPageRepository;
     }
 
     public Task CreateWorld(WorldCreateDto dto, int userId)
@@ -75,6 +79,48 @@ public class WorldService : IWorldService
         world.Wiki.Add(wiki);
 
         _worldRepository.Update(world);
+        _unitOfWork.SaveChanges();
+        return Task.CompletedTask;
+    }
+
+    public Task SaveWikiPage(string header, string text, int? imageId, int? pageId, int wikiId)
+    {
+        var wiki = _wikiRepository.Get(x => x.Id == wikiId).FirstOrDefault();
+        if (wiki == null)
+        {
+            throw new Exception();
+        }
+
+        _wikiRepository.Attach(wiki);
+
+        if (pageId == null)
+        {
+            var newPage = new WikiPage(header, text)
+            {
+                ImageId = imageId
+            };
+            wiki.WikiPage.Add(newPage);
+        }
+        else
+        {
+            var page = _wikiPageRepository.Get(x => x.Id == pageId).FirstOrDefault();
+            if (page == null)
+            {
+                throw new Exception();
+            }
+
+            _wikiPageRepository.Attach(page);
+
+            page.Header = header;
+            page.Text = text;
+            page.ImageId = imageId;
+
+            wiki.WikiPage.Remove(wiki.WikiPage.FirstOrDefault(x => x.Id == pageId) ??
+                                 throw new InvalidOperationException());
+            wiki.WikiPage.Add(page);
+        }
+
+        _wikiRepository.Update(wiki);
         _unitOfWork.SaveChanges();
         return Task.CompletedTask;
     }
