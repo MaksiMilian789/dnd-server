@@ -28,7 +28,7 @@ public class UploadController : ControllerBase
     /// <param name="upload">Файл изображения</param>
     [Authorize]
     [HttpPost]
-    public Task UploadFile(IFormFile upload)
+    public Task<int> UploadFile(IFormFile upload)
     {
         return _uploadService.UploadImage(upload);
     }

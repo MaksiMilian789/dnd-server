@@ -21,7 +21,7 @@ public class UploadService : IUploadService
         _uploadRepository = uploadRepository;
     }
 
-    public Task UploadImage(IFormFile upload)
+    public Task<int> UploadImage(IFormFile upload)
     {
         if (upload.Length == 0)
         {
@@ -49,14 +49,21 @@ public class UploadService : IUploadService
         var filePath = Path.Combine(_uploadsPath, fileName);
         using (var stream = new FileStream(filePath, FileMode.Create))
         {
-            upload.CopyToAsync(stream);
+            upload.CopyTo(stream);
         }
 
         var uploadedFile = new Image(fileName);
         _uploadRepository.Create(uploadedFile);
         _unitOfWork.SaveChanges();
 
-        return Task.CompletedTask;
+        var id = _uploadRepository.Get(x => x.Path == fileName).FirstOrDefault();
+
+        if (id == null)
+        {
+            throw new Exception();
+        }
+
+        return Task.FromResult(id.Id);
     }
 
     public (string path, UploadedFile file) GetImage(int fileId)
