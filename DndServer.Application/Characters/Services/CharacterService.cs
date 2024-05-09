@@ -273,6 +273,24 @@ public class CharacterService : ICharacterService
         character.RaceInstance = raceInstance;
         character.BackgroundInstance = backgroundInstance;
 
+        foreach (var skillId in dto.SkillIds)
+        {
+            var skillTemplate = _skillTemplateRepository.Get(x => x.Id == skillId).FirstOrDefault();
+            if (skillTemplate == null)
+            {
+                throw new Exception();
+            }
+
+            var instance = SkillUtilsService
+                .CreateSkillsInstancesFromTemplate(new List<SkillTemplate> { skillTemplate })
+                .FirstOrDefault();
+
+            if (instance != null)
+            {
+                character.SkillInstance.Add(instance);
+            }
+        }
+
         var user = _userRepository.Get(x => x.Id == userId).FirstOrDefault();
         character.UserId = user!.Id;
         _characterRepository.Create(character);
