@@ -2,6 +2,6 @@
 
 public enum DamageTypeEnum
 {
-    fire,
-    cold
+    Fire,
+    Cold
 }

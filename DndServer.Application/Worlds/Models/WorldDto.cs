@@ -7,5 +7,5 @@ public class WorldDto
     public string Description { get; set; } = "";
     public int TrackerId { get; set; }
     public int? ImageId { get; set; }
-    public int WikiId { get; set; }
+    public List<WikiDto> Wiki { get; set; } = new();
 }

@@ -8,8 +8,10 @@ using DndServer.Domain.Characters.Notes;
 using DndServer.Domain.Characters.Race;
 using DndServer.Domain.Characters.Skill;
 using DndServer.Domain.Characters.Spell;
+using DndServer.Domain.Shared;
 using DndServer.Domain.Users;
 using DndServer.Domain.Worlds;
+using DndServer.Infrastructure.Persistence.Configurations;
 using DndServer.Infrastructure.Persistence.Configurations.Characters;
 using DndServer.Infrastructure.Persistence.Configurations.Characters.Background;
 using DndServer.Infrastructure.Persistence.Configurations.Characters.Class;
@@ -48,6 +50,7 @@ public class DataContext : DbContext, IUnitOfWork
     public DbSet<Wiki> Wiki => Set<Wiki>();
     public DbSet<WikiPage> WikiPage => Set<WikiPage>();
     public DbSet<World> World => Set<World>();
+    public DbSet<Image> Image => Set<Image>();
 
     public DataContext(DbContextOptions<DataContext> options) : base(options)
     {
@@ -87,5 +90,6 @@ public class DataContext : DbContext, IUnitOfWork
         modelBuilder.ApplyConfiguration(new WikiPageConfiguration());
         modelBuilder.ApplyConfiguration(new WorldConfiguration());
         modelBuilder.ApplyConfiguration(new WorldLinksConfiguration());
+        modelBuilder.ApplyConfiguration(new ImageConfiguration());
     }
 }

@@ -57,6 +57,18 @@ public class WorldController : ControllerBase
     }
 
     /// <summary>
+    ///     Редактирование мира
+    /// </summary>
+    [HttpPut]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesDefaultResponseType]
+    public async Task EditWorld([FromBody] WorldDto dto)
+    {
+        await _worldService.EditWorld(dto);
+    }
+
+    /// <summary>
     ///     Трекер
     /// </summary>
     [HttpGet("getTracker")]
@@ -78,5 +90,29 @@ public class WorldController : ControllerBase
     public async Task SetTracker(int worldId, [FromBody] List<TrackerUnitDto> list)
     {
         await _trackerService.SetTracker(worldId, list);
+    }
+
+    /// <summary>
+    ///     Создать раздел вики
+    /// </summary>
+    [HttpPost("wikiPart")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesDefaultResponseType]
+    public async Task AddWikiPart(string name, int worldId)
+    {
+        await _worldService.AddWikiPart(name, worldId);
+    }
+
+    /// <summary>
+    ///     Добавить страницу вики
+    /// </summary>
+    [HttpPut("wikiPage")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesDefaultResponseType]
+    public async Task SaveWikiPage(string header, string text, int? imageId, int? pageId, int wikiId)
+    {
+        await _worldService.SaveWikiPage(header, text, imageId, pageId, wikiId);
     }
 }

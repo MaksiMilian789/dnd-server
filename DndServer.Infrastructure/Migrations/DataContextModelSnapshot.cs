@@ -184,6 +184,9 @@ namespace DndServer.Infrastructure.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -210,6 +213,9 @@ namespace DndServer.Infrastructure.Migrations
 
                     b.Property<int>("AuthorId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -249,6 +255,9 @@ namespace DndServer.Infrastructure.Migrations
 
                     b.Property<int>("ClassInstanceId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("EnergySlots")
                         .IsRequired()
@@ -335,6 +344,9 @@ namespace DndServer.Infrastructure.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -361,6 +373,9 @@ namespace DndServer.Infrastructure.Migrations
 
                     b.Property<int>("AuthorId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -391,6 +406,9 @@ namespace DndServer.Infrastructure.Migrations
 
                     b.Property<int>("AuthorId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -424,6 +442,9 @@ namespace DndServer.Infrastructure.Migrations
 
                     b.Property<int>("AttackType")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -505,6 +526,9 @@ namespace DndServer.Infrastructure.Migrations
 
                     b.Property<int>("AuthorId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -601,6 +625,9 @@ namespace DndServer.Infrastructure.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -627,6 +654,9 @@ namespace DndServer.Infrastructure.Migrations
 
                     b.Property<int>("AuthorId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -658,8 +688,17 @@ namespace DndServer.Infrastructure.Migrations
                     b.Property<int>("ActionType")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Activated")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<int>("Charges")
                         .HasColumnType("int");
+
+                    b.Property<int>("CurrentCharges")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -683,6 +722,17 @@ namespace DndServer.Infrastructure.Migrations
 
                     b.Property<int>("System")
                         .HasColumnType("int");
+
+                    b.ComplexProperty<Dictionary<string, object>>("ActionTime", "DndServer.Domain.Characters.Skill.SkillInstance.ActionTime#ActionTime", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<bool>("Concentrate")
+                                .HasColumnType("tinyint(1)");
+
+                            b1.Property<int>("Time")
+                                .HasColumnType("int");
+                        });
 
                     b.ComplexProperty<Dictionary<string, object>>("Value", "DndServer.Domain.Characters.Skill.SkillInstance.Value#SkillValue", b1 =>
                         {
@@ -851,6 +901,9 @@ namespace DndServer.Infrastructure.Migrations
                     b.Property<int>("Charges")
                         .HasColumnType("int");
 
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -879,6 +932,17 @@ namespace DndServer.Infrastructure.Migrations
 
                     b.Property<int?>("WorldId")
                         .HasColumnType("int");
+
+                    b.ComplexProperty<Dictionary<string, object>>("ActionTime", "DndServer.Domain.Characters.Skill.SkillTemplate.ActionTime#ActionTime", b1 =>
+                        {
+                            b1.IsRequired();
+
+                            b1.Property<bool>("Concentrate")
+                                .HasColumnType("tinyint(1)");
+
+                            b1.Property<int>("Time")
+                                .HasColumnType("int");
+                        });
 
                     b.ComplexProperty<Dictionary<string, object>>("Value", "DndServer.Domain.Characters.Skill.SkillTemplate.Value#SkillValue", b1 =>
                         {
@@ -1045,6 +1109,9 @@ namespace DndServer.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -1052,7 +1119,13 @@ namespace DndServer.Infrastructure.Migrations
                     b.Property<int>("Distance")
                         .HasColumnType("int");
 
+                    b.Property<bool>("HasDamage")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<int>("Level")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MagicSchool")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -1069,8 +1142,8 @@ namespace DndServer.Infrastructure.Migrations
                             b1.Property<bool>("Concentrate")
                                 .HasColumnType("tinyint(1)");
 
-                            b1.Property<TimeSpan>("Time")
-                                .HasColumnType("time(6)");
+                            b1.Property<int>("Time")
+                                .HasColumnType("int");
                         });
 
                     b.ComplexProperty<Dictionary<string, object>>("Damage", "DndServer.Domain.Characters.Spell.SpellInstance.Damage#Damage", b1 =>
@@ -1121,6 +1194,9 @@ namespace DndServer.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -1128,7 +1204,13 @@ namespace DndServer.Infrastructure.Migrations
                     b.Property<int>("Distance")
                         .HasColumnType("int");
 
+                    b.Property<bool>("HasDamage")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<int>("Level")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MagicSchool")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -1148,8 +1230,8 @@ namespace DndServer.Infrastructure.Migrations
                             b1.Property<bool>("Concentrate")
                                 .HasColumnType("tinyint(1)");
 
-                            b1.Property<TimeSpan>("Time")
-                                .HasColumnType("time(6)");
+                            b1.Property<int>("Time")
+                                .HasColumnType("int");
                         });
 
                     b.ComplexProperty<Dictionary<string, object>>("Damage", "DndServer.Domain.Characters.Spell.SpellTemplate.Damage#Damage", b1 =>
@@ -1189,6 +1271,9 @@ namespace DndServer.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Path")
                         .IsRequired()
@@ -1279,7 +1364,12 @@ namespace DndServer.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<int>("WorldId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("WorldId");
 
                     b.ToTable("Wiki");
                 });
@@ -1323,6 +1413,9 @@ namespace DndServer.Infrastructure.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -1337,17 +1430,11 @@ namespace DndServer.Infrastructure.Migrations
                     b.Property<int>("TrackerKey")
                         .HasColumnType("int");
 
-                    b.Property<int>("WikiKey")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ImageId");
 
                     b.HasIndex("TrackerKey")
-                        .IsUnique();
-
-                    b.HasIndex("WikiKey")
                         .IsUnique();
 
                     b.ToTable("World");
@@ -1698,6 +1785,17 @@ namespace DndServer.Infrastructure.Migrations
                     b.Navigation("Tracker");
                 });
 
+            modelBuilder.Entity("DndServer.Domain.Worlds.Wiki", b =>
+                {
+                    b.HasOne("DndServer.Domain.Worlds.World", "World")
+                        .WithMany("Wiki")
+                        .HasForeignKey("WorldId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("World");
+                });
+
             modelBuilder.Entity("DndServer.Domain.Worlds.WikiPage", b =>
                 {
                     b.HasOne("DndServer.Domain.Shared.Image", "Image")
@@ -1727,17 +1825,9 @@ namespace DndServer.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DndServer.Domain.Worlds.Wiki", "Wiki")
-                        .WithOne("World")
-                        .HasForeignKey("DndServer.Domain.Worlds.World", "WikiKey")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Image");
 
                     b.Navigation("Tracker");
-
-                    b.Navigation("Wiki");
                 });
 
             modelBuilder.Entity("DndServer.Domain.Worlds.WorldLinks", b =>
@@ -1897,13 +1987,12 @@ namespace DndServer.Infrastructure.Migrations
             modelBuilder.Entity("DndServer.Domain.Worlds.Wiki", b =>
                 {
                     b.Navigation("WikiPage");
-
-                    b.Navigation("World")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("DndServer.Domain.Worlds.World", b =>
                 {
+                    b.Navigation("Wiki");
+
                     b.Navigation("WorldLinks");
                 });
 #pragma warning restore 612, 618

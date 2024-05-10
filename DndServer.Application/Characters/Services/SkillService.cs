@@ -32,6 +32,7 @@ public class SkillService : ISkillService
                 ActionType = skill.ActionType,
                 SkillType = skill.SkillType,
                 Value = skill.Value,
+                ActionTime = skill.ActionTime,
                 Distance = skill.Distance,
                 Passive = skill.Passive,
                 Recharge = skill.Recharge,
@@ -53,7 +54,8 @@ public class SkillService : ISkillService
         var skillTemplate = new SkillTemplate(dto.Name, dto.Description, dto.ActionType, dto.SkillType, dto.Distance,
             dto.Passive, dto.Recharge, dto.Charges, dto.System, dto.AuthorId, dto.WorldId)
         {
-            Value = dto.Value
+            Value = dto.Value,
+            ActionTime = dto.ActionTime
         };
         _skillTemplateRepository.Create(skillTemplate);
 

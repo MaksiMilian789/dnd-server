@@ -38,7 +38,7 @@ public class ConditionService : IConditionService
                 System = val.System,
                 WorldId = val.WorldId,
                 AuthorId = val.AuthorId,
-                Skills = skills
+                SkillInstances = skills
             };
             listDto.Add(dto);
         }

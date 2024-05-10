@@ -8,9 +8,11 @@ using DndServer.Application.Interfaces.Characters.Notes;
 using DndServer.Application.Interfaces.Characters.Race;
 using DndServer.Application.Interfaces.Characters.Skill;
 using DndServer.Application.Interfaces.Characters.Spell;
+using DndServer.Application.Interfaces.Upload;
 using DndServer.Application.Interfaces.Users;
 using DndServer.Application.Interfaces.Worlds;
 using DndServer.Infrastructure.Persistence;
+using DndServer.Infrastructure.Persistence.Repositories;
 using DndServer.Infrastructure.Persistence.Repositories.Characters;
 using DndServer.Infrastructure.Persistence.Repositories.Characters.Background;
 using DndServer.Infrastructure.Persistence.Repositories.Characters.Class;
@@ -65,6 +67,7 @@ public static class ConfigureServices
         services.AddScoped<ISkillTemplateRepository, SkillTemplateRepository>();
         services.AddScoped<ISpellInstanceRepository, SpellInstanceRepository>();
         services.AddScoped<ISpellTemplateRepository, SpellTemplateRepository>();
+        services.AddScoped<IUploadRepository, UploadRepository>();
 
         return services;
     }

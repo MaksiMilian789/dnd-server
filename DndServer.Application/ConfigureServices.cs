@@ -2,6 +2,8 @@
 using DndServer.Application.Auth.Services;
 using DndServer.Application.Characters.Interfaces;
 using DndServer.Application.Characters.Services;
+using DndServer.Application.Shared;
+using DndServer.Application.Shared.Interfaces;
 using DndServer.Application.Users.Interfaces;
 using DndServer.Application.Users.Services;
 using DndServer.Application.Worlds.Interfaces;
@@ -27,6 +29,9 @@ public static class ConfigureServices
         services.AddScoped<ITrackerService, TrackerService>();
         services.AddScoped<ISkillService, SkillService>();
         services.AddScoped<IConditionService, ConditionService>();
+        services.AddScoped<IObjectService, ObjectService>();
+        services.AddScoped<ISpellService, SpellService>();
+        services.AddScoped<IUploadService, UploadService>();
 
         return services;
     }

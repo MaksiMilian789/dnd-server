@@ -4,5 +4,6 @@ public enum ActionTypesEnum
 {
     Reaction,
     Action,
-    BonusAction
+    BonusAction,
+    None
 }

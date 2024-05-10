@@ -4,6 +4,7 @@ using DndServer.Domain.Characters.Condition;
 using DndServer.Domain.Characters.Inventory;
 using DndServer.Domain.Characters.Race;
 using DndServer.Domain.Characters.Spell;
+using DndServer.Domain.Shared;
 using DndServer.Domain.Shared.Enums;
 
 namespace DndServer.Domain.Characters.Skill;
@@ -13,12 +14,14 @@ public class SkillTemplate
     public int Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
+    public bool Deleted { get; set; }
     public ActionTypesEnum ActionType { get; set; }
     public SkillTypesEnum SkillType { get; set; }
     public SkillValue Value { get; set; } = null!;
+    public ActionTime ActionTime { get; set; } = null!;
     public int? Distance { get; set; }
     public bool Passive { get; set; }
-    public int Recharge { get; set; }
+    public RechargeEnum Recharge { get; set; }
     public int Charges { get; set; }
     public bool Hidden { get; set; } = false;
     public SystemEnum System { get; set; }
@@ -32,7 +35,7 @@ public class SkillTemplate
     public virtual ICollection<Conditions> Condition { get; set; }
 
     public SkillTemplate(string name, string description, ActionTypesEnum actionType, SkillTypesEnum skillType,
-        int? distance, bool passive, int recharge, int charges, SystemEnum system, int authorId,
+        int? distance, bool passive, RechargeEnum recharge, int charges, SystemEnum system, int authorId,
         int? worldId)
     {
         Name = name;

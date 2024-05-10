@@ -7,15 +7,21 @@ using DndServer.Application.Interfaces.Characters;
 using DndServer.Application.Interfaces.Characters.Background;
 using DndServer.Application.Interfaces.Characters.Class;
 using DndServer.Application.Interfaces.Characters.Condition;
+using DndServer.Application.Interfaces.Characters.Inventory;
+using DndServer.Application.Interfaces.Characters.Notes;
 using DndServer.Application.Interfaces.Characters.Race;
 using DndServer.Application.Interfaces.Characters.Skill;
+using DndServer.Application.Interfaces.Characters.Spell;
 using DndServer.Application.Interfaces.Users;
 using DndServer.Application.Shared;
 using DndServer.Domain.Characters;
 using DndServer.Domain.Characters.Background;
 using DndServer.Domain.Characters.Class;
+using DndServer.Domain.Characters.Inventory;
+using DndServer.Domain.Characters.Notes;
 using DndServer.Domain.Characters.Race;
 using DndServer.Domain.Characters.Skill;
+using DndServer.Domain.Characters.Spell;
 
 namespace DndServer.Application.Characters.Services;
 
@@ -30,11 +36,19 @@ public class CharacterService : ICharacterService
     private readonly ISkillTemplateRepository _skillTemplateRepository;
     private readonly ISkillInstanceRepository _skillInstanceRepository;
     private readonly IConditionsRepository _conditionsRepository;
+    private readonly ISpellTemplateRepository _spellTemplateRepository;
+    private readonly ISpellInstanceRepository _spellInstanceRepository;
+    private readonly IObjectTemplateRepository _objectTemplateRepository;
+    private readonly IObjectInstanceRepository _objectInstanceRepository;
+    private readonly INoteRepository _noteRepository;
 
     public CharacterService(ICharacterRepository characterRepository, IClassTemplateRepository classTemplateRepository,
         IRaceTemplateRepository raceTemplateRepository, IBackgroundTemplateRepository backgroundTemplateRepository,
         IUserRepository userRepository, IUnitOfWork unitOfWork, ISkillTemplateRepository skillTemplateRepository,
-        ISkillInstanceRepository skillInstanceRepository, IConditionsRepository conditionsRepository)
+        ISkillInstanceRepository skillInstanceRepository, IConditionsRepository conditionsRepository,
+        ISpellTemplateRepository spellTemplateRepository, ISpellInstanceRepository spellInstanceRepository,
+        IObjectTemplateRepository objectTemplateRepository, IObjectInstanceRepository objectInstanceRepository,
+        INoteRepository noteRepository)
     {
         _characterRepository = characterRepository;
         _classTemplateRepository = classTemplateRepository;
@@ -45,6 +59,11 @@ public class CharacterService : ICharacterService
         _skillTemplateRepository = skillTemplateRepository;
         _skillInstanceRepository = skillInstanceRepository;
         _conditionsRepository = conditionsRepository;
+        _spellTemplateRepository = spellTemplateRepository;
+        _spellInstanceRepository = spellInstanceRepository;
+        _objectTemplateRepository = objectTemplateRepository;
+        _objectInstanceRepository = objectInstanceRepository;
+        _noteRepository = noteRepository;
     }
 
     public Task<List<ShortCharacterDto>> GetShortListCharacters(int userId)
@@ -117,7 +136,8 @@ public class CharacterService : ICharacterService
             {
                 Id = item.Id,
                 Header = item.Header,
-                Text = item.Text
+                Text = item.Text,
+                ImageId = item.ImageId
             };
             notes.Add(dto);
         }
@@ -133,11 +153,14 @@ public class CharacterService : ICharacterService
                 ActionType = item.ActionType,
                 SkillType = item.SkillType,
                 Value = item.Value,
+                ActionTime = item.ActionTime,
                 Distance = item.Distance,
                 Passive = item.Passive,
                 Recharge = item.Recharge,
                 Charges = item.Charges,
-                System = item.System
+                CurrentCharges = item.CurrentCharges,
+                System = item.System,
+                Activated = item.Activated
             };
             skillInstances.Add(dto);
         }
@@ -150,6 +173,8 @@ public class CharacterService : ICharacterService
                 Id = item.Id,
                 Name = item.Name,
                 Description = item.Description,
+                MagicSchool = item.MagicSchool,
+                HasDamage = item.HasDamage,
                 Level = item.Level,
                 Distance = item.Distance,
                 ActionType = item.ActionType,
@@ -251,6 +276,24 @@ public class CharacterService : ICharacterService
         character.RaceInstance = raceInstance;
         character.BackgroundInstance = backgroundInstance;
 
+        foreach (var skillId in dto.SkillIds)
+        {
+            var skillTemplate = _skillTemplateRepository.Get(x => x.Id == skillId).FirstOrDefault();
+            if (skillTemplate == null)
+            {
+                throw new Exception();
+            }
+
+            var instance = SkillUtilsService
+                .CreateSkillsInstancesFromTemplate(new List<SkillTemplate> { skillTemplate })
+                .FirstOrDefault();
+
+            if (instance != null)
+            {
+                character.SkillInstance.Add(instance);
+            }
+        }
+
         var user = _userRepository.Get(x => x.Id == userId).FirstOrDefault();
         character.UserId = user!.Id;
         _characterRepository.Create(character);
@@ -323,6 +366,301 @@ public class CharacterService : ICharacterService
         _conditionsRepository.Attach(condition);
 
         character.Conditions.Add(condition);
+        _characterRepository.Update(character);
+        _unitOfWork.SaveChanges();
+        return Task.CompletedTask;
+    }
+
+    public Task AddObject(int id, int objectId)
+    {
+        var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
+        if (character == null)
+        {
+            throw new Exception();
+        }
+
+        _characterRepository.Attach(character);
+
+        var objectTemplate = _objectTemplateRepository.Get(x => x.Id == objectId).FirstOrDefault();
+        if (objectTemplate == null)
+        {
+            throw new Exception();
+        }
+
+        var objectInstance = new ObjectInstance(objectTemplate.Name, objectTemplate.Description,
+            objectTemplate.AttackType, objectTemplate.Attachment, objectTemplate.Rare, objectTemplate.Type,
+            objectTemplate.MainCharacteristic, false, objectTemplate.Distance, 1, objectTemplate.ImageId,
+            objectTemplate.System)
+        {
+            Damage = objectTemplate.Damage
+        };
+
+        var skillInstances = SkillUtilsService.CreateSkillsInstancesFromTemplate(objectTemplate.SkillTemplate);
+        objectInstance.SkillInstance = skillInstances;
+
+        character.ObjectInstance.Add(objectInstance);
+        _characterRepository.Update(character);
+        _unitOfWork.SaveChanges();
+        return Task.CompletedTask;
+    }
+
+    public Task AddSpell(int id, int spellId)
+    {
+        var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
+        if (character == null)
+        {
+            throw new Exception();
+        }
+
+        _characterRepository.Attach(character);
+
+        var spellTemplate = _spellTemplateRepository.Get(x => x.Id == spellId).FirstOrDefault();
+        if (spellTemplate == null)
+        {
+            throw new Exception();
+        }
+
+        var spellInstance = new SpellInstance(spellTemplate.Name, spellTemplate.Description, spellTemplate.Level,
+            spellTemplate.Distance, spellTemplate.ActionType, spellTemplate.MagicSchool, spellTemplate.HasDamage,
+            spellTemplate.System)
+        {
+            Damage = spellTemplate.Damage,
+            ActionTime = spellTemplate.ActionTime,
+            Components = spellTemplate.Components
+        };
+
+        var skillInstances = SkillUtilsService.CreateSkillsInstancesFromTemplate(spellTemplate.SkillTemplate);
+        spellInstance.SkillInstance = skillInstances;
+
+        character.SpellInstance.Add(spellInstance);
+        _characterRepository.Update(character);
+        _unitOfWork.SaveChanges();
+        return Task.CompletedTask;
+    }
+
+    public Task SaveNote(int id, string header, string text, int? imageId, int? noteId)
+    {
+        var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
+        if (character == null)
+        {
+            throw new Exception();
+        }
+
+        _characterRepository.Attach(character);
+
+        if (noteId == null)
+        {
+            var newNote = new Note(header, text)
+            {
+                ImageId = imageId
+            };
+            character.Note.Add(newNote);
+        }
+        else
+        {
+            var note = _noteRepository.Get(x => x.Id == noteId).FirstOrDefault();
+            if (note == null)
+            {
+                throw new Exception();
+            }
+
+            _noteRepository.Attach(note);
+
+            note.Header = header;
+            note.Text = text;
+            note.ImageId = imageId;
+
+            character.Note.Remove(character.Note.FirstOrDefault(x => x.Id == noteId) ??
+                                  throw new InvalidOperationException());
+            character.Note.Add(note);
+        }
+
+        _characterRepository.Update(character);
+        _unitOfWork.SaveChanges();
+        return Task.CompletedTask;
+    }
+
+    public Task EquipObject(int id, int objectId, bool equip)
+    {
+        var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
+        if (character == null)
+        {
+            throw new Exception();
+        }
+
+        _characterRepository.Attach(character);
+
+        foreach (var objectInstance in character.ObjectInstance)
+        {
+            if (objectInstance.Id == objectId)
+            {
+                objectInstance.Equipped = equip;
+            }
+        }
+
+        _characterRepository.Update(character);
+        _unitOfWork.SaveChanges();
+        return Task.CompletedTask;
+    }
+
+    public Task EditCharInfo(int id, string name, int level, int age)
+    {
+        var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
+        if (character == null)
+        {
+            throw new Exception();
+        }
+
+        _characterRepository.Attach(character);
+
+        character.Name = name;
+        character.Level = level;
+        character.Age = age;
+
+        _characterRepository.Update(character);
+        _unitOfWork.SaveChanges();
+        return Task.CompletedTask;
+    }
+
+    public Task ResetSkillCharges(int id, int skillId)
+    {
+        var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
+        if (character == null)
+        {
+            throw new Exception();
+        }
+
+        _characterRepository.Attach(character);
+
+        foreach (var skill in character.SkillInstance)
+        {
+            if (skill.Id == skillId)
+            {
+                skill.CurrentCharges = skill.Charges;
+            }
+        }
+
+        foreach (var objectInstance in character.ObjectInstance)
+        {
+            foreach (var skill in objectInstance.SkillInstance)
+            {
+                if (skill.Id == skillId)
+                {
+                    skill.CurrentCharges = skill.Charges;
+                }
+            }
+        }
+
+        foreach (var spellInstance in character.SpellInstance)
+        {
+            foreach (var skill in spellInstance.SkillInstance)
+            {
+                if (skill.Id == skillId)
+                {
+                    skill.CurrentCharges = skill.Charges;
+                }
+            }
+        }
+
+        foreach (var skill in character.ClassInstance.SkillInstance)
+        {
+            if (skill.Id == skillId)
+            {
+                skill.CurrentCharges = skill.Charges;
+            }
+        }
+
+        foreach (var skill in character.BackgroundInstance.SkillInstance)
+        {
+            if (skill.Id == skillId)
+            {
+                skill.CurrentCharges = skill.Charges;
+            }
+        }
+
+        foreach (var skill in character.RaceInstance.SkillInstance)
+        {
+            if (skill.Id == skillId)
+            {
+                skill.CurrentCharges = skill.Charges;
+            }
+        }
+
+        _characterRepository.Update(character);
+        _unitOfWork.SaveChanges();
+        return Task.CompletedTask;
+    }
+
+    public Task ToggleSkill(int id, int skillId, bool active, int changeCharges)
+    {
+        var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
+        if (character == null)
+        {
+            throw new Exception();
+        }
+
+        _characterRepository.Attach(character);
+
+        foreach (var skill in character.SkillInstance)
+        {
+            if (skill.Id == skillId)
+            {
+                skill.Activated = active;
+                skill.CurrentCharges += changeCharges;
+            }
+        }
+
+        foreach (var objectInstance in character.ObjectInstance)
+        {
+            foreach (var skill in objectInstance.SkillInstance)
+            {
+                if (skill.Id == skillId)
+                {
+                    skill.Activated = active;
+                    skill.CurrentCharges += changeCharges;
+                }
+            }
+        }
+
+        foreach (var spellInstance in character.SpellInstance)
+        {
+            foreach (var skill in spellInstance.SkillInstance)
+            {
+                if (skill.Id == skillId)
+                {
+                    skill.Activated = active;
+                    skill.CurrentCharges += changeCharges;
+                }
+            }
+        }
+
+        foreach (var skill in character.ClassInstance.SkillInstance)
+        {
+            if (skill.Id == skillId)
+            {
+                skill.Activated = active;
+                skill.CurrentCharges += changeCharges;
+            }
+        }
+
+        foreach (var skill in character.BackgroundInstance.SkillInstance)
+        {
+            if (skill.Id == skillId)
+            {
+                skill.Activated = active;
+                skill.CurrentCharges += changeCharges;
+            }
+        }
+
+        foreach (var skill in character.RaceInstance.SkillInstance)
+        {
+            if (skill.Id == skillId)
+            {
+                skill.Activated = active;
+                skill.CurrentCharges += changeCharges;
+            }
+        }
+
         _characterRepository.Update(character);
         _unitOfWork.SaveChanges();
         return Task.CompletedTask;

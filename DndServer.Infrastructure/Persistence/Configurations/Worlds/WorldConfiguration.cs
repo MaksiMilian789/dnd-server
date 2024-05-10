@@ -10,5 +10,6 @@ public class WorldConfiguration : IEntityTypeConfiguration<World>
     {
         builder.HasKey(x => x.Id);
         builder.HasMany(x => x.WorldLinks).WithOne(x => x.World).HasForeignKey(x => x.WorldId);
+        builder.HasMany(x => x.Wiki).WithOne(x => x.World).HasForeignKey(x => x.WorldId);
     }
 }

@@ -16,4 +16,5 @@ public class CharacterCreateDto
     public int BackgroundId { get; set; }
     public SystemEnum System { get; set; }
     public Characteristics Characteristics { get; set; } = null!;
+    public List<int> SkillIds { get; set; } = new();
 }

@@ -38,7 +38,7 @@ public class ClassService : IClassService
                 System = val.System,
                 WorldId = val.WorldId,
                 AuthorId = val.AuthorId,
-                Skills = skills
+                SkillInstances = skills
             };
             listDto.Add(dto);
         }
