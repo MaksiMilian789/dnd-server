@@ -33,6 +33,7 @@ public enum SkillTypesEnum
     DifficultSpellCheck,
     AddHp,
     AttackCount,
+    Initiative,
     Speed,
     SpeedFly,
     SpeedSwim,

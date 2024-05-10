@@ -540,4 +540,23 @@ public class CharacterService : ICharacterService
         _unitOfWork.SaveChanges();
         return Task.CompletedTask;
     }
+
+    public Task EditCharInfo(int id, string name, int level, int age)
+    {
+        var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
+        if (character == null)
+        {
+            throw new Exception();
+        }
+
+        _characterRepository.Attach(character);
+
+        character.Name = name;
+        character.Level = level;
+        character.Age = age;
+
+        _characterRepository.Update(character);
+        _unitOfWork.SaveChanges();
+        return Task.CompletedTask;
+    }
 }

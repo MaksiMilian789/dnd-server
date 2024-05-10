@@ -125,4 +125,16 @@ public class CharacterController : ControllerBase
     {
         await _characterService.SaveNote(id, header, text, imageId, noteId);
     }
+
+    /// <summary>
+    ///     Изменение информации о персонаже
+    /// </summary>
+    [HttpPut("editInfo")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesDefaultResponseType]
+    public async Task EditInfo(int id, string name, int level, int age)
+    {
+        await _characterService.EditCharInfo(id, name, level, age);
+    }
 }
