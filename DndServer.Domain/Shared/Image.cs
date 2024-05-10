@@ -15,6 +15,7 @@ public class Image
     public virtual ICollection<WikiPage> WikiPage { get; set; } = null!;
     public virtual ICollection<ObjectTemplate> ObjectTemplate { get; set; } = null!;
     public virtual ICollection<ObjectInstance> ObjectInstance { get; set; } = null!;
+    public bool Deleted { get; set; }
 
     public Image(string path)
     {

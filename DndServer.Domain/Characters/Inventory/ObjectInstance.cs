@@ -9,6 +9,7 @@ public class ObjectInstance
     public int Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
+    public bool Deleted { get; set; }
     public Damage Damage { get; set; } = null!;
     public AttackTypesEnum AttackType { get; set; }
     public bool Attachment { get; set; }

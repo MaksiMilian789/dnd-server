@@ -9,6 +9,7 @@ public class SpellTemplate
     public int Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
+    public bool Deleted { get; set; }
     public MagicSchoolEnum MagicSchool { get; set; }
     public bool HasDamage { get; set; }
     public int Level { get; set; }

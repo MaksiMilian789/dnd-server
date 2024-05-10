@@ -157,7 +157,8 @@ public class CharacterService : ICharacterService
                 Passive = item.Passive,
                 Recharge = item.Recharge,
                 Charges = item.Charges,
-                System = item.System
+                System = item.System,
+                Activated = item.Activated
             };
             skillInstances.Add(dto);
         }
@@ -464,6 +465,75 @@ public class CharacterService : ICharacterService
             character.Note.Remove(character.Note.FirstOrDefault(x => x.Id == noteId) ??
                                   throw new InvalidOperationException());
             character.Note.Add(note);
+        }
+
+        _characterRepository.Update(character);
+        _unitOfWork.SaveChanges();
+        return Task.CompletedTask;
+    }
+
+    public Task ToggleSkill(int id, int skillId, bool active)
+    {
+        var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
+        if (character == null)
+        {
+            throw new Exception();
+        }
+
+        _characterRepository.Attach(character);
+
+        foreach (var skill in character.SkillInstance)
+        {
+            if (skill.Id == skillId)
+            {
+                skill.Activated = active;
+            }
+        }
+
+        foreach (var objectInstance in character.ObjectInstance)
+        {
+            foreach (var skill in objectInstance.SkillInstance)
+            {
+                if (skill.Id == skillId)
+                {
+                    skill.Activated = active;
+                }
+            }
+        }
+
+        foreach (var spellInstance in character.SpellInstance)
+        {
+            foreach (var skill in spellInstance.SkillInstance)
+            {
+                if (skill.Id == skillId)
+                {
+                    skill.Activated = active;
+                }
+            }
+        }
+
+        foreach (var skill in character.ClassInstance.SkillInstance)
+        {
+            if (skill.Id == skillId)
+            {
+                skill.Activated = active;
+            }
+        }
+
+        foreach (var skill in character.BackgroundInstance.SkillInstance)
+        {
+            if (skill.Id == skillId)
+            {
+                skill.Activated = active;
+            }
+        }
+
+        foreach (var skill in character.RaceInstance.SkillInstance)
+        {
+            if (skill.Id == skillId)
+            {
+                skill.Activated = active;
+            }
         }
 
         _characterRepository.Update(character);

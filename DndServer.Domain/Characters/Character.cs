@@ -42,6 +42,7 @@ public class Character
     public virtual ICollection<Note> Note { get; set; }
     public virtual ICollection<SkillInstance> SkillInstance { get; set; }
     public virtual ICollection<SpellInstance> SpellInstance { get; set; }
+    public bool Deleted { get; set; }
 
     public Character(string name, int level, int age, GenderEnum gender, IdeologyEnum ideology,
         SystemEnum system)

@@ -13,6 +13,7 @@ public class SkillInstanceDto
     public SkillValue Value { get; set; } = null!;
     public int? Distance { get; set; }
     public bool Passive { get; set; }
+    public bool Activated { get; set; }
     public RechargeEnum Recharge { get; set; }
     public int Charges { get; set; }
     public SystemEnum System { get; set; }

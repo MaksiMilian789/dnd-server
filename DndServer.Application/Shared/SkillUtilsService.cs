@@ -13,7 +13,7 @@ public static class SkillUtilsService
         {
             var skill = new SkillInstance(skillTemplate.Name, skillTemplate.Description, skillTemplate.ActionType,
                 skillTemplate.SkillType, skillTemplate.Distance, skillTemplate.Passive, skillTemplate.Recharge,
-                skillTemplate.Charges, skillTemplate.System)
+                skillTemplate.Charges, skillTemplate.System, false)
             {
                 Value = skillTemplate.Value
             };
@@ -59,7 +59,8 @@ public static class SkillUtilsService
                 Passive = instance.Passive,
                 Recharge = instance.Recharge,
                 Charges = instance.Charges,
-                System = instance.System
+                System = instance.System,
+                Activated = instance.Activated
             };
             skillInstancesDto.Add(skill);
         }
