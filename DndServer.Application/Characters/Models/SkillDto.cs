@@ -1,4 +1,5 @@
 ﻿using DndServer.Domain.Characters.Skill;
+using DndServer.Domain.Shared;
 using DndServer.Domain.Shared.Enums;
 
 namespace DndServer.Application.Characters.Models;
@@ -11,6 +12,7 @@ public class SkillDto
     public ActionTypesEnum ActionType { get; set; }
     public SkillTypesEnum SkillType { get; set; }
     public SkillValue Value { get; set; } = null!;
+    public ActionTime ActionTime { get; set; } = null!;
     public int? Distance { get; set; }
     public bool Passive { get; set; }
     public RechargeEnum Recharge { get; set; }

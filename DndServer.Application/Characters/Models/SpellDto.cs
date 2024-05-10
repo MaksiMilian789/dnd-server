@@ -19,5 +19,5 @@ public class SpellDto
     public SystemEnum System { get; set; }
     public int? WorldId { get; set; }
     public int? AuthorId { get; set; }
-    public List<SkillDto> Skills { get; set; } = new();
+    public List<SkillDto> SkillInstances { get; set; } = new();
 }

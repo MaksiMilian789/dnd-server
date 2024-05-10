@@ -16,7 +16,8 @@ public static class SkillUtilsService
                 skillTemplate.Charges, skillTemplate.System, false)
             {
                 Value = skillTemplate.Value,
-                CurrentCharges = skillTemplate.Charges
+                CurrentCharges = skillTemplate.Charges,
+                ActionTime = skillTemplate.ActionTime
             };
             skillInstances.Add(skill);
         }
@@ -35,7 +36,8 @@ public static class SkillUtilsService
                 skillTemplate.Charges, skillTemplate.System, skillTemplate.AuthorId, skillTemplate.WorldId)
             {
                 Value = skillTemplate.Value,
-                Hidden = hidden
+                Hidden = hidden,
+                ActionTime = skillTemplate.ActionTime
             };
             skillTemplates.Add(skill);
         }
@@ -62,7 +64,8 @@ public static class SkillUtilsService
                 Charges = instance.Charges,
                 CurrentCharges = instance.CurrentCharges,
                 System = instance.System,
-                Activated = instance.Activated
+                Activated = instance.Activated,
+                ActionTime = instance.ActionTime
             };
             skillInstancesDto.Add(skill);
         }
@@ -83,6 +86,7 @@ public static class SkillUtilsService
                 ActionType = template.ActionType,
                 SkillType = template.SkillType,
                 Value = template.Value,
+                ActionTime = template.ActionTime,
                 Distance = template.Distance,
                 Passive = template.Passive,
                 Recharge = template.Recharge,

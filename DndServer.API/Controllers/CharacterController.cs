@@ -145,9 +145,9 @@ public class CharacterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task ToggleSkill(int id, int skillId, bool active)
+    public async Task ToggleSkill(int id, int skillId, bool active, int changeCharges)
     {
-        await _characterService.ToggleSkill(id, skillId, active);
+        await _characterService.ToggleSkill(id, skillId, active, changeCharges);
     }
 
     /// <summary>

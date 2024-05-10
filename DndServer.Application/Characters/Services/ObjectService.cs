@@ -46,7 +46,7 @@ public class ObjectService : IObjectService
                 System = objectTemplate.System,
                 WorldId = objectTemplate.WorldId,
                 AuthorId = objectTemplate.AuthorId,
-                Skills = skills
+                SkillInstances = skills
             };
             listDto.Add(dto);
         }

@@ -3,6 +3,7 @@ using DndServer.Domain.Characters.Class;
 using DndServer.Domain.Characters.Inventory;
 using DndServer.Domain.Characters.Race;
 using DndServer.Domain.Characters.Spell;
+using DndServer.Domain.Shared;
 using DndServer.Domain.Shared.Enums;
 
 namespace DndServer.Domain.Characters.Skill;
@@ -16,6 +17,7 @@ public class SkillInstance
     public ActionTypesEnum ActionType { get; set; }
     public SkillTypesEnum SkillType { get; set; }
     public SkillValue Value { get; set; } = null!;
+    public ActionTime ActionTime { get; set; } = null!;
     public int? Distance { get; set; }
     public bool Passive { get; set; }
     public RechargeEnum Recharge { get; set; }
