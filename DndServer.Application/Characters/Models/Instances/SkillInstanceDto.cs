@@ -16,5 +16,6 @@ public class SkillInstanceDto
     public bool Activated { get; set; }
     public RechargeEnum Recharge { get; set; }
     public int Charges { get; set; }
+    public int CurrentCharges { get; set; }
     public SystemEnum System { get; set; }
 }

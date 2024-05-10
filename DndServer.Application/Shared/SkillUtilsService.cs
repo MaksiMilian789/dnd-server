@@ -15,7 +15,8 @@ public static class SkillUtilsService
                 skillTemplate.SkillType, skillTemplate.Distance, skillTemplate.Passive, skillTemplate.Recharge,
                 skillTemplate.Charges, skillTemplate.System, false)
             {
-                Value = skillTemplate.Value
+                Value = skillTemplate.Value,
+                CurrentCharges = skillTemplate.Charges
             };
             skillInstances.Add(skill);
         }
@@ -59,6 +60,7 @@ public static class SkillUtilsService
                 Passive = instance.Passive,
                 Recharge = instance.Recharge,
                 Charges = instance.Charges,
+                CurrentCharges = instance.CurrentCharges,
                 System = instance.System,
                 Activated = instance.Activated
             };

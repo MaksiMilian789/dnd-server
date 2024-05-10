@@ -157,6 +157,7 @@ public class CharacterService : ICharacterService
                 Passive = item.Passive,
                 Recharge = item.Recharge,
                 Charges = item.Charges,
+                CurrentCharges = item.CurrentCharges,
                 System = item.System,
                 Activated = item.Activated
             };
@@ -487,6 +488,10 @@ public class CharacterService : ICharacterService
             if (skill.Id == skillId)
             {
                 skill.Activated = active;
+                if (active)
+                {
+                    skill.CurrentCharges -= 1;
+                }
             }
         }
 
@@ -497,6 +502,10 @@ public class CharacterService : ICharacterService
                 if (skill.Id == skillId)
                 {
                     skill.Activated = active;
+                    if (active)
+                    {
+                        skill.CurrentCharges -= 1;
+                    }
                 }
             }
         }
@@ -508,6 +517,10 @@ public class CharacterService : ICharacterService
                 if (skill.Id == skillId)
                 {
                     skill.Activated = active;
+                    if (active)
+                    {
+                        skill.CurrentCharges -= 1;
+                    }
                 }
             }
         }
@@ -517,6 +530,10 @@ public class CharacterService : ICharacterService
             if (skill.Id == skillId)
             {
                 skill.Activated = active;
+                if (active)
+                {
+                    skill.CurrentCharges -= 1;
+                }
             }
         }
 
@@ -525,6 +542,10 @@ public class CharacterService : ICharacterService
             if (skill.Id == skillId)
             {
                 skill.Activated = active;
+                if (active)
+                {
+                    skill.CurrentCharges -= 1;
+                }
             }
         }
 
@@ -533,6 +554,33 @@ public class CharacterService : ICharacterService
             if (skill.Id == skillId)
             {
                 skill.Activated = active;
+                if (active)
+                {
+                    skill.CurrentCharges -= 1;
+                }
+            }
+        }
+
+        _characterRepository.Update(character);
+        _unitOfWork.SaveChanges();
+        return Task.CompletedTask;
+    }
+
+    public Task EquipObject(int id, int objectId, bool equip)
+    {
+        var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
+        if (character == null)
+        {
+            throw new Exception();
+        }
+
+        _characterRepository.Attach(character);
+
+        foreach (var objectInstance in character.ObjectInstance)
+        {
+            if (objectInstance.Id == objectId)
+            {
+                objectInstance.Equipped = equip;
             }
         }
 
@@ -554,6 +602,75 @@ public class CharacterService : ICharacterService
         character.Name = name;
         character.Level = level;
         character.Age = age;
+
+        _characterRepository.Update(character);
+        _unitOfWork.SaveChanges();
+        return Task.CompletedTask;
+    }
+
+    public Task ResetSkillCharges(int id, int skillId)
+    {
+        var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
+        if (character == null)
+        {
+            throw new Exception();
+        }
+
+        _characterRepository.Attach(character);
+
+        foreach (var skill in character.SkillInstance)
+        {
+            if (skill.Id == skillId)
+            {
+                skill.CurrentCharges = skill.Charges;
+            }
+        }
+
+        foreach (var objectInstance in character.ObjectInstance)
+        {
+            foreach (var skill in objectInstance.SkillInstance)
+            {
+                if (skill.Id == skillId)
+                {
+                    skill.CurrentCharges = skill.Charges;
+                }
+            }
+        }
+
+        foreach (var spellInstance in character.SpellInstance)
+        {
+            foreach (var skill in spellInstance.SkillInstance)
+            {
+                if (skill.Id == skillId)
+                {
+                    skill.CurrentCharges = skill.Charges;
+                }
+            }
+        }
+
+        foreach (var skill in character.ClassInstance.SkillInstance)
+        {
+            if (skill.Id == skillId)
+            {
+                skill.CurrentCharges = skill.Charges;
+            }
+        }
+
+        foreach (var skill in character.BackgroundInstance.SkillInstance)
+        {
+            if (skill.Id == skillId)
+            {
+                skill.CurrentCharges = skill.Charges;
+            }
+        }
+
+        foreach (var skill in character.RaceInstance.SkillInstance)
+        {
+            if (skill.Id == skillId)
+            {
+                skill.CurrentCharges = skill.Charges;
+            }
+        }
 
         _characterRepository.Update(character);
         _unitOfWork.SaveChanges();
