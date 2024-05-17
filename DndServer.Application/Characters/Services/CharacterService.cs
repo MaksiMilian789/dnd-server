@@ -503,7 +503,7 @@ public class CharacterService : ICharacterService
         return Task.CompletedTask;
     }
 
-    public Task EditCharInfo(int id, string name, int level, int age)
+    public Task EditCharInfo(int id, string name, int level, int age, int? imageId)
     {
         var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
         if (character == null)
@@ -516,6 +516,7 @@ public class CharacterService : ICharacterService
         character.Name = name;
         character.Level = level;
         character.Age = age;
+        character.ImageId = imageId;
 
         _characterRepository.Update(character);
         _unitOfWork.SaveChanges();

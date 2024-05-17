@@ -133,9 +133,9 @@ public class CharacterController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesDefaultResponseType]
-    public async Task EditInfo(int id, string name, int level, int age)
+    public async Task EditInfo(int id, string name, int level, int age, int? imageId)
     {
-        await _characterService.EditCharInfo(id, name, level, age);
+        await _characterService.EditCharInfo(id, name, level, age, imageId);
     }
 
     /// <summary>

@@ -17,5 +17,5 @@ public interface ICharacterService
     public Task ToggleSkill(int id, int skillId, bool active, int changeCharges);
     public Task ResetSkillCharges(int id, int skillId);
     public Task EquipObject(int id, int objectId, bool equip);
-    public Task EditCharInfo(int id, string name, int level, int age);
+    public Task EditCharInfo(int id, string name, int level, int age, int? imageId);
 }
