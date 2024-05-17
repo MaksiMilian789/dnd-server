@@ -1,4 +1,5 @@
 ﻿using DndServer.Application.Interfaces;
+using DndServer.Application.Interfaces.Users;
 using DndServer.Application.Interfaces.Worlds;
 using DndServer.Application.Worlds.Interfaces;
 using DndServer.Application.Worlds.Models;
@@ -12,17 +13,20 @@ public class WorldService : IWorldService
     private readonly IUnitOfWork _unitOfWork;
     private readonly IWorldRepository _worldRepository;
     private readonly IWorldLinksRepository _worldLinksRepository;
+    private readonly IUserRepository _userRepository;
     private readonly IWikiRepository _wikiRepository;
     private readonly IWikiPageRepository _wikiPageRepository;
 
     public WorldService(IWorldRepository worldRepository, IWorldLinksRepository worldLinksRepository,
-        IUnitOfWork unitOfWork, IWikiRepository wikiRepository, IWikiPageRepository wikiPageRepository)
+        IUnitOfWork unitOfWork, IWikiRepository wikiRepository, IWikiPageRepository wikiPageRepository,
+        IUserRepository userRepository)
     {
         _worldRepository = worldRepository;
         _worldLinksRepository = worldLinksRepository;
         _unitOfWork = unitOfWork;
         _wikiRepository = wikiRepository;
         _wikiPageRepository = wikiPageRepository;
+        _userRepository = userRepository;
     }
 
     public Task CreateWorld(WorldCreateDto dto, int userId)
@@ -121,6 +125,90 @@ public class WorldService : IWorldService
         }
 
         _wikiRepository.Update(wiki);
+        _unitOfWork.SaveChanges();
+        return Task.CompletedTask;
+    }
+
+    public Task<List<UserRoleDto>> GetUserRoles(int worldId)
+    {
+        var users = _userRepository.Get();
+        var roles = _worldLinksRepository.Get();
+        var userRoles = roles.Where(x => x.World.Id == worldId).ToList();
+        if (userRoles == null)
+        {
+            throw new Exception();
+        }
+
+        var usersRolesDto = new List<UserRoleDto>();
+        foreach (var user in users)
+        {
+            var userRole = new UserRoleDto
+            {
+                Id = user.Id,
+                Name = user.Login,
+                Role = null
+            };
+
+            var role = userRoles.FirstOrDefault(x => x.UserId == user.Id);
+            if (role != null)
+            {
+                userRole.Role = role.Role;
+            }
+
+            usersRolesDto.Add(userRole);
+        }
+
+        return Task.FromResult(usersRolesDto);
+    }
+
+    public Task SetUserRoles(int worldId, List<UserRoleDto> newUserRoles)
+    {
+        var roles = _worldLinksRepository.GetWithoutTracking();
+        var userRoles = roles.Where(x => x.World.Id == worldId).ToList();
+        if (userRoles == null)
+        {
+            throw new Exception();
+        }
+
+        var attach = false;
+        foreach (var role in newUserRoles)
+        {
+            var currentRole = userRoles.FirstOrDefault(x => x.UserId == role.Id);
+            if (currentRole != null)
+            {
+                if (!attach)
+                {
+                    _worldLinksRepository.Attach(currentRole);
+                    attach = true;
+                }
+
+                if (role.Role == null)
+                {
+                    currentRole.World = null;
+                    _worldLinksRepository.Remove(currentRole);
+                }
+                else
+                {
+                    currentRole.Role = (RoleEnum)role.Role;
+                    //_worldLinksRepository.Update(currentRole);
+                }
+            }
+            else
+            {
+                if (role.Role == null)
+                {
+                    continue;
+                }
+
+                var newRole = new WorldLinks((RoleEnum)role.Role)
+                {
+                    UserId = role.Id,
+                    WorldId = worldId
+                };
+                _worldLinksRepository.Create(newRole);
+            }
+        }
+
         _unitOfWork.SaveChanges();
         return Task.CompletedTask;
     }
