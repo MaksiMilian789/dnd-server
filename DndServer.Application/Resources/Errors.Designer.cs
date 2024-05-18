@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DndServer.API.Resources {
+namespace DndServer.Application.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace DndServer.API.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DndServer.API.Resources.Errors", typeof(Errors).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DndServer.Application.Resources.Errors", typeof(Errors).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -66,6 +66,78 @@ namespace DndServer.API.Resources {
         public static string AuthFailed {
             get {
                 return ResourceManager.GetString("AuthFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Персонаж не найден.
+        /// </summary>
+        public static string CharacterNotFound {
+            get {
+                return ResourceManager.GetString("CharacterNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Состояние не найдено.
+        /// </summary>
+        public static string ConditionNotFound {
+            get {
+                return ResourceManager.GetString("ConditionNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Данные не найдены.
+        /// </summary>
+        public static string DataNotFound {
+            get {
+                return ResourceManager.GetString("DataNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Объект не найден.
+        /// </summary>
+        public static string ObjectNotFound {
+            get {
+                return ResourceManager.GetString("ObjectNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Способность не найдена.
+        /// </summary>
+        public static string SkillNotFound {
+            get {
+                return ResourceManager.GetString("SkillNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Заклинание не найдено.
+        /// </summary>
+        public static string SpellNotFound {
+            get {
+                return ResourceManager.GetString("SpellNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Пользователь не найден.
+        /// </summary>
+        public static string UserNotFound {
+            get {
+                return ResourceManager.GetString("UserNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Мир не найден.
+        /// </summary>
+        public static string WorldNotFound {
+            get {
+                return ResourceManager.GetString("WorldNotFound", resourceCulture);
             }
         }
     }

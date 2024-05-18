@@ -1,6 +1,7 @@
 ﻿using DndServer.Application.Interfaces;
 using DndServer.Application.Interfaces.Users;
 using DndServer.Application.Interfaces.Worlds;
+using DndServer.Application.Resources;
 using DndServer.Application.Worlds.Interfaces;
 using DndServer.Application.Worlds.Models;
 using DndServer.Domain.Shared.Enums;
@@ -55,7 +56,7 @@ public class WorldService : IWorldService
         var world = _worldRepository.Get(x => x.Id == dto.Id).FirstOrDefault();
         if (world == null)
         {
-            throw new Exception();
+            throw new Exception(Errors.WorldNotFound);
         }
 
         _worldRepository.Attach(world);
@@ -74,7 +75,7 @@ public class WorldService : IWorldService
         var world = _worldRepository.Get(x => x.Id == worldId).FirstOrDefault();
         if (world == null)
         {
-            throw new Exception();
+            throw new Exception(Errors.WorldNotFound);
         }
 
         _worldRepository.Attach(world);
@@ -92,7 +93,7 @@ public class WorldService : IWorldService
         var wiki = _wikiRepository.Get(x => x.Id == wikiId).FirstOrDefault();
         if (wiki == null)
         {
-            throw new Exception();
+            throw new Exception(Errors.DataNotFound);
         }
 
         _wikiRepository.Attach(wiki);
@@ -110,7 +111,7 @@ public class WorldService : IWorldService
             var page = _wikiPageRepository.Get(x => x.Id == pageId).FirstOrDefault();
             if (page == null)
             {
-                throw new Exception();
+                throw new Exception(Errors.DataNotFound);
             }
 
             _wikiPageRepository.Attach(page);
@@ -136,7 +137,7 @@ public class WorldService : IWorldService
         var userRoles = roles.Where(x => x.World.Id == worldId).ToList();
         if (userRoles == null)
         {
-            throw new Exception();
+            throw new Exception(Errors.DataNotFound);
         }
 
         var usersRolesDto = new List<UserRoleDto>();
@@ -167,7 +168,7 @@ public class WorldService : IWorldService
         var userRoles = roles.Where(x => x.World.Id == worldId).ToList();
         if (userRoles == null)
         {
-            throw new Exception();
+            throw new Exception(Errors.DataNotFound);
         }
 
         var attach = false;
@@ -239,7 +240,7 @@ public class WorldService : IWorldService
         var world = worlds.FirstOrDefault(x => x.WorldLinks.Any(y => y.Id == worldId));
         if (world == null)
         {
-            throw new Exception();
+            throw new Exception(Errors.WorldNotFound);
         }
 
         var wikiList = new List<WikiDto>();

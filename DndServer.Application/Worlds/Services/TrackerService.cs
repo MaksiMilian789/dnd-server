@@ -1,5 +1,6 @@
 ﻿using DndServer.Application.Interfaces;
 using DndServer.Application.Interfaces.Worlds;
+using DndServer.Application.Resources;
 using DndServer.Application.Worlds.Interfaces;
 using DndServer.Application.Worlds.Models;
 using DndServer.Domain.Worlds;
@@ -26,7 +27,7 @@ public class TrackerService : ITrackerService
         var tracker = trackers.FirstOrDefault(x => x.World.Id == worldId);
         if (tracker == null)
         {
-            throw new Exception();
+            throw new Exception(Errors.DataNotFound);
         }
 
         var units = tracker.TrackerUnits.Select(unit => new TrackerUnitDto
@@ -45,7 +46,7 @@ public class TrackerService : ITrackerService
         var tracker = trackers.FirstOrDefault(x => x.World.Id == worldId);
         if (tracker == null)
         {
-            throw new Exception();
+            throw new Exception(Errors.DataNotFound);
         }
 
         foreach (var unit in tracker.TrackerUnits)

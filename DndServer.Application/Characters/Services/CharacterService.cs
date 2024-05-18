@@ -13,6 +13,7 @@ using DndServer.Application.Interfaces.Characters.Race;
 using DndServer.Application.Interfaces.Characters.Skill;
 using DndServer.Application.Interfaces.Characters.Spell;
 using DndServer.Application.Interfaces.Users;
+using DndServer.Application.Resources;
 using DndServer.Application.Shared;
 using DndServer.Domain.Characters;
 using DndServer.Domain.Characters.Background;
@@ -90,7 +91,7 @@ public class CharacterService : ICharacterService
         var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
         if (character == null)
         {
-            throw new Exception();
+            throw new Exception(Errors.CharacterNotFound);
         }
 
         var conditions = new List<ConditionDto>();
@@ -253,7 +254,7 @@ public class CharacterService : ICharacterService
 
         if (classTemplate == null || raceTemplate == null || backgroundTemplate == null)
         {
-            throw new Exception();
+            throw new Exception(Errors.DataNotFound);
         }
 
         var classInstance = new ClassInstance(classTemplate.Name, classTemplate.Description, classTemplate.System)
@@ -281,7 +282,7 @@ public class CharacterService : ICharacterService
             var skillTemplate = _skillTemplateRepository.Get(x => x.Id == skillId).FirstOrDefault();
             if (skillTemplate == null)
             {
-                throw new Exception();
+                throw new Exception(Errors.SkillNotFound);
             }
 
             var instance = SkillUtilsService
@@ -307,7 +308,7 @@ public class CharacterService : ICharacterService
         var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
         if (character == null)
         {
-            throw new Exception();
+            throw new Exception(Errors.CharacterNotFound);
         }
 
         character.Hp = hp;
@@ -322,7 +323,7 @@ public class CharacterService : ICharacterService
         var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
         if (character == null)
         {
-            throw new Exception();
+            throw new Exception(Errors.CharacterNotFound);
         }
 
         _characterRepository.Attach(character);
@@ -330,7 +331,7 @@ public class CharacterService : ICharacterService
         var skillTemplate = _skillTemplateRepository.Get(x => x.Id == skillId).FirstOrDefault();
         if (skillTemplate == null)
         {
-            throw new Exception();
+            throw new Exception(Errors.SkillNotFound);
         }
 
         var instance = SkillUtilsService.CreateSkillsInstancesFromTemplate(new List<SkillTemplate> { skillTemplate })
@@ -352,7 +353,7 @@ public class CharacterService : ICharacterService
         var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
         if (character == null)
         {
-            throw new Exception();
+            throw new Exception(Errors.CharacterNotFound);
         }
 
         _characterRepository.Attach(character);
@@ -360,7 +361,7 @@ public class CharacterService : ICharacterService
         var condition = _conditionsRepository.Get(x => x.Id == conditionId).FirstOrDefault();
         if (condition == null)
         {
-            throw new Exception();
+            throw new Exception(Errors.ConditionNotFound);
         }
 
         _conditionsRepository.Attach(condition);
@@ -376,7 +377,7 @@ public class CharacterService : ICharacterService
         var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
         if (character == null)
         {
-            throw new Exception();
+            throw new Exception(Errors.CharacterNotFound);
         }
 
         _characterRepository.Attach(character);
@@ -384,7 +385,7 @@ public class CharacterService : ICharacterService
         var objectTemplate = _objectTemplateRepository.Get(x => x.Id == objectId).FirstOrDefault();
         if (objectTemplate == null)
         {
-            throw new Exception();
+            throw new Exception(Errors.ObjectNotFound);
         }
 
         var objectInstance = new ObjectInstance(objectTemplate.Name, objectTemplate.Description,
@@ -409,7 +410,7 @@ public class CharacterService : ICharacterService
         var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
         if (character == null)
         {
-            throw new Exception();
+            throw new Exception(Errors.CharacterNotFound);
         }
 
         _characterRepository.Attach(character);
@@ -417,7 +418,7 @@ public class CharacterService : ICharacterService
         var spellTemplate = _spellTemplateRepository.Get(x => x.Id == spellId).FirstOrDefault();
         if (spellTemplate == null)
         {
-            throw new Exception();
+            throw new Exception(Errors.SpellNotFound);
         }
 
         var spellInstance = new SpellInstance(spellTemplate.Name, spellTemplate.Description, spellTemplate.Level,
@@ -443,7 +444,7 @@ public class CharacterService : ICharacterService
         var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
         if (character == null)
         {
-            throw new Exception();
+            throw new Exception(Errors.CharacterNotFound);
         }
 
         _characterRepository.Attach(character);
@@ -461,7 +462,7 @@ public class CharacterService : ICharacterService
             var note = _noteRepository.Get(x => x.Id == noteId).FirstOrDefault();
             if (note == null)
             {
-                throw new Exception();
+                throw new Exception(Errors.DataNotFound);
             }
 
             _noteRepository.Attach(note);
@@ -485,7 +486,7 @@ public class CharacterService : ICharacterService
         var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
         if (character == null)
         {
-            throw new Exception();
+            throw new Exception(Errors.CharacterNotFound);
         }
 
         _characterRepository.Attach(character);
@@ -508,7 +509,7 @@ public class CharacterService : ICharacterService
         var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
         if (character == null)
         {
-            throw new Exception();
+            throw new Exception(Errors.CharacterNotFound);
         }
 
         _characterRepository.Attach(character);
@@ -528,7 +529,7 @@ public class CharacterService : ICharacterService
         var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
         if (character == null)
         {
-            throw new Exception();
+            throw new Exception(Errors.CharacterNotFound);
         }
 
         _characterRepository.Attach(character);
@@ -597,7 +598,7 @@ public class CharacterService : ICharacterService
         var character = _characterRepository.Get(x => x.Id == id).FirstOrDefault();
         if (character == null)
         {
-            throw new Exception();
+            throw new Exception(Errors.CharacterNotFound);
         }
 
         _characterRepository.Attach(character);

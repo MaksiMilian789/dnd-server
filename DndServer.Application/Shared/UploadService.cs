@@ -1,5 +1,6 @@
 ﻿using DndServer.Application.Interfaces;
 using DndServer.Application.Interfaces.Upload;
+using DndServer.Application.Resources;
 using DndServer.Application.Shared.Interfaces;
 using DndServer.Application.Shared.Models;
 using DndServer.Domain.Shared;
@@ -25,18 +26,18 @@ public class UploadService : IUploadService
     {
         if (upload.Length == 0)
         {
-            throw new Exception();
+            throw new Exception("Размер файла равен 0");
         }
 
         // TODO: Move max file size to config
         if (upload.Length > 10 * 1024 * 1024)
         {
-            throw new Exception();
+            throw new Exception("Превышен размер файла");
         }
 
         if (_acceptedFileTypes.All(s => s != Path.GetExtension(upload.FileName)?.ToLower()))
         {
-            throw new Exception();
+            throw new Exception("Файл имеет некорректное расширение");
         }
 
         if (!Directory.Exists(_uploadsPath))
@@ -60,7 +61,7 @@ public class UploadService : IUploadService
 
         if (id == null)
         {
-            throw new Exception();
+            throw new Exception(Errors.DataNotFound);
         }
 
         return Task.FromResult(id.Id);
@@ -71,7 +72,7 @@ public class UploadService : IUploadService
         var file = _uploadRepository.Get(x => x.Id == fileId).FirstOrDefault();
         if (file == null)
         {
-            throw new Exception();
+            throw new Exception(Errors.DataNotFound);
         }
 
         var image = new UploadedFile
