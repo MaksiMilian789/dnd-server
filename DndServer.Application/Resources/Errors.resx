@@ -120,4 +120,28 @@
   <data name="AuthFailed" xml:space="preserve">
     <value>Неверный логин или пароль</value>
   </data>
+  <data name="CharacterNotFound" xml:space="preserve">
+    <value>Персонаж не найден</value>
+  </data>
+  <data name="ConditionNotFound" xml:space="preserve">
+    <value>Состояние не найдено</value>
+  </data>
+  <data name="DataNotFound" xml:space="preserve">
+    <value>Данные не найдены</value>
+  </data>
+  <data name="ObjectNotFound" xml:space="preserve">
+    <value>Объект не найден</value>
+  </data>
+  <data name="SkillNotFound" xml:space="preserve">
+    <value>Способность не найдена</value>
+  </data>
+  <data name="SpellNotFound" xml:space="preserve">
+    <value>Заклинание не найдено</value>
+  </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>Пользователь не найден</value>
+  </data>
+  <data name="WorldNotFound" xml:space="preserve">
+    <value>Мир не найден</value>
+  </data>
 </root>

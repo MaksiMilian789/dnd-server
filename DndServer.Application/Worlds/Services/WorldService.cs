@@ -1,5 +1,7 @@
 ﻿using DndServer.Application.Interfaces;
+using DndServer.Application.Interfaces.Users;
 using DndServer.Application.Interfaces.Worlds;
+using DndServer.Application.Resources;
 using DndServer.Application.Worlds.Interfaces;
 using DndServer.Application.Worlds.Models;
 using DndServer.Domain.Shared.Enums;
@@ -12,17 +14,20 @@ public class WorldService : IWorldService
     private readonly IUnitOfWork _unitOfWork;
     private readonly IWorldRepository _worldRepository;
     private readonly IWorldLinksRepository _worldLinksRepository;
+    private readonly IUserRepository _userRepository;
     private readonly IWikiRepository _wikiRepository;
     private readonly IWikiPageRepository _wikiPageRepository;
 
     public WorldService(IWorldRepository worldRepository, IWorldLinksRepository worldLinksRepository,
-        IUnitOfWork unitOfWork, IWikiRepository wikiRepository, IWikiPageRepository wikiPageRepository)
+        IUnitOfWork unitOfWork, IWikiRepository wikiRepository, IWikiPageRepository wikiPageRepository,
+        IUserRepository userRepository)
     {
         _worldRepository = worldRepository;
         _worldLinksRepository = worldLinksRepository;
         _unitOfWork = unitOfWork;
         _wikiRepository = wikiRepository;
         _wikiPageRepository = wikiPageRepository;
+        _userRepository = userRepository;
     }
 
     public Task CreateWorld(WorldCreateDto dto, int userId)
@@ -51,7 +56,7 @@ public class WorldService : IWorldService
         var world = _worldRepository.Get(x => x.Id == dto.Id).FirstOrDefault();
         if (world == null)
         {
-            throw new Exception();
+            throw new Exception(Errors.WorldNotFound);
         }
 
         _worldRepository.Attach(world);
@@ -70,7 +75,7 @@ public class WorldService : IWorldService
         var world = _worldRepository.Get(x => x.Id == worldId).FirstOrDefault();
         if (world == null)
         {
-            throw new Exception();
+            throw new Exception(Errors.WorldNotFound);
         }
 
         _worldRepository.Attach(world);
@@ -88,7 +93,7 @@ public class WorldService : IWorldService
         var wiki = _wikiRepository.Get(x => x.Id == wikiId).FirstOrDefault();
         if (wiki == null)
         {
-            throw new Exception();
+            throw new Exception(Errors.DataNotFound);
         }
 
         _wikiRepository.Attach(wiki);
@@ -106,7 +111,7 @@ public class WorldService : IWorldService
             var page = _wikiPageRepository.Get(x => x.Id == pageId).FirstOrDefault();
             if (page == null)
             {
-                throw new Exception();
+                throw new Exception(Errors.DataNotFound);
             }
 
             _wikiPageRepository.Attach(page);
@@ -121,6 +126,90 @@ public class WorldService : IWorldService
         }
 
         _wikiRepository.Update(wiki);
+        _unitOfWork.SaveChanges();
+        return Task.CompletedTask;
+    }
+
+    public Task<List<UserRoleDto>> GetUserRoles(int worldId)
+    {
+        var users = _userRepository.Get();
+        var roles = _worldLinksRepository.Get();
+        var userRoles = roles.Where(x => x.World.Id == worldId).ToList();
+        if (userRoles == null)
+        {
+            throw new Exception(Errors.DataNotFound);
+        }
+
+        var usersRolesDto = new List<UserRoleDto>();
+        foreach (var user in users)
+        {
+            var userRole = new UserRoleDto
+            {
+                Id = user.Id,
+                Name = user.Login,
+                Role = null
+            };
+
+            var role = userRoles.FirstOrDefault(x => x.UserId == user.Id);
+            if (role != null)
+            {
+                userRole.Role = role.Role;
+            }
+
+            usersRolesDto.Add(userRole);
+        }
+
+        return Task.FromResult(usersRolesDto);
+    }
+
+    public Task SetUserRoles(int worldId, List<UserRoleDto> newUserRoles)
+    {
+        var roles = _worldLinksRepository.GetWithoutTracking();
+        var userRoles = roles.Where(x => x.World.Id == worldId).ToList();
+        if (userRoles == null)
+        {
+            throw new Exception(Errors.DataNotFound);
+        }
+
+        var attach = false;
+        foreach (var role in newUserRoles)
+        {
+            var currentRole = userRoles.FirstOrDefault(x => x.UserId == role.Id);
+            if (currentRole != null)
+            {
+                if (!attach)
+                {
+                    _worldLinksRepository.Attach(currentRole);
+                    attach = true;
+                }
+
+                if (role.Role == null)
+                {
+                    currentRole.World = null;
+                    _worldLinksRepository.Remove(currentRole);
+                }
+                else
+                {
+                    currentRole.Role = (RoleEnum)role.Role;
+                    //_worldLinksRepository.Update(currentRole);
+                }
+            }
+            else
+            {
+                if (role.Role == null)
+                {
+                    continue;
+                }
+
+                var newRole = new WorldLinks((RoleEnum)role.Role)
+                {
+                    UserId = role.Id,
+                    WorldId = worldId
+                };
+                _worldLinksRepository.Create(newRole);
+            }
+        }
+
         _unitOfWork.SaveChanges();
         return Task.CompletedTask;
     }
@@ -151,7 +240,7 @@ public class WorldService : IWorldService
         var world = worlds.FirstOrDefault(x => x.WorldLinks.Any(y => y.Id == worldId));
         if (world == null)
         {
-            throw new Exception();
+            throw new Exception(Errors.WorldNotFound);
         }
 
         var wikiList = new List<WikiDto>();

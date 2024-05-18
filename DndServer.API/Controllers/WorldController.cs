@@ -69,7 +69,7 @@ public class WorldController : ControllerBase
     }
 
     /// <summary>
-    ///     Трекер
+    ///     Получить трекер
     /// </summary>
     [HttpGet("getTracker")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -81,7 +81,7 @@ public class WorldController : ControllerBase
     }
 
     /// <summary>
-    ///     Трекер
+    ///     Сохранить трекер
     /// </summary>
     [HttpPut("setTracker")]
     [ProducesResponseType(StatusCodes.Status200OK)]
@@ -114,5 +114,29 @@ public class WorldController : ControllerBase
     public async Task SaveWikiPage(string header, string text, int? imageId, int? pageId, int wikiId)
     {
         await _worldService.SaveWikiPage(header, text, imageId, pageId, wikiId);
+    }
+
+    /// <summary>
+    ///     Получить роли
+    /// </summary>
+    [HttpGet("getUserRoles")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesDefaultResponseType]
+    public async Task<ActionResult<List<UserRoleDto>>> GetUserRoles(int worldId)
+    {
+        return await _worldService.GetUserRoles(worldId);
+    }
+
+    /// <summary>
+    ///     Сохранить роли
+    /// </summary>
+    [HttpPut("setUserRoles")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesDefaultResponseType]
+    public async Task SetUserRoles(int worldId, [FromBody] List<UserRoleDto> roles)
+    {
+        await _worldService.SetUserRoles(worldId, roles);
     }
 }

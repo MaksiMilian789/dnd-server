@@ -1,5 +1,6 @@
 ﻿using DndServer.Application.Interfaces;
 using DndServer.Application.Interfaces.Users;
+using DndServer.Application.Resources;
 using DndServer.Application.Users.Interfaces;
 using DndServer.Application.Users.Models;
 using DndServer.Domain.Users;
@@ -25,7 +26,7 @@ public class UserService : IUserService
         var user = _userRepository.Get(x => x.Login == login).FirstOrDefault();
         if (user == null)
         {
-            throw new Exception();
+            throw new Exception(Errors.UserNotFound);
         }
 
         var userDto = new UserDto
@@ -47,7 +48,7 @@ public class UserService : IUserService
         var user = _userRepository.Get(x => x.Login == dto.Login).FirstOrDefault();
         if (user != null)
         {
-            throw new Exception();
+            throw new Exception(Errors.UserNotFound);
         }
 
         var newUser = new User(dto.Login, "");

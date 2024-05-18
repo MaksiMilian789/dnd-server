@@ -11,4 +11,6 @@ public interface IWorldService
     public Task EditWorld(WorldDto dto);
     public Task AddWikiPart(string name, int worldId);
     public Task SaveWikiPage(string header, string text, int? imageId, int? pageId, int wikiId);
+    public Task<List<UserRoleDto>> GetUserRoles(int worldId);
+    public Task SetUserRoles(int worldId, List<UserRoleDto> userRoles);
 }

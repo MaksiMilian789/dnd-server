@@ -1,11 +1,11 @@
-﻿using DndServer.API.Resources;
-using DndServer.Application.Auth.Interfaces;
+﻿using DndServer.Application.Auth.Interfaces;
 using DndServer.Application.Auth.Models;
+using DndServer.Application.Resources;
 using DndServer.Application.Users.Interfaces;
 using DndServer.Application.Users.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DndServer.API.Controllers.Auth;
+namespace DndServer.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
