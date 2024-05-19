@@ -59,7 +59,9 @@ builder.Services
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(key),
                 ValidateAudience = false,
-                ValidateIssuer = false
+                ValidateIssuer = false,
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
             };
         }
     );
