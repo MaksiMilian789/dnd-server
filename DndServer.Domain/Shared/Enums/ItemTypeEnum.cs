@@ -7,5 +7,10 @@ public enum ItemTypeEnum
     LightArmor,
     MediumArmor,
     HeavyArmor,
-    Shield
+    Shield,
+    MagicItem,
+    Scroll,
+    Potion,
+    Ammo,
+    Other
 }

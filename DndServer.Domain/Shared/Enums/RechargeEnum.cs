@@ -12,5 +12,6 @@ public enum RechargeEnum
     d12,
     d20,
     d25,
-    d100
+    d100,
+    none
 }

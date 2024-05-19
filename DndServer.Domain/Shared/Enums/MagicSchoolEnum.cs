@@ -2,5 +2,12 @@
 
 public enum MagicSchoolEnum
 {
-    Necromancy
+    Necromancy,
+    Evocation,
+    Illusion,
+    Conjuration,
+    Abjuration,
+    Enchantment,
+    Transmutation,
+    Divination
 }

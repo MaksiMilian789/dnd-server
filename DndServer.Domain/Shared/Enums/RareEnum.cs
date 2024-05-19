@@ -4,5 +4,8 @@ public enum RareEnum
 {
     Common,
     Uncommon,
-    Rare
+    Rare,
+    VeryRare,
+    Legendary,
+    Artifact
 }

@@ -3,5 +3,16 @@
 public enum DamageTypeEnum
 {
     Fire,
-    Cold
+    Cold,
+    Acid,
+    Poison,
+    Lightning,
+    Thunder,
+    Force,
+    Psychic,
+    Necrotic,
+    Radiant,
+    Piercing,
+    Slashing,
+    Bludgeoning
 }
