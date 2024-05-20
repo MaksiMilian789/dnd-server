@@ -9,6 +9,7 @@ public class Image
 {
     public int Id { get; set; }
     public string Path { get; set; }
+    public byte[] ImageByte { get; set; }
     public virtual ICollection<Character> Character { get; set; } = null!;
     public virtual ICollection<World> World { get; set; } = null!;
     public virtual ICollection<Note> Note { get; set; } = null!;
@@ -17,8 +18,9 @@ public class Image
     public virtual ICollection<ObjectInstance> ObjectInstance { get; set; } = null!;
     public bool Deleted { get; set; }
 
-    public Image(string path)
+    public Image(string path, byte[] imageByte)
     {
         Path = path;
+        ImageByte = imageByte;
     }
 }

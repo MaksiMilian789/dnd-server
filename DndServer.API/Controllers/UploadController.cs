@@ -1,7 +1,7 @@
 ﻿using DndServer.Application.Shared.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.Win32;
 
 namespace DndServer.API.Controllers;
 
@@ -38,15 +38,24 @@ public class UploadController : ControllerBase
     /// </summary>
     /// <param name="fileId">Id файла изображения </param>
     [HttpGet("{fileId}")]
-    public PhysicalFileResult GetFile(int fileId)
+    public FileContentResult GetFile(int fileId)
     {
-        var (path, file) = _uploadService.GetImage(fileId);
-        var provider = new FileExtensionContentTypeProvider();
-        if (!provider.TryGetContentType(file.FileName, out var contentType))
+        var (image, file) = _uploadService.GetImage(fileId);
+        var contentType = GetMimeType(file.FileName);
+
+        return File(image, contentType);
+    }
+
+    private string GetMimeType(string fileName)
+    {
+        var mimeType = "application/unknown";
+        var ext = Path.GetExtension(fileName).ToLower();
+        var regKey = Registry.ClassesRoot.OpenSubKey(ext);
+        if (regKey != null && regKey.GetValue("Content Type") != null)
         {
-            contentType = "application/octet-stream";
+            mimeType = regKey.GetValue("Content Type").ToString();
         }
 
-        return PhysicalFile(path, contentType);
+        return mimeType;
     }
 }

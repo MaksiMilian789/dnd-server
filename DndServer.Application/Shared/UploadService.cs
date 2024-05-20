@@ -5,6 +5,7 @@ using DndServer.Application.Shared.Interfaces;
 using DndServer.Application.Shared.Models;
 using DndServer.Domain.Shared;
 using Microsoft.AspNetCore.Http;
+using SystemImage = System.Drawing.Image;
 
 namespace DndServer.Application.Shared;
 
@@ -53,7 +54,8 @@ public class UploadService : IUploadService
             upload.CopyTo(stream);
         }
 
-        var uploadedFile = new Image(fileName);
+        var bytes = File.ReadAllBytes(filePath);
+        var uploadedFile = new Image(fileName, bytes);
         _uploadRepository.Create(uploadedFile);
         _unitOfWork.SaveChanges();
 
@@ -67,7 +69,7 @@ public class UploadService : IUploadService
         return Task.FromResult(id.Id);
     }
 
-    public (string path, UploadedFile file) GetImage(int fileId)
+    public (byte[] bytes, UploadedFile file) GetImage(int fileId)
     {
         var file = _uploadRepository.Get(x => x.Id == fileId).FirstOrDefault();
         if (file == null)
@@ -81,7 +83,6 @@ public class UploadService : IUploadService
             FileName = file.Path
         };
 
-        var physicalPath = Path.Combine(_uploadsPath, image.FileName);
-        return (physicalPath, image);
+        return (file.ImageByte, image);
     }
 }

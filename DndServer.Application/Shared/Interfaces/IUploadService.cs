@@ -5,6 +5,6 @@ namespace DndServer.Application.Shared.Interfaces;
 
 public interface IUploadService
 {
-    public (string path, UploadedFile file) GetImage(int fileId);
+    public (byte[] bytes, UploadedFile file) GetImage(int fileId);
     public Task<int> UploadImage(IFormFile upload);
 }
