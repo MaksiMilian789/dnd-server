@@ -1,7 +1,7 @@
-﻿using DndServer.Application.Shared.Interfaces;
+﻿using DndServer.Application;
+using DndServer.Application.Shared.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Win32;
 
 namespace DndServer.API.Controllers;
 
@@ -41,23 +41,8 @@ public class UploadController : ControllerBase
     public FileContentResult GetFile(int fileId)
     {
         var (image, file) = _uploadService.GetImage(fileId);
-        Console.WriteLine(image.Length);
-        var contentType = GetMimeType(file.FileName);
-        Console.WriteLine(contentType);
+        var contentType = MimeTypeService.GetMimeType(file.FileName);
 
         return File(image, contentType);
-    }
-
-    private string GetMimeType(string fileName)
-    {
-        var mimeType = "application/unknown";
-        var ext = Path.GetExtension(fileName).ToLower();
-        var regKey = Registry.ClassesRoot.OpenSubKey(ext);
-        if (regKey != null && regKey.GetValue("Content Type") != null)
-        {
-            mimeType = regKey.GetValue("Content Type").ToString();
-        }
-
-        return mimeType;
     }
 }
