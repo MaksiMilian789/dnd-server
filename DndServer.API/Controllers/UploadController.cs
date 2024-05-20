@@ -41,7 +41,9 @@ public class UploadController : ControllerBase
     public FileContentResult GetFile(int fileId)
     {
         var (image, file) = _uploadService.GetImage(fileId);
+        Console.WriteLine(image.Length);
         var contentType = GetMimeType(file.FileName);
+        Console.WriteLine(contentType);
 
         return File(image, contentType);
     }
